@@ -10,7 +10,8 @@ public interface IBlogService<T> {
 
     void modifier(Blog blog);
 
-    void supprimer(Blog blog);
+
+    boolean delete(Blog b);
 
     void ajouter(T t);
     void modifier(T t);

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.esprit.controllers.AvisController">
+    <VBox spacing="10" padding="10">
+
+        <!-- Blog Title Display -->
+        <Label text="Commentaires pour le blog sélectionné" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+
+        <!-- Table to display comments -->
+        <TableView fx:id="tableAvis">
+            <columns>
+                <TableColumn text="ID" fx:id="colId" prefWidth="50"/>
+                <TableColumn text="Commentaire" fx:id="colCommentaire" prefWidth="300"/>
+                <TableColumn text="Date" fx:id="colDate" prefWidth="120"/>
+            </columns>
+        </TableView>
+
+        <!-- Form to add/update a comment -->
+        <HBox spacing="10">
+            <Label text="Commentaire:"/>
+            <TextField fx:id="commentTextField" promptText="Entrez votre commentaire ici"/>
+        </HBox>
+
+        <!-- Buttons for actions -->
+        <HBox spacing="10">
+            <Button fx:id="btnAdd" text="Ajouter" onAction="#ajouterAvis"/>
+            <Button fx:id="btnUpdate" text="Modifier" onAction="#modifierAvis"/>
+            <Button fx:id="btnDelete" text="Supprimer" onAction="#supprimerAvis"/>
+        </HBox>
+    </VBox>
+</AnchorPane>

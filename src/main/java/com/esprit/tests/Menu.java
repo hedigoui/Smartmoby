@@ -240,7 +240,7 @@ public class Menu {
         int id = scanner.nextInt();
         scanner.nextLine(); // Consume newline
         Avis avis = new Avis();
-        avis.setId(id);
+        avis.setAvisId(id);
         avisService.supprimer(avis);
         System.out.println("Avis deleted successfully!");
     }
