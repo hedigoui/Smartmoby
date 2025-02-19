@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="678.0" prefWidth="1293.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controllers.AcceuilAdmin">
+   <children>
+      <AnchorPane layoutX="-4.0" prefHeight="678.0" prefWidth="299.0" styleClass="left-form" stylesheets="@AcceuilUser.css">
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="56.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="104.0" fitWidth="107.0" layoutX="104.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@user.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="108.0" layoutY="128.0" text="Bienvenue">
+               <font>
+                  <Font name="Tahoma" size="24.0" />
+               </font>
+            </Label>
+            <Line endX="100.0" layoutX="156.0" layoutY="176.0" startX="-100.0" />
+            <Button layoutX="46.0" layoutY="212.0" mnemonicParsing="false" onAction="#show_acceuil" prefHeight="26.0" prefWidth="218.0" text="Acceuil">
+               <styleClass>
+                  <String fx:value="nav-btn" />
+                  <String fx:value="nav-btn" />
+               </styleClass>
+            </Button>
+            <Button layoutX="47.0" layoutY="255.0" mnemonicParsing="false" onAction="#show_transport" prefHeight="26.0" prefWidth="218.0" styleClass="nav-btn" text="Transports" />
+            <Button layoutX="47.0" layoutY="299.0" mnemonicParsing="false" onAction="#show_service" prefHeight="26.0" prefWidth="218.0" styleClass="nav-btn" text="Services" />
+            <Button layoutX="47.0" layoutY="343.0" mnemonicParsing="false" onAction="#show_event" prefHeight="26.0" prefWidth="218.0" styleClass="nav-btn" text="Evénements" />
+            <Button layoutX="47.0" layoutY="389.0" mnemonicParsing="false" onAction="#show_blog" prefHeight="26.0" prefWidth="218.0" styleClass="nav-btn" text="Blog" />
+            <Button layoutX="47.0" layoutY="473.0" mnemonicParsing="false" onAction="#show_parametres" prefHeight="26.0" prefWidth="218.0" styleClass="nav-btn" text="Paramétres" />
+            <Button layoutX="46.0" layoutY="514.0" mnemonicParsing="false" onAction="#show_se_deconnecter" prefHeight="26.0" prefWidth="218.0" styleClass="nav-btn" text="Se Déconnecter" />
+            <Button layoutX="47.0" layoutY="562.0" mnemonicParsing="false" onAction="#quiiter" prefHeight="26.0" prefWidth="218.0" styleClass="nav-btn" text="Quitter" />
+            <Button layoutX="47.0" layoutY="434.0" mnemonicParsing="false" onAction="#show_utilisateurs" prefHeight="26.0" prefWidth="218.0" styleClass="nav-btn" text="Utilisateurs" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="page_utilisateurs" layoutX="296.8" prefHeight="666.0" prefWidth="841.0" visible="false" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="297.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <AnchorPane layoutX="-2.0" prefHeight="622.0" prefWidth="208.0">
+               <children>
+                  <Button layoutX="37.0" layoutY="36.0" mnemonicParsing="false" onAction="#afficher_admins" prefHeight="58.0" prefWidth="130.0" text="Afficher Admins" />
+                  <Button layoutX="37.0" layoutY="117.0" mnemonicParsing="false" onAction="#afficher_clients" prefHeight="58.0" prefWidth="130.0" text="Afficher Clients" />
+                  <Button layoutX="37.0" layoutY="204.0" mnemonicParsing="false" onAction="#afficher_organisateurs" prefHeight="58.0" prefWidth="130.0" text="Afficher Organisateurs" />
+                  <Button layoutX="37.0" layoutY="299.0" mnemonicParsing="false" onAction="#afficher_conducteurs" prefHeight="58.0" prefWidth="130.0" text="Afficher Conducteurs" />
+                  <Button layoutX="39.0" layoutY="376.0" mnemonicParsing="false" onAction="#supprimer" prefHeight="58.0" prefWidth="130.0" text="Supprimer" />
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="TableAdmins" layoutX="206.0" layoutY="8.0" prefHeight="610.0" prefWidth="633.0" visible="false">
+               <children>
+                  <TableView fx:id="tableView" layoutX="16.0" layoutY="14.0" prefHeight="593.0" prefWidth="618.0" AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <columns>
+                        <TableColumn fx:id="nom_admin" prefWidth="72.79995727539062" text="Nom" />
+                        <TableColumn fx:id="prenom_admin" prefWidth="77.5999755859375" text="Prenom" />
+                        <TableColumn fx:id="nom_utilisateur_admin" prefWidth="112.0" text="Nom D'utilisateur" />
+                        <TableColumn fx:id="email_admin" prefWidth="84.0" text="Email" />
+                        <TableColumn fx:id="mot_de_passe_admin" prefWidth="87.199951171875" text="Mot De Passe " />
+                        <TableColumn fx:id="role_admin" prefWidth="84.7999267578125" text="Role" />
+                        <TableColumn fx:id="departement_admin" prefWidth="86.400146484375" text="Département" />
+                     </columns>
+                  </TableView>
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="PageClients" layoutX="206.0" layoutY="14.0" prefHeight="634.0" prefWidth="618.0" visible="false">
+               <children>
+                  <TableView fx:id="table_client" layoutX="46.0" layoutY="14.0" prefHeight="551.0" prefWidth="566.0">
+                     <columns>
+                        <TableColumn fx:id="nom_client" prefWidth="72.79995727539062" text="Nom" />
+                        <TableColumn fx:id="prenom_client" prefWidth="77.5999755859375" text="Prenom" />
+                        <TableColumn fx:id="nom_utilisateur_client" prefWidth="112.0" text="Nom D'utilisateur" />
+                        <TableColumn fx:id="email_client" prefWidth="84.0" text="Email" />
+                        <TableColumn fx:id="mot_de_passe_client" prefWidth="87.199951171875" text="Mot De Passe " />
+                        <TableColumn fx:id="role_client" prefWidth="84.7999267578125" text="Role" />
+                     </columns>
+                  </TableView>
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="Afficher_organisateurs" layoutX="206.0" layoutY="14.0" prefHeight="634.0" prefWidth="648.0" visible="false">
+               <children>
+                  <TableView fx:id="table_organisateurs" layoutX="8.0" layoutY="2.0" prefHeight="583.0" prefWidth="682.0">
+                     <columns>
+                        <TableColumn fx:id="nom_organisateur" prefWidth="72.79995727539062" text="Nom" />
+                        <TableColumn fx:id="prenom_organisateur" prefWidth="77.5999755859375" text="Prenom" />
+                        <TableColumn fx:id="nom_utilisateur_organisateur" prefWidth="112.0" text="Nom D'utilisateur" />
+                        <TableColumn fx:id="email_organisateur" prefWidth="84.0" text="Email" />
+                        <TableColumn fx:id="mot_de_passe_organisateur" prefWidth="87.199951171875" text="Mot De Passe " />
+                        <TableColumn fx:id="role_organisateur" prefWidth="84.7999267578125" text="Role" />
+                        <TableColumn fx:id="num_badge" prefWidth="75.0" text="Num Badge" />
+                     </columns>
+                  </TableView>
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="afficher_conducteurs" layoutX="206.0" layoutY="14.0" prefHeight="634.0" prefWidth="770.0">
+               <children>
+                  <TableView fx:id="table_conducteurs" layoutX="14.0" layoutY="14.0" prefHeight="594.0" prefWidth="715.0">
+                     <columns>
+                        <TableColumn fx:id="nom_conducteur" prefWidth="72.79995727539062" text="Nom" />
+                        <TableColumn fx:id="prenom_conducteur" prefWidth="77.5999755859375" text="Prenom" />
+                        <TableColumn fx:id="nom_utilisateur_conducteur" prefWidth="112.0" text="Nom D'utilisateur" />
+                        <TableColumn fx:id="email_conducteur" prefWidth="84.0" text="Email" />
+                        <TableColumn fx:id="mot_de_passe_conducteur" prefWidth="87.199951171875" text="Mot De Passe " />
+                        <TableColumn fx:id="role_conducteur" prefWidth="84.7999267578125" text="Role" />
+                        <TableColumn fx:id="num_permis" prefWidth="93.5999755859375" text="Numero Permis" />
+                     </columns>
+                  </TableView>
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="Modifier" layoutX="297.0" layoutY="7.0" prefHeight="666.0" prefWidth="950.0">
+         <children>
+            <TextField fx:id="nom" layoutX="25.0" layoutY="45.0" prefHeight="43.0" prefWidth="502.0" promptText="Nom" styleClass="text-field" stylesheets="@AcceuilUser.css" />
+            <TextField fx:id="prenom" layoutX="25.0" layoutY="106.0" prefHeight="43.0" prefWidth="502.0" promptText="Prénom" styleClass="text-field" stylesheets="@AcceuilUser.css" />
+            <TextField fx:id="email" layoutX="25.0" layoutY="230.0" prefHeight="43.0" prefWidth="502.0" promptText="Email" styleClass="text-field" stylesheets="@AcceuilUser.css" />
+            <TextField fx:id="mdp" layoutX="25.0" layoutY="289.0" prefHeight="43.0" prefWidth="502.0" promptText="Mot De Passe" styleClass="text-field" stylesheets="@AcceuilUser.css" />
+            <TextField fx:id="nom_utilisateur" layoutX="25.0" layoutY="169.0" prefHeight="43.0" prefWidth="502.0" promptText="Nom D'utilisateur" styleClass="text-field" stylesheets="@AcceuilUser.css" />
+            <Button layoutX="178.0" layoutY="455.0" mnemonicParsing="false" onAction="#modifier_compte" prefHeight="26.0" prefWidth="196.0" styleClass="login-btn" stylesheets="@AcceuilUser.css" text="Modifier Votre Compte">
+               <font>
+                  <Font name="Tahoma" size="14.0" />
+               </font>
+            </Button>
+            <TextField fx:id="departement" layoutX="25.0" layoutY="352.0" prefHeight="43.0" prefWidth="502.0" promptText="Département" styleClass="text-field" stylesheets="@AcceuilUser.css" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
