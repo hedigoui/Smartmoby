@@ -12,56 +12,59 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
+        // Initialisation de la source de données
         datasrc dataSource = datasrc.getInstance();
-
         Connection connection = dataSource.getConnection();
+
+        // Services pour gérer les événements et les retours
         event_serv e1 = new event_serv();
         fedback_serv feedbackService = new fedback_serv();
+
+        // Gestion des feedbacks
         fedback newFeedback = new fedback("Super événement, très bien organisé!", 5);
         feedbackService.ajouter(newFeedback);
+
         fedback feedbackToModify = new fedback(1, "Événement génial, mais quelques améliorations.", 4);
         feedbackService.modifier(feedbackToModify);
+
         fedback feedbackToDelete = new fedback(1, null, 0);
         feedbackService.supprimer(feedbackToDelete);
+
         List<fedback> fedbacks = feedbackService.afficher();
-
-
         if (fedbacks.isEmpty()) {
             System.out.println("Aucun feedback trouvé.");
         } else {
             System.out.println("Liste des feedbacks :");
-            
             for (fedback feedback : fedbacks) {
                 System.out.println("ID : " + feedback.getId() + ", Commentaire : " + feedback.getCommentaire() + ", Note : " + feedback.getNote());
             }
         }
 
-
+        // Gestion des événements
         try {
+            // Parse de la date à partir de chaîne
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
             Date date = dateFormat.parse("18/10/2025");
 
-            event newEvent = new event("Conférence Tech", date, "Tunis");
+            // Création d'un nouvel événement
+            event newEvent = new event("Conférence Tech", date, "Tunis"); // Passer des valeurs valides au constructeur
             e1.ajouter(newEvent);
-            event eventToModify = new event(2, "Conférence Tech - Nouvelle Edition", date, "Tunis");  // ID de l'événement à modifier.
 
-            // Appeler la méthode modifier pour changer les informations de l'événement dans la base de données
+            // Modification d'un événement existant (ID 2 par exemple)
+            event eventToModify = new event(2, "Conférence Tech - Nouvelle Edition", date, "Tunis");
             e1.modifier(eventToModify);
-            event eventasupprimer = new event(15, "Conférence Tech - Nouvelle Edition", date, "Tunis");
-            eventasupprimer.setId(15);  // Supposons que l'utilisateur avec ID 1 existe dans la base de données
 
-            // Appeler la méthode supprimer pour supprimer l'utilisateur
-            e1.supprimer(eventasupprimer);
+            // Suppression d'un événement (ID 15 par exemple)
+            event eventToDelete = new event(24, "Conférence Tech - Nouvelle Edition", date, "Tunis");
+            e1.supprimer(eventToDelete);
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        List<event> events = e1.afficher();
 
-        // Afficher les événements récupérés
+        // Récupérer et afficher la liste des événements
+        List<event> events = e1.afficher();
         if (events.isEmpty()) {
             System.out.println("Aucun événement trouvé.");
         } else {
@@ -72,9 +75,4 @@ public class Main {
             }
         }
     }
-
-
 }
-
-
-
