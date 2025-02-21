@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="68d15971-7a4c-46a9-9182-fb8edef44c78" name="Changes" comment="API">
+      <change afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_19_02_2025_5_51_PM_[Changes]/shelved.patch" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_19_02_2025_5_51_PM__Changes_.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_19_02_2025_5_55_PM_[Changes]/shelved.patch" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_19_02_2025_5_55_PM_[Changes]1/shelved.patch" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_19_02_2025_5_55_PM__Changes_.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_19_02_2025_5_55_PM__Changes_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../src/main/java/org/example/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../src/main/java/org/example/controller/Aaa.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../src/main/java/org/example/controller/AfficherEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../src/main/java/org/example/controller/AjouterEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../src/main/java/org/example/controller/modifierEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../src/main/java/org/example/modeles/event.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../src/main/java/org/example/modeles/fedback.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../src/main/java/org/example/service/Ievent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../src/main/java/org/example/service/Ifedback.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../src/main/java/org/example/service/event_serv.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../src/main/java/org/example/service/fedback_serv.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../src/main/java/org/example/utilis/datasrc.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../src/main/java/org/example/utilis/mainfx.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../src/main/resources/aaa.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../src/main/resources/afficher_event.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../src/main/resources/ajouter_event.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../src/main/resources/modifier.fxml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="CSS File" />
+        <option value="Interface" />
+        <option value="FxmlFile" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;SiHaythem420&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/hedigoui/Smartmoby.git&quot;,
+    &quot;accountId&quot;: &quot;bf2a2e99-cbce-4553-a582-ddbfbb9fa2de&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
+  <component name="ProjectId" id="2snyK5rWxnGTVTddPZ9y1qCcaRR" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.AI_API.executor": "Run",
+    "Application.EmailAPI.executor": "Run",
+    "Application.Gemini_API.executor": "Run",
+    "Application.GoogleCalendar.executor": "Run",
+    "Application.Main.executor": "Run",
+    "Application.MainGUI.executor": "Run",
+    "Application.OpenAI_API.executor": "Run",
+    "Application.Unnamed.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "Merging haythem",
+    "kotlin-language-version-configured": "true",
+    "last_directory_selection": "C:/Users/hayth/OneDrive/Bureau/pi java/projet pi (smart moby) LAST ONE/projet pi smart moby/src/main/java",
+    "last_opened_file_path": "C:/Users/hayth/Downloads/openjfx-23.0.2_windows-x64_bin-sdk/javafx-sdk-23.0.2/lib",
+    "list.type.of.created.stylesheet": "CSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "onboarding.tips.debug.path": "C:/Users/hayth/OneDrive/Bureau/pi java/projet pi (smart moby)/projet pi smart moby/src/main/java/org/example/Main.java",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.keymap",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
+      "XML"
+    ]
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\hayth\OneDrive\Bureau\pi java\projet pi (smart moby) LAST ONE\projet pi smart moby\src\main\resources" />
+      <recent name="C:\Users\hayth\OneDrive\Bureau\pi java\projet pi (smart moby) LAST ONE\projet pi smart moby\src\main" />
+    </key>
+    <key name="ExtractSuperBase.RECENT_KEYS">
+      <recent name="org.example.services" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.Unnamed">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.example.tests.Main" />
+      <module name="projet_pi_smart_moby" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.tests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.example.tests.MainGUI" />
+      <module name="projet_pi_smart_moby" />
+      <option name="VM_PARAMETERS" value="--module-path &quot;C:\Users\hayth\Downloads\openjfx-23.0.2_windows-x64_bin-sdk (1)\javafx-sdk-23.0.2\lib&quot; --add-modules javafx.controls,javafx.fxml " />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23339.11" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23339.11" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="68d15971-7a4c-46a9-9182-fb8edef44c78" name="Changes" comment="" />
+      <created>1739105568828</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1739105568828</updated>
+      <workItem from="1739105569921" duration="6568000" />
+      <workItem from="1739222284322" duration="5807000" />
+      <workItem from="1739228715676" duration="89000" />
+      <workItem from="1739228822146" duration="8000" />
+      <workItem from="1739228994109" duration="11000" />
+      <workItem from="1739231872863" duration="529000" />
+      <workItem from="1739232753093" duration="13000" />
+      <workItem from="1739268414288" duration="48000" />
+      <workItem from="1739269195478" duration="1691000" />
+      <workItem from="1739397846796" duration="46000" />
+      <workItem from="1739650656853" duration="379000" />
+      <workItem from="1739651160370" duration="8493000" />
+      <workItem from="1739726151974" duration="21623000" />
+      <workItem from="1739782430469" duration="16814000" />
+      <workItem from="1739807254865" duration="588000" />
+      <workItem from="1739809202341" duration="11280000" />
+      <workItem from="1739823510533" duration="4343000" />
+      <workItem from="1739829091699" duration="16497000" />
+      <workItem from="1739865669532" duration="2732000" />
+      <workItem from="1739984225005" duration="7958000" />
+      <workItem from="1739995630978" duration="3298000" />
+      <workItem from="1739998953928" duration="2516000" />
+      <workItem from="1740055759567" duration="3011000" />
+      <workItem from="1740081122642" duration="7155000" />
+      <workItem from="1740137347545" duration="297000" />
+    </task>
+    <task id="LOCAL-00001" summary="API">
+      <option name="closed" value="true" />
+      <created>1739998807362</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1739998807362</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="API" />
+    <option name="LAST_COMMIT_MESSAGE" value="API" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>

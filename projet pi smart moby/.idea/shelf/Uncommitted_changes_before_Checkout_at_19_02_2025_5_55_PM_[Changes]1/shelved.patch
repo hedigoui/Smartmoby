@@ -1,0 +1,287 @@
+Index: src/main/java/org/example/tests/Main.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package org.example.tests;\r\n\r\nimport org.example.models.*;\r\nimport org.example.services.*;\r\nimport org.example.utils.DataSource;\r\nimport java.io.File;\r\nimport java.io.FileInputStream;\r\nimport java.io.IOException;\r\nimport java.sql.Connection;\r\nimport java.sql.Timestamp;\r\nimport java.text.ParseException;\r\nimport java.text.SimpleDateFormat;\r\nimport java.time.LocalDateTime;\r\nimport java.util.ArrayList;\r\nimport java.util.Date;\r\nimport java.util.List;\r\nimport java.util.Scanner;\r\n\r\n//TIP To <b>Run</b> code, press <shortcut actionId=\"Run\"/> or\r\n// click the <icon src=\"AllIcons.Actions.Execute\"/> icon in the gutter.\r\npublic class Main {\r\n    private static final Scanner scanner = new Scanner(System.in);\r\n    private static final BlogService blogService = new BlogService();\r\n    private static final AvisService avisService = new AvisService();\r\n    public static void main(String[] args) {\r\n        DataSource dataSource = DataSource.getInstance();\r\n\r\n        Connection connection = dataSource.getConnection();\r\n\r\n        String imagePath = \"C:\\\\Users\\\\hayth\\\\OneDrive\\\\Bureau\\\\pi java\\\\image.png\";\r\n\r\n        // Charger l'image sous forme de tableau de bytes\r\n        byte[] photoBytes = loadImageAsBytes(imagePath);\r\n\r\n        //haythem\r\n\r\n        //user\r\n        Utilisateur_service u = new Utilisateur_service();\r\n        u.ajouter(new Utilisateur(\"ahmed\", \"ayari\", \"user\", \"aa@gmail.com\", \"aaaa\", Utilisateur.Role.ADMIN));\r\n        /*u.modifier(new Utilisateur(97, \"chams\", \"ayari\", \"user\", \"aa@gmail.com\", \"aaaa\"));\r\n        u.supprimer(new Utilisateur(53, \"\", \"\", \"\", \"\", \"\",null));*/\r\n        u.ajouter(new Utilisateur(\"haythem\", \"ayari\", \"user\", \"aa@gmail.com\", \"aaaa\", Utilisateur.Role.CONDUCTEUR));\r\n        System.out.println(u.afficher());\r\n\r\n\r\n        //admin\r\n        Admin_service a = new Admin_service();\r\n        a.modifier(new Admin(97, \"hamda\", \"ayari\", \"user\", \"aa@gmail.com\", \"aaaa\", Utilisateur.Role.ADMIN,\"marketing\"),new Utilisateur(97, \"chams\", \"ayari\", \"user\", \"aa@gmail.com\", \"aaaa\"));\r\n        a.supprimer(new Admin(99, \"\", \"\", \"\", \"\", \"\",null,\"\"), new Utilisateur(99, \"\", \"\", \"\", \"\", \"\",null));\r\n\r\n        //conducteur\r\n        Conducteur_service c = new Conducteur_service();\r\n        c.modifier(new Conducteur(130, \"hitler\", \"ayari\", \"user\", \"aa@gmail.com\", \"aaaa\", Utilisateur.Role.CONDUCTEUR,2222), new Utilisateur(130, \"hitler\", \"ayari\", \"user\", \"aa@gmail.com\", \"aaaa\"));\r\n        c.supprimer(new Conducteur(136,\"\", \"\", \"\", \"\", \"\",null,0),new Utilisateur(136,\"\", \"\", \"\", \"\", \"\",null));\r\n\r\n        //organisateur\r\n        u.ajouter(new Utilisateur(\"ahmed\", \"ayari\", \"user\", \"aa@gmail.com\", \"aaaa\", Utilisateur.Role.ORGANISATEUR));\r\n        Organisateur_service o = new Organisateur_service();\r\n        o.modifier(new Organisateur(164,\"hamda\", \"ayari\", \"user\", \"aa@gmail.com\", \"aaaa\", Utilisateur.Role.ORGANISATEUR,500), new Utilisateur(164,\"hamda\", \"ayari\", \"user\", \"aa@gmail.com\", \"aaaa\"));\r\n        o.supprimer(new Organisateur(161,\"\",\"\",\"\",\"\",\"\",null,0), new Utilisateur(161,\"\",\"\",\"\",\"\",\"\",null));\r\n\r\n        //client\r\n        u.ajouter(new Utilisateur(\"ahmed\", \"ayari\", \"user\", \"aa@gmail.com\", \"aaaa\", Utilisateur.Role.CLIENT));\r\n        Client_service cl = new Client_service();\r\n        cl.modifier(new Client(177,\"hamda\", \"ayari\", \"user\", \"aa@gmail.com\", \"aaaa\", Utilisateur.Role.CLIENT,177),new Utilisateur(177,\"hamda\", \"ayari\", \"user\", \"aa@gmail.com\", \"aaaa\"));\r\n        cl.supprimer(new Client(177,\"\", \"\", \"\", \"\", \"\", null,0),new Utilisateur(177,\"\",\"\",\"\",\"\",\"\",null));\r\n        //Trajets (hedi)\r\n\r\n        Vehicule s1 = new Vehicule(6, \"trotinette\", 1, \"hors service\", false);\r\n        Vehicule vehiculeToUpdate = new Vehicule(5, \"bus\", 4, \"Available\", false);\r\n        Services sap = new Services();\r\n        sap.add(s1);\r\n        sap.update(vehiculeToUpdate);\r\n        // Print the result of sap.getAll()\r\n        System.out.println(sap.getAll_vehicule());\r\n        Vehicule stockToDelete = new Vehicule();\r\n        stockToDelete.setId(4);\r\n\r\n\r\n        boolean isDeleted = sap.delete(stockToDelete);\r\n\r\n        if (isDeleted) {\r\n            System.out.println(\"Vehicule deleted successfully\");\r\n        } else {\r\n            System.out.println(\"Failed to deleted Vehicule\");\r\n        }\r\n\r\n        System.out.println(\"Vehicule after deleting\" + sap.getAll());\r\n\r\n\r\n        //TRAJET\r\n        Services tap = new Services();\r\n        Trajet t1 = new Trajet(2, \"ariana\", \"petite ariana\",\r\n                Timestamp.valueOf(LocalDateTime.of(2026, 8, 10, 17, 30)),  // Date et heure de départ\r\n                Timestamp.valueOf(LocalDateTime.of(2026, 8, 10, 19, 45)), // Date et heure d'arrivée\r\n                6, 5.5);\r\n\r\n        tap.addtrajet(t1);\r\n        Trajet targetToUpdate = new Trajet(5, \"aouina\", \"zahrouni\",\r\n                Timestamp.valueOf(LocalDateTime.of(2025, 5, 20, 14, 30)),\r\n                Timestamp.valueOf(LocalDateTime.of(2025, 5, 20, 16, 45)),\r\n                6, 5.5);\r\n        tap.update(targetToUpdate);\r\n        ArrayList<Trajet> trajets = tap.getAll();\r\n        for (Trajet trajet : trajets) {\r\n            System.out.println(trajet);  // Assurez-vous que `Trajet` a une méthode `toString()` correcte\r\n        }\r\n        System.out.println(tap.getAll());\r\n\r\n\r\n        Trajet stockToDelete2 = new Trajet();\r\n        stockToDelete2.setId(5);\r\n\r\n\r\n        boolean isDeleted2 = tap.delete(stockToDelete);\r\n\r\n        if (isDeleted2) {\r\n            System.out.println(\"Trajet deleted successfully\");\r\n        } else {\r\n            System.out.println(\"Failed to deleted Trajet\");\r\n        }\r\n\r\n        System.out.println(\"Trajet after deleting\" + tap.getAll());\r\n\r\n\r\n        //Oussema\r\n\r\n        event_serv e1 = new event_serv();\r\n        fedback_serv feedbackService = new fedback_serv();\r\n        fedback newFeedback = new fedback(\"Super événement, très bien organisé!\", 5);\r\n        feedbackService.ajouter(newFeedback);\r\n        fedback feedbackToModify = new fedback(1, \"Événement génial, mais quelques améliorations.\", 4);\r\n        feedbackService.modifier(feedbackToModify);\r\n        fedback feedbackToDelete = new fedback(1, null, 0);\r\n        feedbackService.supprimer(feedbackToDelete);\r\n        List<fedback> fedbacks = feedbackService.afficher();\r\n\r\n\r\n        if (fedbacks.isEmpty()) {\r\n            System.out.println(\"Aucun feedback trouvé.\");\r\n        } else {\r\n            System.out.println(\"Liste des feedbacks :\");\r\n\r\n            for (fedback feedback : fedbacks) {\r\n                System.out.println(\"ID : \" + feedback.getId() + \", Commentaire : \" + feedback.getCommentaire() + \", Note : \" + feedback.getNote());\r\n            }\r\n        }\r\n\r\n\r\n        try {\r\n            SimpleDateFormat dateFormat = new SimpleDateFormat(\"dd/MM/yyyy\");\r\n            Date date = dateFormat.parse(\"18/10/2025\");\r\n\r\n            event newEvent = new event(\"Conférence Tech\", date, \"Tunis\");\r\n            e1.ajouter(newEvent);\r\n            event eventToModify = new event(2, \"Conférence Tech - Nouvelle Edition\", date, \"Tunis\");  // ID de l'événement à modifier.\r\n\r\n            // Appeler la méthode modifier pour changer les informations de l'événement dans la base de données\r\n            e1.modifier(eventToModify);\r\n            event eventasupprimer = new event(15, \"Conférence Tech - Nouvelle Edition\", date, \"Tunis\");\r\n            eventasupprimer.setId(15);  // Supposons que l'utilisateur avec ID 1 existe dans la base de données\r\n\r\n            // Appeler la méthode supprimer pour supprimer l'utilisateur\r\n            e1.supprimer(eventasupprimer);\r\n        } catch (\r\n                ParseException e) {\r\n            e.printStackTrace();\r\n        }\r\n        List<event> events = e1.afficher();\r\n\r\n        // Afficher les événements récupérés\r\n        if (events.isEmpty()) {\r\n            System.out.println(\"Aucun événement trouvé.\");\r\n        } else {\r\n            System.out.println(\"Événements trouvés :\");\r\n            for (event ev : events) {\r\n                // Afficher les informations de chaque événement\r\n                System.out.println(ev);\r\n            }\r\n        }\r\n        //hazem\r\n        while (true) {\r\n            System.out.println(\"\\n--- Main Menu ---\");\r\n            System.out.println(\"1. Manage Blogs\");\r\n            System.out.println(\"2. Manage Avis\");\r\n            System.out.println(\"3. Exit\");\r\n            System.out.print(\"Choose an option: \");\r\n            int choice = scanner.nextInt();\r\n            scanner.nextLine(); // Consume newline\r\n\r\n            switch (choice) {\r\n                case 1:\r\n                    manageBlogs();\r\n                    break;\r\n                case 2:\r\n                    manageAvis();\r\n                    break;\r\n                case 3:\r\n                    System.out.println(\"Exiting...\");\r\n                    return;\r\n                default:\r\n                    System.out.println(\"Invalid choice. Please try again.\");\r\n            }\r\n        }\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n    }\r\n\r\n\r\n\r\n\r\n\r\n\r\n    private static byte[] loadImageAsBytes(String imagePath) {\r\n        File file = new File(imagePath);\r\n        byte[] imageBytes = null;\r\n\r\n        try (FileInputStream fis = new FileInputStream(file)) {\r\n            imageBytes = new byte[(int) file.length()];\r\n            fis.read(imageBytes);\r\n        } catch (IOException e) {\r\n            System.out.println(\"Erreur lors de la lecture de l'image : \" + e.getMessage());\r\n        }\r\n\r\n        return imageBytes;\r\n    }\r\n\r\n    private static void manageBlogs() {\r\n        while (true) {\r\n            System.out.println(\"\\n--- Blog Management ---\");\r\n            System.out.println(\"1. Add Blog\");\r\n            System.out.println(\"2. Update Blog\");\r\n            System.out.println(\"3. Delete Blog\");\r\n            System.out.println(\"4. View All Blogs\");\r\n            System.out.println(\"5. Back to Main Menu\");\r\n            System.out.print(\"Choose an option: \");\r\n            int choice = scanner.nextInt();\r\n            scanner.nextLine(); // Consume newline\r\n\r\n            switch (choice) {\r\n                case 1:\r\n                    addBlog();\r\n                    break;\r\n                case 2:\r\n                    updateBlog();\r\n                    break;\r\n                case 3:\r\n                    deleteBlog();\r\n                    break;\r\n                case 4:\r\n                    viewAllBlogs();\r\n                    break;\r\n                case 5:\r\n                    return;\r\n                default:\r\n                    System.out.println(\"Invalid choice. Please try again.\");\r\n            }\r\n        }\r\n    }\r\n\r\n    private static void manageAvis() {\r\n        while (true) {\r\n            System.out.println(\"\\n--- Avis Management ---\");\r\n            System.out.println(\"1. Add Avis\");\r\n            System.out.println(\"2. Update Avis\");\r\n            System.out.println(\"3. Delete Avis\");\r\n            System.out.println(\"4. View All Avis\");\r\n            System.out.println(\"5. Back to Main Menu\");\r\n            System.out.print(\"Choose an option: \");\r\n            int choice = scanner.nextInt();\r\n            scanner.nextLine(); // Consume newline\r\n\r\n            switch (choice) {\r\n                case 1:\r\n                    addAvis();\r\n                    break;\r\n                case 2:\r\n                    updateAvis();\r\n                    break;\r\n                case 3:\r\n                    deleteAvis();\r\n                    break;\r\n                case 4:\r\n                    viewAllAvis();\r\n                    break;\r\n                case 5:\r\n                    return;\r\n                default:\r\n                    System.out.println(\"Invalid choice. Please try again.\");\r\n            }\r\n        }\r\n    }\r\n\r\n    private static void addBlog() {\r\n        System.out.print(\"Enter blog title: \");\r\n        String title = scanner.nextLine();\r\n        System.out.print(\"Enter blog content: \");\r\n        String content = scanner.nextLine();\r\n        System.out.print(\"Enter blog date (dd/MM/yyyy): \");\r\n        String dateStr = scanner.nextLine();\r\n\r\n        try {\r\n            // Parse the date string into java.util.Date\r\n            SimpleDateFormat sdf = new SimpleDateFormat(\"dd/MM/yyyy\");\r\n            java.util.Date utilDate = sdf.parse(dateStr);\r\n\r\n            // Convert java.util.Date to java.sql.Date\r\n            java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());\r\n\r\n            // Create and add the blog\r\n            Blog blog = new Blog(title, content, sqlDate);\r\n            blogService.ajouter(blog);\r\n            System.out.println(\"Blog added successfully!\");\r\n        } catch (ParseException e) {\r\n            System.out.println(\"Invalid date format. Please use dd/MM/yyyy.\");\r\n        }\r\n    }\r\n\r\n    private static void updateBlog() {\r\n        System.out.print(\"Enter blog ID to update: \");\r\n        int id = scanner.nextInt();\r\n        scanner.nextLine(); // Consume newline\r\n        System.out.print(\"Enter new title: \");\r\n        String title = scanner.nextLine();\r\n        System.out.print(\"Enter new content: \");\r\n        String content = scanner.nextLine();\r\n        System.out.print(\"Enter new date (dd/MM/yyyy): \");\r\n        String dateStr = scanner.nextLine();\r\n\r\n        try {\r\n            // Parse the date string into java.util.Date\r\n            SimpleDateFormat sdf = new SimpleDateFormat(\"dd/MM/yyyy\");\r\n            java.util.Date utilDate = sdf.parse(dateStr);\r\n\r\n            // Convert java.util.Date to java.sql.Date\r\n            java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());\r\n\r\n            // Create and update the blog\r\n            Blog blog = new Blog(id, title, content, sqlDate);\r\n            blogService.modifier(blog);\r\n            System.out.println(\"Blog updated successfully!\");\r\n        } catch (ParseException e) {\r\n            System.out.println(\"Invalid date format. Please use dd/MM/yyyy.\");\r\n        }\r\n    }\r\n\r\n    private static void deleteBlog() {\r\n        System.out.print(\"Enter blog ID to delete: \");\r\n        int id = scanner.nextInt();\r\n        scanner.nextLine(); // Consume newline\r\n        Blog blog = new Blog();\r\n        blog.setId(id);\r\n        blogService.supprimer(blog);\r\n        System.out.println(\"Blog deleted successfully!\");\r\n    }\r\n\r\n    private static void viewAllBlogs() {\r\n        List<Blog> blogs = blogService.rechercher();\r\n        if (blogs.isEmpty()) {\r\n            System.out.println(\"No blogs found.\");\r\n        } else {\r\n            for (Blog blog : blogs) {\r\n                System.out.println(blog);\r\n            }\r\n        }\r\n    }\r\n\r\n    private static void addAvis() {\r\n        System.out.print(\"Enter name: \");\r\n        String name = scanner.nextLine();\r\n        System.out.print(\"Enter comment: \");\r\n        String comment = scanner.nextLine();\r\n        System.out.print(\"Enter date (dd/MM/yyyy): \");\r\n        String dateStr = scanner.nextLine();\r\n\r\n        try {\r\n            // Parse the date string into java.util.Date\r\n            SimpleDateFormat sdf = new SimpleDateFormat(\"dd/MM/yyyy\");\r\n            java.util.Date utilDate = sdf.parse(dateStr);\r\n\r\n            // Convert java.util.Date to java.sql.Date\r\n            java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());\r\n\r\n            // Create and add the avis\r\n            Avis avis = new Avis(name, comment, sqlDate);\r\n            avisService.ajouter(avis);\r\n            System.out.println(\"Avis added successfully!\");\r\n        } catch (ParseException e) {\r\n            System.out.println(\"Invalid date format. Please use dd/MM/yyyy.\");\r\n        }\r\n    }\r\n\r\n    private static void updateAvis() {\r\n        System.out.print(\"Enter avis ID to update: \");\r\n        int id = scanner.nextInt();\r\n        scanner.nextLine(); // Consume newline\r\n        System.out.print(\"Enter new name: \");\r\n        String name = scanner.nextLine();\r\n        System.out.print(\"Enter new comment: \");\r\n        String comment = scanner.nextLine();\r\n        System.out.print(\"Enter new date (dd/MM/yyyy): \");\r\n        String dateStr = scanner.nextLine();\r\n\r\n        try {\r\n            // Parse the date string into java.util.Date\r\n            SimpleDateFormat sdf = new SimpleDateFormat(\"dd/MM/yyyy\");\r\n            java.util.Date utilDate = sdf.parse(dateStr);\r\n\r\n            // Convert java.util.Date to java.sql.Date\r\n            java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());\r\n\r\n            // Create and update the avis\r\n            Avis avis = new Avis(id, name, comment, sqlDate);\r\n            avisService.modifier(avis);\r\n            System.out.println(\"Avis updated successfully!\");\r\n        } catch (ParseException e) {\r\n            System.out.println(\"Invalid date format. Please use dd/MM/yyyy.\");\r\n        }\r\n    }\r\n\r\n    private static void deleteAvis() {\r\n        System.out.print(\"Enter avis ID to delete: \");\r\n        int id = scanner.nextInt();\r\n        scanner.nextLine(); // Consume newline\r\n        Avis avis = new Avis();\r\n        avis.setId(id);\r\n        avisService.supprimer(avis);\r\n        System.out.println(\"Avis deleted successfully!\");\r\n    }\r\n\r\n    private static void viewAllAvis() {\r\n        List<Avis> avisList = avisService.rechercher();\r\n        if (avisList.isEmpty()) {\r\n            System.out.println(\"No avis found.\");\r\n        } else {\r\n            for (Avis avis : avisList) {\r\n                System.out.println(avis);\r\n            }\r\n        }\r\n    }\r\n\r\n\r\n\r\n\r\n\r\n}\r\n\r\n\r\n\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/example/tests/Main.java b/src/main/java/org/example/tests/Main.java
+--- a/src/main/java/org/example/tests/Main.java	(revision 5d8dcd09d861c581eab370e90184d182f054638b)
++++ b/src/main/java/org/example/tests/Main.java	(date 1739837429089)
+@@ -46,8 +46,8 @@
+         //admin
+         Admin_service a = new Admin_service();
+         a.modifier(new Admin(97, "hamda", "ayari", "user", "aa@gmail.com", "aaaa", Utilisateur.Role.ADMIN,"marketing"),new Utilisateur(97, "chams", "ayari", "user", "aa@gmail.com", "aaaa"));
+-        a.supprimer(new Admin(99, "", "", "", "", "",null,""), new Utilisateur(99, "", "", "", "", "",null));
+-
++        a.supprimer(new Admin(199, "", "", "", "", "",null,""), new Utilisateur(99, "", "", "", "", "",null));
++        System.out.println(a.afficher());
+         //conducteur
+         Conducteur_service c = new Conducteur_service();
+         c.modifier(new Conducteur(130, "hitler", "ayari", "user", "aa@gmail.com", "aaaa", Utilisateur.Role.CONDUCTEUR,2222), new Utilisateur(130, "hitler", "ayari", "user", "aa@gmail.com", "aaaa"));
+@@ -58,14 +58,16 @@
+         Organisateur_service o = new Organisateur_service();
+         o.modifier(new Organisateur(164,"hamda", "ayari", "user", "aa@gmail.com", "aaaa", Utilisateur.Role.ORGANISATEUR,500), new Utilisateur(164,"hamda", "ayari", "user", "aa@gmail.com", "aaaa"));
+         o.supprimer(new Organisateur(161,"","","","","",null,0), new Utilisateur(161,"","","","","",null));
+-
++        System.out.println(o.afficher());
+         //client
+         u.ajouter(new Utilisateur("ahmed", "ayari", "user", "aa@gmail.com", "aaaa", Utilisateur.Role.CLIENT));
+         Client_service cl = new Client_service();
+         cl.modifier(new Client(177,"hamda", "ayari", "user", "aa@gmail.com", "aaaa", Utilisateur.Role.CLIENT,177),new Utilisateur(177,"hamda", "ayari", "user", "aa@gmail.com", "aaaa"));
+         cl.supprimer(new Client(177,"", "", "", "", "", null,0),new Utilisateur(177,"","","","","",null));
++        System.out.println(cl.afficher());
+         //Trajets (hedi)
+ 
++
+         Vehicule s1 = new Vehicule(6, "trotinette", 1, "hors service", false);
+         Vehicule vehiculeToUpdate = new Vehicule(5, "bus", 4, "Available", false);
+         Services sap = new Services();
+Index: src/main/java/org/example/models/Admin.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package org.example.models;\r\n\r\nimport java.util.Arrays;\r\n\r\npublic class Admin extends Utilisateur {\r\n    private int id_admin;\r\n    private String departement;\r\n\r\n    public Admin(int id, String nom, String prenom, String nom_utilisateur, String email, String mot_de_passe, Role role, int id_admin, String departement) {\r\n        super(id, nom, prenom, nom_utilisateur, email, mot_de_passe, role);\r\n        this.id_admin = id_admin;\r\n        this.departement = departement;\r\n    }\r\n\r\n    public Admin(String nom, String prenom, String nom_utilisateur, String email, String mot_de_passe, Role role, int id_admin, String departement) {\r\n        super(nom, prenom, nom_utilisateur, email, mot_de_passe, role);\r\n        this.id_admin = id_admin;\r\n        this.departement = departement;\r\n    }\r\n\r\n    public Admin(int id, String nom, String prenom, String nom_utilisateur, String email, String mot_de_passe, Role role, String departement) {\r\n        super(id, nom, prenom, nom_utilisateur, email, mot_de_passe, role);\r\n        this.departement = departement;\r\n    }\r\n\r\n    public Admin(String nom, String prenom, String nom_utilisateur, String email, String mot_de_passe, Role role, String departement) {\r\n        super(nom, prenom, nom_utilisateur, email, mot_de_passe, role);\r\n        this.departement = departement;\r\n    }\r\n\r\n\r\n\r\n    public int getId_admin() {\r\n        return id_admin;\r\n    }\r\n\r\n    public void setId_admin(int id_admin) {\r\n        this.id_admin = id_admin;\r\n    }\r\n\r\n    public String getDepartement() {\r\n        return departement;\r\n    }\r\n\r\n    public void setDepartement(String departement) {\r\n        this.departement = departement;\r\n    }\r\n\r\n    @Override\r\n    public String toString() {\r\n        return \"Admin{\" +\r\n                \"id_admin=\" + id_admin +\r\n                \", departement='\" + departement + '\\'' +\r\n                '}';\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/example/models/Admin.java b/src/main/java/org/example/models/Admin.java
+--- a/src/main/java/org/example/models/Admin.java	(revision 5d8dcd09d861c581eab370e90184d182f054638b)
++++ b/src/main/java/org/example/models/Admin.java	(date 1739831193430)
+@@ -49,7 +49,13 @@
+     @Override
+     public String toString() {
+         return "Admin{" +
+-                "id_admin=" + id_admin +
++                ", nom='" + getNom() + '\'' +
++                ", prenom='" + getPrenom() + '\'' +
++                ", nom_utilisateur='" + getNom_utilisateur() + '\'' +
++                ", email='" + getEmail() + '\'' +
++                ", mot_de_passe='" + getMot_de_passe() + '\'' +
++                ", role=" + getRole() + '\'' +
++                "id_admin=" + id_admin + '\'' +
+                 ", departement='" + departement + '\'' +
+                 '}';
+     }
+Index: src/main/resources/Login.fxml
+===================================================================
+diff --git a/src/main/resources/Login.fxml b/src/main/resources/Login.fxml
+deleted file mode 100644
+--- a/src/main/resources/Login.fxml	(revision 5d8dcd09d861c581eab370e90184d182f054638b)
++++ /dev/null	(revision 5d8dcd09d861c581eab370e90184d182f054638b)
+@@ -1,58 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-
+-<?import javafx.scene.control.Button?>
+-<?import javafx.scene.control.Label?>
+-<?import javafx.scene.control.PasswordField?>
+-<?import javafx.scene.control.TextField?>
+-<?import javafx.scene.image.Image?>
+-<?import javafx.scene.image.ImageView?>
+-<?import javafx.scene.layout.AnchorPane?>
+-<?import javafx.scene.shape.Line?>
+-<?import javafx.scene.text.Font?>
+-
+-<AnchorPane prefHeight="509.0" prefWidth="898.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controllers.AcceuilUser">
+-   <children>
+-      <AnchorPane layoutX="-4.0" prefHeight="508.0" prefWidth="327.0" styleClass="left-form" stylesheets="@AcceuilUser.css">
+-         <children>
+-            <ImageView fitHeight="163.0" fitWidth="249.0" layoutX="39.0" layoutY="96.0" pickOnBounds="true" preserveRatio="true">
+-               <image>
+-                  <Image url="@LOGO_pi.png" />
+-               </image>
+-            </ImageView>
+-            <Line endX="159.4000244140625" endY="1.52587890625E-5" layoutX="133.0" layoutY="255.0" startX="-100.0" />
+-         </children>
+-      </AnchorPane>
+-      <ImageView fitHeight="102.0" fitWidth="104.0" layoutX="559.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+-         <image>
+-            <Image url="@login2.png" />
+-         </image>
+-      </ImageView>
+-      <Label layoutX="482.0" layoutY="116.0" stylesheets="@AcceuilUser.css" text="Content de vous revoir !" textFill="#4f8c7d">
+-         <font>
+-            <Font name="Tahoma" size="24.0" />
+-         </font>
+-      </Label>
+-      <TextField layoutX="358.0" layoutY="198.0" prefHeight="43.0" prefWidth="502.0" promptText="Nom D'utilisateur" styleClass="text-field" stylesheets="@AcceuilUser.css" />
+-      <PasswordField layoutX="359.0" layoutY="297.0" prefHeight="43.0" prefWidth="502.0" promptText="Mot De Passe" styleClass="text-field" stylesheets="@AcceuilUser.css" />
+-      <Button layoutX="359.0" layoutY="373.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="182.0" styleClass="login-btn" stylesheets="@AcceuilUser.css" text="Se Connecter">
+-         <font>
+-            <Font name="Tahoma" size="14.0" />
+-         </font>
+-      </Button>
+-      <Button layoutX="497.0" layoutY="437.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="196.0" styleClass="login-btn" stylesheets="@AcceuilUser.css" text="Créer un nouveau compte">
+-         <font>
+-            <Font name="Tahoma" size="14.0" />
+-         </font>
+-      </Button>
+-      <Button layoutX="677.0" layoutY="373.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="182.0" styleClass="login-btn" stylesheets="@AcceuilUser.css" text="Mot De Passe Oublié">
+-         <font>
+-            <Font name="Tahoma" size="14.0" />
+-         </font>
+-      </Button>
+-      <Button layoutX="861.0" layoutY="14.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="26.0" styleClass="login-btn" stylesheets="@AcceuilUser.css" text="X">
+-         <font>
+-            <Font name="Tahoma" size="14.0" />
+-         </font>
+-      </Button>
+-   </children>
+-</AnchorPane>
+Index: src/main/java/org/example/services/Admin_service.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/example/services/Admin_service.java b/src/main/java/org/example/services/Admin_service.java
+deleted file mode 100644
+--- a/src/main/java/org/example/services/Admin_service.java	(revision 5d8dcd09d861c581eab370e90184d182f054638b)
++++ /dev/null	(revision 5d8dcd09d861c581eab370e90184d182f054638b)
+@@ -1,75 +0,0 @@
+-package org.example.services;
+-
+-import org.example.models.Admin;
+-import org.example.models.Utilisateur;
+-import org.example.models.Trajet;
+-import org.example.models.Utilisateur;
+-import org.example.utils.DataSource;
+-
+-import java.sql.*;
+-import java.util.ArrayList;
+-import java.util.List;
+-
+-public class Admin_service implements IAdmin_service {
+-    Connection connection = DataSource.getInstance().getConnection();
+-
+-
+-    @Override
+-    public void ajouter(Admin admin) {
+-        String req = "INSERT INTO admin (id, departement) VALUES (" + admin.getId() + ", '" + admin.getDepartement() + "')";
+-
+-        try {
+-            Statement st = connection.createStatement();
+-            st.executeUpdate(req);
+-            System.out.println("Admin ajouté avec succès.");
+-        } catch (SQLException e) {
+-            System.out.println("Erreur lors de l'ajout de l'admin : " + e.getMessage());
+-        }
+-    }
+-
+-
+-    @Override
+-    public void modifier(Admin admin, Utilisateur utilisateur) {
+-        try {
+-            Statement st = connection.createStatement();
+-
+-            String req1 = "UPDATE admin SET departement='" + admin.getDepartement() + "' WHERE id=" + admin.getId();
+-            st.executeUpdate(req1);
+-
+-            String req2 = "UPDATE utilisateur SET nom='" + utilisateur.getNom() + "', prenom='" + utilisateur.getPrenom() +
+-                    "', nom_utilisateur='" + utilisateur.getNom_utilisateur() + "', email='" + utilisateur.getEmail() +
+-                    "', mot_de_passe='" + utilisateur.getMot_de_passe() + "' WHERE id=" + utilisateur.getId();
+-            st.executeUpdate(req2);
+-
+-            System.out.println("Admin et utilisateur modifiés");
+-        } catch (SQLException e) {
+-            System.out.println(e.getMessage());
+-        }
+-    }
+-
+-
+-
+-    @Override
+-    public void supprimer(Admin admin , Utilisateur utilisateur) {
+-        try {
+-            Statement st = connection.createStatement();
+-
+-            String req1 = "DELETE FROM admin WHERE id="+admin.getId();
+-            st.executeUpdate(req1);
+-
+-            String req2 = "DELETE FROM utilisateur WHERE id="+utilisateur.getId();
+-            st.executeUpdate(req2);
+-
+-            System.out.println("Admin et utilisateur supprime");
+-        } catch (SQLException e) {
+-            System.out.println(e.getMessage());
+-        }
+-
+-    }
+-
+-
+-
+-
+-
+-
+-}
+Index: src/main/java/org/example/services/Utilisateur_service.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package org.example.services;\r\n\r\nimport org.example.models.*;\r\nimport org.example.utils.DataSource;\r\n\r\nimport java.sql.*;\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\n\r\npublic class Utilisateur_service implements IUtilisateur_service {\r\n    Connection connection = DataSource.getInstance().getConnection();\r\n\r\n    @Override\r\n    public void ajouter(Utilisateur utilisateur) {\r\n        String req = \"INSERT INTO utilisateur (nom, prenom, nom_utilisateur, email, mot_de_passe, role) VALUES ('\"\r\n                + utilisateur.getNom() + \"', '\" + utilisateur.getPrenom() + \"', '\" + utilisateur.getNom_utilisateur()\r\n                + \"', '\" + utilisateur.getEmail() + \"',  '\" + utilisateur.getMot_de_passe() + \"', '\" + utilisateur.getRole() + \"')\";\r\n\r\n        try {\r\n            PreparedStatement pst = connection.prepareStatement(req, Statement.RETURN_GENERATED_KEYS);\r\n            pst.executeUpdate();\r\n\r\n            ResultSet rs = pst.getGeneratedKeys();\r\n            if (rs.next()) {\r\n                int userId = rs.getInt(1);\r\n\r\n                if (utilisateur.getRole() == Utilisateur.Role.CONDUCTEUR) {\r\n                    Conducteur_service c = new Conducteur_service();\r\n                    c.ajouter(new Conducteur(userId, utilisateur.getNom(), utilisateur.getPrenom(), utilisateur.getNom_utilisateur(),\r\n                            utilisateur.getEmail(), utilisateur.getMot_de_passe(), utilisateur.getRole(), userId, 1234));\r\n                }\r\n\r\n                if (utilisateur.getRole() == Utilisateur.Role.ADMIN) {\r\n                    Admin_service a = new Admin_service();\r\n                    a.ajouter(new Admin(userId, utilisateur.getNom(), utilisateur.getPrenom(), utilisateur.getNom_utilisateur(),\r\n                            utilisateur.getEmail(), utilisateur.getMot_de_passe(), utilisateur.getRole(), \"HR\"));\r\n                }\r\n\r\n                if(utilisateur.getRole() == Utilisateur.Role.ORGANISATEUR){\r\n                    Organisateur_service o = new Organisateur_service();\r\n                    o.ajouter(new Organisateur(userId, utilisateur.getNom(), utilisateur.getPrenom(), utilisateur.getNom_utilisateur(),\r\n                            utilisateur.getEmail(), utilisateur.getMot_de_passe(), utilisateur.getRole(),400));\r\n                }\r\n\r\n                if(utilisateur.getRole() == Utilisateur.Role.CLIENT){\r\n                    Client_service c = new Client_service();\r\n                    c.ajouter(new Client(userId, utilisateur.getNom(), utilisateur.getPrenom(), utilisateur.getNom_utilisateur(),\r\n                            utilisateur.getEmail(), utilisateur.getMot_de_passe(), utilisateur.getRole(),userId));\r\n                }\r\n\r\n            }\r\n\r\n            System.out.println(\"Utilisateur ajouté avec succès.\");\r\n        } catch (SQLException e) {\r\n            System.out.println(\"Erreur lors de l'ajout : \" + e.getMessage());\r\n        }\r\n    }\r\n\r\n\r\n    @Override\r\n    public void modifier(Utilisateur utilisateur) {\r\n        // Préparer la requête de mise à jour de l'utilisateur sans toucher au rôle\r\n        String req = \"UPDATE utilisateur SET nom='\" + utilisateur.getNom() + \"' ,prenom='\" + utilisateur.getPrenom() + \"' ,nom_utilisateur='\" + utilisateur.getNom_utilisateur() + \"' ,email='\" + utilisateur.getEmail() + \"'  ,mot_de_passe='\" + utilisateur.getMot_de_passe() + \"' WHERE id=\" + utilisateur.getId();\r\n\r\n        try {\r\n            Statement st = connection.createStatement();\r\n            st.executeUpdate(req);  // Exécution de la requête pour l'utilisateur\r\n            System.out.println(\"Utilisateur modifié\");\r\n\r\n\r\n\r\n        } catch (SQLException e) {\r\n            System.out.println(e.getMessage());\r\n        }\r\n    }\r\n\r\n\r\n    @Override\r\n    public void supprimer(Utilisateur utilisateur) {\r\n        String req = \"DELETE FROM utilisateur WHERE id=\" + utilisateur.getId();\r\n        try {\r\n            Statement st = connection.createStatement();\r\n            st.executeUpdate(req);\r\n            System.out.println(\"Utilisateur supprimée\");\r\n        } catch (SQLException e) {\r\n            System.out.println(e.getMessage());\r\n        }\r\n    }\r\n\r\n    @Override\r\n    public List<Utilisateur> afficher() {\r\n        List<Utilisateur> utilisateurs = new ArrayList<>();\r\n\r\n        String req = \"SELECT * FROM utilisateur\";\r\n        try {\r\n            Statement st = connection.createStatement();\r\n            ResultSet rs = st.executeQuery(req);\r\n            while (rs.next()) {\r\n                utilisateurs.add(new Utilisateur(rs.getInt(\"id\"), rs.getString(\"nom\"), rs.getString(\"prenom\"), rs.getString(\"nom_utilisateur\"), rs.getString(\"email\"), rs.getString(\"mot_de_passe\"), Utilisateur.Role.valueOf(rs.getString(\"role\").toUpperCase())));\r\n\r\n\r\n            }\r\n        } catch (SQLException e) {\r\n            System.out.println(e.getMessage());\r\n        }\r\n\r\n        return utilisateurs;\r\n    }\r\n\r\n\r\n}\r\n\r\n\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/example/services/Utilisateur_service.java b/src/main/java/org/example/services/Utilisateur_service.java
+--- a/src/main/java/org/example/services/Utilisateur_service.java	(revision 5d8dcd09d861c581eab370e90184d182f054638b)
++++ b/src/main/java/org/example/services/Utilisateur_service.java	(date 1739831162834)
+@@ -7,11 +7,14 @@
+ import java.util.ArrayList;
+ import java.util.List;
+ 
++import org.example.controllers.Register;
++
+ public class Utilisateur_service implements IUtilisateur_service {
+     Connection connection = DataSource.getInstance().getConnection();
+ 
+     @Override
+     public void ajouter(Utilisateur utilisateur) {
++        Register register = new Register();
+         String req = "INSERT INTO utilisateur (nom, prenom, nom_utilisateur, email, mot_de_passe, role) VALUES ('"
+                 + utilisateur.getNom() + "', '" + utilisateur.getPrenom() + "', '" + utilisateur.getNom_utilisateur()
+                 + "', '" + utilisateur.getEmail() + "',  '" + utilisateur.getMot_de_passe() + "', '" + utilisateur.getRole() + "')";
+@@ -24,17 +27,15 @@
+             if (rs.next()) {
+                 int userId = rs.getInt(1);
+ 
++
++
++
+                 if (utilisateur.getRole() == Utilisateur.Role.CONDUCTEUR) {
+                     Conducteur_service c = new Conducteur_service();
+                     c.ajouter(new Conducteur(userId, utilisateur.getNom(), utilisateur.getPrenom(), utilisateur.getNom_utilisateur(),
+                             utilisateur.getEmail(), utilisateur.getMot_de_passe(), utilisateur.getRole(), userId, 1234));
+                 }
+ 
+-                if (utilisateur.getRole() == Utilisateur.Role.ADMIN) {
+-                    Admin_service a = new Admin_service();
+-                    a.ajouter(new Admin(userId, utilisateur.getNom(), utilisateur.getPrenom(), utilisateur.getNom_utilisateur(),
+-                            utilisateur.getEmail(), utilisateur.getMot_de_passe(), utilisateur.getRole(), "HR"));
+-                }
+ 
+                 if(utilisateur.getRole() == Utilisateur.Role.ORGANISATEUR){
+                     Organisateur_service o = new Organisateur_service();
+Index: src/main/java/org/example/services/IAdmin_service.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package org.example.services;\r\n\r\nimport org.example.models.Admin;\r\nimport org.example.models.Trajet;\r\nimport org.example.models.Utilisateur;\r\n\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\n\r\npublic interface IAdmin_service {\r\n    void ajouter(Admin admin);\r\n\r\n    void modifier(Admin admin , Utilisateur utilisateur);\r\n\r\n    void supprimer(Admin admin, Utilisateur utilisateur);\r\n\r\n\r\n\r\n\r\n\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/example/services/IAdmin_service.java b/src/main/java/org/example/services/IAdmin_service.java
+--- a/src/main/java/org/example/services/IAdmin_service.java	(revision 5d8dcd09d861c581eab370e90184d182f054638b)
++++ b/src/main/java/org/example/services/IAdmin_service.java	(date 1739830574803)
+@@ -8,12 +8,15 @@
+ import java.util.List;
+ 
+ public interface IAdmin_service {
+-    void ajouter(Admin admin);
++
++    void ajouter(Admin admin );
+ 
+     void modifier(Admin admin , Utilisateur utilisateur);
+ 
+     void supprimer(Admin admin, Utilisateur utilisateur);
+ 
++    public List<Admin> afficher();
++
+ 
+ 
+ 
