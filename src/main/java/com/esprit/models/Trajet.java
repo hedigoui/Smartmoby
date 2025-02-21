@@ -1,8 +1,6 @@
 package com.esprit.models;
 import java.sql.Timestamp;
 
-import java.util.Date;
-
 public class Trajet {
     private int id;
     private String pointD;
@@ -15,9 +13,8 @@ public class Trajet {
     // Constructeur par défaut
     public Trajet() {}
 
-    // Constructeur avec paramètres
-    public Trajet(int id, String pointD, String pointA, Timestamp dateD, Timestamp dateA, double distance, double prix) {
-        this.id = id;
+    // Constructeur sans ID (ID auto-incrémenté par la base de données)
+    public Trajet(String pointD, String pointA, Timestamp dateD, Timestamp dateA, double distance, double prix) {
         this.pointD = pointD;
         this.pointA = pointA;
         this.dateD = dateD;
@@ -62,3 +59,4 @@ public class Trajet {
                 '}';
     }
 }
+

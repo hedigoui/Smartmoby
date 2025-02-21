@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://maps.googleapis.com/maps/api/js?key=VOTRE_CLE_API"></script>
+    <script>
+        function initMap() {
+            var map = new google.maps.Map(document.getElementById("map"), {
+                center: { lat: 36.8065, lng: 10.1815 }, // Coordonnées de Tunis
+                zoom: 10
+            });
+        }
+    </script>
+</head>
+<body onload="initMap()">
+<div id="map" style="width:100%; height:100vh;"></div>
+</body>
+</html>

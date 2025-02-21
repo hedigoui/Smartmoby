@@ -1,22 +1,13 @@
-/* Set a white background with a soft shadow */
-.root {
-    -fx-background-color: white;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 15, 0, 0, 5);
-}
-/* Table border styling */
-.table-view {
-    -fx-border-color: #A8E6CF; /* Light Green border */
-    -fx-border-width: 2px;
-    -fx-background-color: #F0F0F0; /* Light Gray background */
-}
-
-/* Table header styling */
-.table-view .column-header-background {
-    -fx-background-color: #F0F0F0; /* Light Green header */
-}
-
-.table-view .column-header {
-    -fx-border-color: #E0E0E0; /* Light Gray border for column separation */
-    -fx-border-width: 0 0 1px 0;
+/* Style général des boutons */
+.button {
+    -fx-background-color: linear-gradient(to bottom, #F0F0F0, #A8E6CF); /* Dégradé vert */
+    -fx-text-fill: white; /* Texte en blanc */
+    -fx-font-size: 14px;
     -fx-font-weight: bold;
+    -fx-padding: 8px 16px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-border-color: #2E7D32;
+    -fx-border-width: 2px;
 }
+

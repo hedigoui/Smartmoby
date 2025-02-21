@@ -20,7 +20,8 @@ public class MainProgGUI extends Application {
         Parent root = loader.load();
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
-        primaryStage.setTitle("Transport Management System");
+        primaryStage.setTitle("Mobility Management System");
         primaryStage.show();
     }
+
 }

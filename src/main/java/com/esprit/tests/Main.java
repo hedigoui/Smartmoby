@@ -20,8 +20,10 @@ public class Main {
         Services sap = new Services();
 //       sap.add(s1);
 //       sap.update(vehiculeToUpdate);
-//         Print the result of sap.getAll();
-//        System.out.println(sap.getAll());
+//         Print the result of sap.getAllVehicule();
+//        System.out.println(sap.getAllVehicule());
+
+
 //        Vehicule stockToDelete = new Vehicule();
 //        stockToDelete.setId(10);
 //
@@ -52,11 +54,11 @@ public class Main {
 //                Timestamp.valueOf(LocalDateTime.of(2025, 5, 20, 16, 45)),
 //                6, 5.5);
 //       tap.update(targetToUpdate);
-//        ArrayList<Trajet> trajets = tap.getAll();
+//        ArrayList<Trajet> trajets = tap.getAllTrajet();
 //        for (Trajet trajet : trajets) {
 //            System.out.println(trajet);  // Assurez-vous que `Trajet` a une méthode `toString()` correcte
 //        }
-//        System.out.println(tap.getAll());
+//        System.out.println(tap.getAllTrajet());
 
 
 //        Trajet stockToDelete = new Trajet();
