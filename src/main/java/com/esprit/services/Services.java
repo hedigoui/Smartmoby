@@ -107,7 +107,7 @@ public class Services {
     }
 
     public Trajet addtrajet(Trajet trajet) {
-        String query = "INSERT INTO `Trajet`(`pointD`, `pointA`, `dateD`, `dateA`, `distance`, `prix`) VALUES (?,?,?,?,?,?)";
+        String query = "INSERT INTO `Trajet`(`pointD`, `pointA`, `dateD`, `dateA`, `distance`, `prix`, `id_veh`) VALUES (?,?,?,?,?,?,?)";
         try {
             PreparedStatement stm = cnx.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 
@@ -117,6 +117,7 @@ public class Services {
             stm.setTimestamp(4, new java.sql.Timestamp(trajet.getDateA().getTime()));
             stm.setDouble(5, trajet.getDistance());
             stm.setDouble(6, trajet.getPrix());
+            stm.setInt(7, trajet.getId_veh());
 
             stm.executeUpdate();
 
@@ -152,6 +153,7 @@ public class Services {
                 t.setDateA(rs.getTimestamp("dateA"));  // Date d'arrivée
                 t.setDistance(rs.getDouble("distance"));  // Distance
                 t.setPrix(rs.getDouble("prix"));  // Prix
+                t.setId_veh(rs.getInt("id_veh"));
 
                 // Ajouter le trajet à la liste
                 trajets.add(t);

@@ -47,6 +47,8 @@ public class Addtrajet {
 
     @FXML
     private TableColumn<Trajet, Double> px;
+    @FXML
+    private ComboBox<Vehicule> id_veh;
 
     @FXML
     private TextField idt, pointd, pointa, distance, prix;
@@ -87,7 +89,7 @@ public class Addtrajet {
             String pointArrivee = pointa.getText();
             double distanceValue = Double.parseDouble(distance.getText());
             double prixValue = Double.parseDouble(prix.getText());
-
+            Vehicule selectedveh = id_veh.getValue();
             // Convertir LocalDate en Timestamp
             Timestamp dateDepart = Timestamp.valueOf(dated.getValue().atStartOfDay());
             Timestamp dateArrivee = Timestamp.valueOf(datea.getValue().atStartOfDay());
@@ -98,8 +100,10 @@ public class Addtrajet {
                 return;
             }
 
+            int id_veh = selectedveh.getId();
+
             // Créer un objet Trajet et l'ajouter
-            Trajet trajet = new Trajet(pointDepart, pointArrivee, dateDepart, dateArrivee, distanceValue, prixValue);
+            Trajet trajet = new Trajet(pointDepart, pointArrivee, dateDepart, dateArrivee, distanceValue, prixValue, id_veh);
             ps.addtrajet(trajet);
 
             // Ajouter le trajet à la TableView
@@ -127,6 +131,7 @@ public class Addtrajet {
         }
 
     }
+
     @FXML
     public void updatetrajet(ActionEvent event) {
         Trajet selectedItem = tabt.getSelectionModel().getSelectedItem();

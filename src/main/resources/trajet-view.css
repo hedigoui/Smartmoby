@@ -1,0 +1,103 @@
+.transparent {
+    -fx-background-color: #2d3436;
+}
+
+.selected-button-container {
+    -fx-background-color: #2d3436;
+    -fx-background-radius: 0 30 30 0;
+}
+
+.button-container-mouse-moved {
+    -fx-background-color: transparent;
+    -fx-background-radius: 30;
+    -fx-cursor: hand;
+}
+
+.button-container-mouse-moved:hover {
+    -fx-background-color: #34495e;
+}
+
+.add-button {
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+    -fx-background-radius: 5;
+    -fx-padding: 8 15;
+    -fx-cursor: hand;
+}
+
+.add-button:hover {
+    -fx-background-color: #2980b9;
+}
+
+.text-field {
+    -fx-background-color: #34495e;
+    -fx-text-fill: white;
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+    -fx-border-color: #3498db;
+    -fx-border-width: 0 0 2 0;
+}
+
+.combo-box {
+    -fx-background-color: #34495e;
+    -fx-text-fill: white;
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+    -fx-border-color: #3498db;
+    -fx-border-width: 0 0 2 0;
+}
+
+.combo-box .list-cell {
+    -fx-text-fill: white;
+    -fx-background-color: #34495e;
+}
+
+.combo-box .list-view {
+    -fx-background-color: #34495e;
+}
+
+.pagination {
+    -fx-page-information-visible: false;
+}
+
+.pagination .pagination-control .number-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+}
+
+.pagination .pagination-control .number-button:selected {
+    -fx-background-color: #3498db;
+}
+
+.exit-button:hover {
+    -fx-opacity: 0.8;
+    -fx-cursor: hand;
+}
+
+/* GridPane styling */
+.grid-pane {
+    -fx-background-color: transparent;
+    -fx-padding: 10;
+    -fx-hgap: 10;
+    -fx-vgap: 10;
+}
+
+/* ScrollPane styling */
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar:vertical,
+.scroll-bar:horizontal {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar:vertical .thumb,
+.scroll-bar:horizontal .thumb {
+    -fx-background-color: #3498db;
+    -fx-background-radius: 5;
+}

@@ -1,0 +1,35 @@
+.trajet-card {
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);
+}
+
+.location-label {
+    -fx-font-weight: bold;
+}
+
+.update-button {
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+}
+
+.update-button:hover {
+    -fx-background-color: #2980b9;
+}
+
+.delete-button {
+    -fx-background-color: #e74c3c;
+    -fx-text-fill: white;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+}
+
+.delete-button:hover {
+    -fx-background-color: #c0392b;
+}
+
+.button {
+    -fx-padding: 8 15 8 15;
+}
