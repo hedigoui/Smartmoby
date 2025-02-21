@@ -5,32 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="68d15971-7a4c-46a9-9182-fb8edef44c78" name="Changes" comment="API">
-      <change afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_19_02_2025_5_51_PM_[Changes]/shelved.patch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_19_02_2025_5_51_PM__Changes_.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_19_02_2025_5_55_PM_[Changes]/shelved.patch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_19_02_2025_5_55_PM_[Changes]1/shelved.patch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_19_02_2025_5_55_PM__Changes_.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_19_02_2025_5_55_PM__Changes_1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/java/org/example/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/java/org/example/controller/Aaa.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/java/org/example/controller/AfficherEvent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/java/org/example/controller/AjouterEvent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/java/org/example/controller/modifierEvent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/java/org/example/modeles/event.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/java/org/example/modeles/fedback.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/java/org/example/service/Ievent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/java/org/example/service/Ifedback.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/java/org/example/service/event_serv.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/java/org/example/service/fedback_serv.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/java/org/example/utilis/datasrc.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/java/org/example/utilis/mainfx.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/resources/aaa.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/resources/afficher_event.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/resources/ajouter_event.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/main/resources/modifier.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/jarRepositories.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/org/example/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/org/example/controller/Aaa.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/org/example/controller/AfficherEvent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/org/example/controller/AjouterEvent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/org/example/controller/modifierEvent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/org/example/modeles/event.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/org/example/modeles/fedback.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/org/example/service/Ievent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/org/example/service/Ifedback.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/org/example/service/event_serv.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/org/example/service/fedback_serv.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/org/example/utilis/datasrc.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/org/example/utilis/mainfx.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/resources/aaa.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/resources/afficher_event.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/resources/ajouter_event.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/resources/modifier.fxml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,41 +66,41 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.AI_API.executor": "Run",
-    "Application.EmailAPI.executor": "Run",
-    "Application.Gemini_API.executor": "Run",
-    "Application.GoogleCalendar.executor": "Run",
-    "Application.Main.executor": "Run",
-    "Application.MainGUI.executor": "Run",
-    "Application.OpenAI_API.executor": "Run",
-    "Application.Unnamed.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "Merging haythem",
-    "kotlin-language-version-configured": "true",
-    "last_directory_selection": "C:/Users/hayth/OneDrive/Bureau/pi java/projet pi (smart moby) LAST ONE/projet pi smart moby/src/main/java",
-    "last_opened_file_path": "C:/Users/hayth/Downloads/openjfx-23.0.2_windows-x64_bin-sdk/javafx-sdk-23.0.2/lib",
-    "list.type.of.created.stylesheet": "CSS",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "onboarding.tips.debug.path": "C:/Users/hayth/OneDrive/Bureau/pi java/projet pi (smart moby)/projet pi smart moby/src/main/java/org/example/Main.java",
-    "project.structure.last.edited": "Libraries",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "preferences.keymap",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.AI_API.executor&quot;: &quot;Run&quot;,
+    &quot;Application.EmailAPI.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Gemini_API.executor&quot;: &quot;Run&quot;,
+    &quot;Application.GoogleCalendar.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Application.MainGUI.executor&quot;: &quot;Run&quot;,
+    &quot;Application.OpenAI_API.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Unnamed.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;haythem&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_directory_selection&quot;: &quot;C:/Users/hayth/OneDrive/Bureau/pi java/projet pi (smart moby) LAST ONE/projet pi smart moby/src/main/java&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/hayth/Downloads/openjfx-23.0.2_windows-x64_bin-sdk/javafx-sdk-23.0.2/lib&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/hayth/OneDrive/Bureau/pi java/projet pi (smart moby)/projet pi smart moby/src/main/java/org/example/Main.java&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
-      "XML"
+  &quot;keyToStringList&quot;: {
+    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
+      &quot;XML&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\hayth\OneDrive\Bureau\pi java\projet pi (smart moby) LAST ONE\projet pi smart moby\src\main\resources" />
@@ -186,6 +179,7 @@
       <workItem from="1740055759567" duration="3011000" />
       <workItem from="1740081122642" duration="7155000" />
       <workItem from="1740137347545" duration="297000" />
+      <workItem from="1740138769053" duration="89000" />
     </task>
     <task id="LOCAL-00001" summary="API">
       <option name="closed" value="true" />
