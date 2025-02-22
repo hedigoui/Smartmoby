@@ -16,7 +16,7 @@ public class MainGUI extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ChatBOT.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/afficher_event.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);

@@ -1,4 +1,4 @@
-package org.example.controller;
+package org.example.controllers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,8 +11,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import org.example.modeles.event;
-import org.example.service.event_serv;
+import org.example.models.event;
+import org.example.services.event_serv;
 
 import java.io.IOException;
 import java.util.List;

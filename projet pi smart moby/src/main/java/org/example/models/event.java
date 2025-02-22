@@ -8,6 +8,7 @@ public class event {
     private Date date;
     private String lieu;
 
+    // ✅ Constructeur avec id (si utilisé pour la récupération depuis la BDD)
     public event(int id, String nom, Date date, String lieu) {
         this.id = id;
         this.nom = nom;
@@ -15,12 +16,14 @@ public class event {
         this.lieu = lieu;
     }
 
+    // ✅ Constructeur sans id (utilisé pour l'ajout d'un nouvel événement)
     public event(String nom, Date date, String lieu) {
         this.nom = nom;
         this.date = date;
         this.lieu = lieu;
     }
 
+    // Getters et Setters
     public int getId() {
         return id;
     }

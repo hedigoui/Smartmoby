@@ -9,7 +9,7 @@ public interface Ievent {
 
     void modifier(event event);
 
-    void supprimer(event event);
+    boolean supprimer(event event);
 
     List<event> afficher();
 }
