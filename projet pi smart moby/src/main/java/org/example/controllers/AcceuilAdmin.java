@@ -1,27 +1,66 @@
 package org.example.controllers;
 
+import com.itextpdf.layout.element.Cell;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import org.example.models.*;
 import org.example.services.Admin_service;
 import org.example.services.Client_service;
 import org.example.services.Conducteur_service;
 import org.example.services.Organisateur_service;
+import org.example.utils.DataSource;
 
+import com.itextpdf.kernel.pdf.*;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.*;
+import com.itextpdf.layout.property.UnitValue;
+
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
+
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+import javafx.scene.Node;
+
+
+
 public class AcceuilAdmin {
+    Connection connection = DataSource.getInstance().getConnection();
 
     @FXML
     private TableColumn<Admin, String> departement_admin;
+
+    @FXML
+    private TextField nom_client_a_rechercher;
+
+    @FXML
+    private TextField nom_organisateur_a_rechercher;
+
+    @FXML
+    private TextField nom_conducteur_a_rechercher;
 
     @FXML
     private TableColumn<Admin, String> email_admin;
@@ -54,10 +93,8 @@ public class AcceuilAdmin {
     private AnchorPane PageClients;
 
 
-
     @FXML
     private TableColumn<Client, String> email_client;
-
 
 
     @FXML
@@ -156,7 +193,7 @@ public class AcceuilAdmin {
 
 
     @FXML
-    private TextField mdp;
+    private PasswordField mdp;
 
 
     @FXML
@@ -174,6 +211,8 @@ public class AcceuilAdmin {
     @FXML
     private TextField departement;
 
+    @FXML
+    private TextField nom_admin_a_rechercher;
 
 
     @FXML
@@ -252,20 +291,19 @@ public class AcceuilAdmin {
         num_permis.setCellValueFactory(new PropertyValueFactory<>("numero_permis"));
 
 
-
-
     }
-
 
 
     @FXML
     void quiiter(ActionEvent event) {
-
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.close();
     }
 
     @FXML
     void show_acceuil(ActionEvent event) {
         page_utilisateurs.setVisible(false);
+        Modifier.setVisible(false);
 
     }
 
@@ -288,6 +326,22 @@ public class AcceuilAdmin {
 
     @FXML
     void show_se_deconnecter(ActionEvent event) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Déconnexion");
+        alert.setHeaderText(null);
+        alert.setContentText("Vous êtes déconnecté.");
+        alert.showAndWait();
+        Session.setUserId(-1);
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/login.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -554,7 +608,242 @@ public class AcceuilAdmin {
         departement_admin.setCellValueFactory(new PropertyValueFactory<>("departement"));
     }
 
+    @FXML
+    void rechercher_admin(ActionEvent event) {
+        Admin_service adminService = new Admin_service();
+        List<Admin> admins = adminService.afficher();
+        ObservableList<Admin> adminsList = FXCollections.observableArrayList(admins);
+        adminsList.clear();
 
+        String searchQuery = "SELECT u.nom, u.prenom, u.nom_utilisateur, u.email, u.mot_de_passe, u.role, a.departement FROM UTILISATEUR u " +
+                "JOIN ADMIN a ON u.id = a.id WHERE u.nom LIKE ?";
+
+        try (
+             PreparedStatement stmt = connection.prepareStatement(searchQuery)) {
+
+            stmt.setString(1, "%" + nom_admin_a_rechercher.getText().trim() + "%");
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                adminsList.add(new Admin(
+                        rs.getString("nom"),
+                        rs.getString("prenom"),
+                        rs.getString("nom_utilisateur"),
+                        rs.getString("email"),
+                        rs.getString("mot_de_passe"), // Optionnel selon besoin
+                        Utilisateur.Role.valueOf(rs.getString("role").toUpperCase()),
+                        rs.getString("departement")
+                ));
+            }
+            tableView.setItems(adminsList);
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+
+
+    }
+
+    @FXML
+    void reset_admin(ActionEvent event) {
+        initialize();
+        System.out.println("clicked");
+    }
+
+    @FXML
+    void rechercher_client(ActionEvent event) {
+        System.out.println("clicked");
+        String text = nom_client_a_rechercher.getText().trim();
+        System.out.println("Texte recherché : " + text);
+
+        ObservableList<Client> clientsList = FXCollections.observableArrayList();
+
+        String searchQuery = "SELECT u.nom, u.prenom, u.nom_utilisateur, u.email, u.mot_de_passe, u.role FROM UTILISATEUR u " +
+                "JOIN client c ON u.id = c.id WHERE u.nom LIKE ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(searchQuery)) {
+            stmt.setString(1, "%" + text + "%");
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                clientsList.add(new Client(
+                        rs.getString("nom"),
+                        rs.getString("prenom"),
+                        rs.getString("nom_utilisateur"),
+                        rs.getString("email"),
+                        rs.getString("mot_de_passe"), // Optionnel selon besoin
+                        Utilisateur.Role.valueOf(rs.getString("role").toUpperCase())
+                ));
+            }
+
+            table_client.setItems(clientsList);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @FXML
+    void reset_client(ActionEvent event) {
+        initialize();
+        System.out.println("clicked");
+    }
+
+    @FXML
+    void rechercher_organisateur(ActionEvent event) {
+        System.out.println("clicked");
+        String text = nom_organisateur_a_rechercher.getText().trim();
+        System.out.println("Texte recherché : " + text);
+
+        ObservableList<Organisateur> organisateursList = FXCollections.observableArrayList();
+
+        String searchQuery = "SELECT u.nom, u.prenom, u.nom_utilisateur, u.email, u.mot_de_passe, u.role ,o.num_badge FROM UTILISATEUR u " +
+                "JOIN ORGANISATEUR o ON u.id = o.id WHERE u.nom LIKE ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(searchQuery)) {
+            stmt.setString(1, "%" + text + "%");
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                organisateursList.add(new Organisateur(
+                        rs.getString("nom"),
+                        rs.getString("prenom"),
+                        rs.getString("nom_utilisateur"),
+                        rs.getString("email"),
+                        rs.getString("mot_de_passe"), // Optionnel selon besoin
+                        Utilisateur.Role.valueOf(rs.getString("role").toUpperCase()),
+                        rs.getInt("num_badge")
+                ));
+            }
+
+            table_organisateurs.setItems(organisateursList);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @FXML
+    void reset_organisateur(ActionEvent event) {
+        initialize();
+        System.out.println("clicked");
+    }
+
+    @FXML
+    void rechercher_conducteur(ActionEvent event) {
+        System.out.println("clicked");
+        String text = nom_conducteur_a_rechercher.getText().trim();
+        System.out.println("Texte recherché : " + text);
+
+        ObservableList<Conducteur> conducteursList = FXCollections.observableArrayList();
+
+        String searchQuery = "SELECT u.nom, u.prenom, u.nom_utilisateur, u.email, u.mot_de_passe, u.role ,c.numero_permis FROM UTILISATEUR u " +
+                "JOIN CONDUCTEUR c ON u.id = c.id WHERE u.nom LIKE ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(searchQuery)) {
+            stmt.setString(1, "%" + text + "%");
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                conducteursList.add(new Conducteur(
+                        rs.getString("nom"),
+                        rs.getString("prenom"),
+                        rs.getString("nom_utilisateur"),
+                        rs.getString("email"),
+                        rs.getString("mot_de_passe"), // Optionnel selon besoin
+                        Utilisateur.Role.valueOf(rs.getString("role").toUpperCase()),
+                        rs.getInt("numero_permis")
+                ));
+            }
+
+            table_conducteurs.setItems(conducteursList);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @FXML
+    void reset_conducteur(ActionEvent event) {
+        initialize();
+        System.out.println("clicked");
+    }
+
+    @FXML
+    void OpenStatWindow(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/stat.fxml"));
+            Parent root = loader.load();
+
+            Stat controller = loader.getController();
+            controller.refreshChart();
+
+            Stage stage = new Stage();
+            stage.setTitle("Statistiques des Utilisateurs");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (Exception e) {
+            System.out.println("Erreur lors de l'ouverture des statistiques : " + e.getMessage());
+        }
+    }
+
+    @FXML
+    void exporter(ActionEvent event) {
+        String filePath = "Utilisateurs.pdf";
+
+        try {
+            PdfWriter writer = new PdfWriter(new File(filePath));
+            PdfDocument pdfDoc = new PdfDocument(writer);
+            Document document = new Document(pdfDoc);
+
+            document.add(new Paragraph("Liste des Utilisateurs").setBold().setFontSize(14));
+
+            // Création du tableau avec des colonnes ajustées
+            Table table = new Table(UnitValue.createPercentArray(new float[]{1.5f, 1.5f, 2, 2.5f, 2.5f, 1.5f, 2, 2, 2}))
+                    .useAllAvailableWidth();
+
+            // Ajouter les en-têtes avec une taille de police plus petite
+            String[] headers = {"Nom", "Prénom", "Nom d'utilisateur", "Email", "Mot de passe", "Rôle", "Département", "Num Badge", "Num Permis"};
+            for (String header : headers) {
+                table.addHeaderCell(new Cell().add(new Paragraph(header).setBold().setFontSize(10)));
+            }
+
+            // Requête SQL pour récupérer tous les utilisateurs avec leurs infos spécifiques
+            String query = "SELECT u.nom, u.prenom, u.nom_utilisateur, u.email, u.mot_de_passe, u.role, " +
+                    "a.departement, o.num_badge, c.numero_permis " +
+                    "FROM utilisateur u " +
+                    "LEFT JOIN admin a ON u.id = a.id " +
+                    "LEFT JOIN organisateur o ON u.id = o.id " +
+                    "LEFT JOIN conducteur c ON u.id = c.id";
+
+            try (
+                 Statement stmt = connection.createStatement();
+                 ResultSet rs = stmt.executeQuery(query)) {
+
+                while (rs.next()) {
+                    table.addCell(new Cell().add(new Paragraph(rs.getString("nom")).setFontSize(9)));
+                    table.addCell(new Cell().add(new Paragraph(rs.getString("prenom")).setFontSize(9)));
+                    table.addCell(new Cell().add(new Paragraph(rs.getString("nom_utilisateur")).setFontSize(9)));
+                    table.addCell(new Cell().add(new Paragraph(rs.getString("email")).setFontSize(9)));
+                    table.addCell(new Cell().add(new Paragraph(rs.getString("mot_de_passe")).setFontSize(9)));
+                    table.addCell(new Cell().add(new Paragraph(rs.getString("role")).setFontSize(9)));
+                    table.addCell(new Cell().add(new Paragraph(rs.getString("departement") != null ? rs.getString("departement") : "N/A")).setFontSize(9));
+                    table.addCell(new Cell().add(new Paragraph(rs.getString("num_badge") != null ? rs.getString("num_badge") : "N/A")).setFontSize(9));
+                    table.addCell(new Cell().add(new Paragraph(rs.getString("numero_permis") != null ? rs.getString("numero_permis") : "N/A")).setFontSize(9));
+                }
+
+            } catch (SQLException e) {
+                System.out.println("Erreur SQL : " + e.getMessage());
+            }
+
+            document.add(table);
+            document.close();
+            System.out.println("PDF généré avec succès : " + filePath);
+
+        } catch (FileNotFoundException e) {
+            System.out.println("Erreur de fichier : " + e.getMessage());
+        }
+    }
 
 
 

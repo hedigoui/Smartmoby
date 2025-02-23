@@ -44,3 +44,89 @@
 .login-btn:hover{
     -fx-background-color: linear-gradient(to bottom, #54ae96, #55867e);
 }
+
+.supprimer-btn {
+    -fx-background-color: linear-gradient(to bottom, #ff4c4c, #ff9999);
+    -fx-background-radius: 4px;
+    -fx-cursor: hand;
+    -fx-text-fill: #fff;
+    -fx-font-size: 14px;
+    -fx-font-family: "Arial";
+}
+
+.supprimer-btn:hover {
+    -fx-background-color: linear-gradient(to bottom, #ff6666, #ff3333);
+}
+
+.export-btn {
+    -fx-background-color: linear-gradient(to bottom, #4f8cff, #98c9ff);
+    -fx-background-radius: 4px;
+    -fx-cursor: hand;
+    -fx-text-fill: #fff;
+    -fx-font-size: 14px;
+    -fx-font-family: "Arial";
+}
+
+.export-btn:hover {
+    -fx-background-color: linear-gradient(to bottom, #007bff, #0056b3);
+}
+
+.statistique-btn {
+    -fx-background-color: linear-gradient(to bottom, #ffcc00, #ffd633);
+    -fx-background-radius: 4px;
+    -fx-cursor: hand;
+    -fx-text-fill: #fff;
+    -fx-font-size: 14px;
+    -fx-font-family: "Arial";
+}
+
+.statistique-btn:hover {
+    -fx-background-color: linear-gradient(to bottom, #ffb300, #ff9900);
+}
+
+.table-view {
+    -fx-background-color: #f9f9f9;
+    -fx-border-color: #4f4c4e;
+    -fx-border-width: 2px;
+}
+
+.table-view .column-header {
+    -fx-background-color: linear-gradient(to bottom, #4f4c4e, #98ff96);
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-family: "Arial";
+    -fx-padding: 10px;
+}
+
+.table-view .table-row {
+    -fx-background-color: white;
+}
+
+.table-view .table-row:hover {
+    -fx-background-color: #e0e0e0;
+}
+
+.table-view .table-row .cell {
+    -fx-padding: 10px;
+    -fx-font-size: 12px;
+    -fx-font-family: "Arial";
+}
+
+.table-view .table-row .cell:nth-child(even) {
+    -fx-background-color: #f2f2f2;
+}
+
+.rechercher-btn, .reinitialiser-btn {
+    -fx-background-color: linear-gradient(to bottom, #4f4c4e, #98ff96);
+    -fx-background-radius: 4px;
+    -fx-cursor: hand;
+    -fx-text-fill: #fff;
+    -fx-font-size: 14px;
+    -fx-font-family: "Arial";
+    -fx-padding: 10px;
+}
+
+.rechercher-btn:hover, .reinitialiser-btn:hover {
+    -fx-background-color: linear-gradient(to bottom, #54ae96, #55867e);
+}
+

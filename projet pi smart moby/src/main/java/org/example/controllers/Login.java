@@ -76,6 +76,63 @@ public class Login {
                         e.printStackTrace(); // Gérer l'erreur s'il y a un problème avec le chargement du fichier FXML
                     }
                 }
+                if(role.equals(Utilisateur.Role.CONDUCTEUR)) {
+                    try {
+                        // Charger le fichier FXML de la nouvelle scène
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/AcceuilConducteur.fxml"));
+                        Parent root = loader.load();
+
+                        // Créer une nouvelle scène avec le fichier FXML chargé
+                        Scene scene = new Scene(root);
+
+                        // Récupérer la scène actuelle
+                        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+                        // Changer de scène
+                        stage.setScene(scene);
+                        stage.show();
+                    } catch (IOException e) {
+                        e.printStackTrace(); // Gérer l'erreur s'il y a un problème avec le chargement du fichier FXML
+                    }
+                }
+                if(role.equals(Utilisateur.Role.ORGANISATEUR)) {
+                    try {
+                        // Charger le fichier FXML de la nouvelle scène
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/AcceuilOrganisateur.fxml"));
+                        Parent root = loader.load();
+
+                        // Créer une nouvelle scène avec le fichier FXML chargé
+                        Scene scene = new Scene(root);
+
+                        // Récupérer la scène actuelle
+                        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+                        // Changer de scène
+                        stage.setScene(scene);
+                        stage.show();
+                    } catch (IOException e) {
+                        e.printStackTrace(); // Gérer l'erreur s'il y a un problème avec le chargement du fichier FXML
+                    }
+                }
+                if(role.equals(Utilisateur.Role.CLIENT)) {
+                    try {
+                        // Charger le fichier FXML de la nouvelle scène
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/AcceuilClient.fxml"));
+                        Parent root = loader.load();
+
+                        // Créer une nouvelle scène avec le fichier FXML chargé
+                        Scene scene = new Scene(root);
+
+                        // Récupérer la scène actuelle
+                        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+                        // Changer de scène
+                        stage.setScene(scene);
+                        stage.show();
+                    } catch (IOException e) {
+                        e.printStackTrace(); // Gérer l'erreur s'il y a un problème avec le chargement du fichier FXML
+                    }
+                }
             } else {
                 // Si aucun utilisateur n'est trouvé, afficher un message d'erreur
                 Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -119,6 +176,29 @@ public class Login {
 
         // Fermer la fenêtre
         stage.close();
+
+    }
+
+    @FXML
+    void mot_de_passe_oublie(ActionEvent event) {
+        try {
+            // Charger le fichier FXML de la nouvelle scène
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mot_de_passe_oublie.fxml"));
+            Parent root = loader.load();
+
+            // Créer une nouvelle scène avec le fichier FXML chargé
+            Scene scene = new Scene(root);
+
+            // Récupérer la scène actuelle
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            // Changer de scène
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace(); // Gérer l'erreur s'il y a un problème avec le chargement du fichier FXML
+        }
+
 
     }
 

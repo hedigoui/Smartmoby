@@ -3,6 +3,7 @@
 <?import java.lang.String?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -44,20 +45,22 @@
             <Button layoutX="47.0" layoutY="434.0" mnemonicParsing="false" onAction="#show_utilisateurs" prefHeight="26.0" prefWidth="218.0" styleClass="nav-btn" text="Utilisateurs" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="page_utilisateurs" layoutX="296.8" prefHeight="666.0" prefWidth="841.0" visible="false" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="297.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane fx:id="page_utilisateurs" layoutX="296.8" prefHeight="668.0" prefWidth="1203.0" visible="false" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="297.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="0.0">
          <children>
-            <AnchorPane layoutX="-2.0" prefHeight="622.0" prefWidth="208.0">
+            <AnchorPane layoutX="-2.0" prefHeight="668.0" prefWidth="208.0">
                <children>
-                  <Button layoutX="37.0" layoutY="36.0" mnemonicParsing="false" onAction="#afficher_admins" prefHeight="58.0" prefWidth="130.0" text="Afficher Admins" />
-                  <Button layoutX="37.0" layoutY="117.0" mnemonicParsing="false" onAction="#afficher_clients" prefHeight="58.0" prefWidth="130.0" text="Afficher Clients" />
-                  <Button layoutX="37.0" layoutY="204.0" mnemonicParsing="false" onAction="#afficher_organisateurs" prefHeight="58.0" prefWidth="130.0" text="Afficher Organisateurs" />
-                  <Button layoutX="37.0" layoutY="299.0" mnemonicParsing="false" onAction="#afficher_conducteurs" prefHeight="58.0" prefWidth="130.0" text="Afficher Conducteurs" />
-                  <Button layoutX="39.0" layoutY="376.0" mnemonicParsing="false" onAction="#supprimer" prefHeight="58.0" prefWidth="130.0" text="Supprimer" />
+                  <Button layoutX="22.0" layoutY="36.0" mnemonicParsing="false" onAction="#afficher_admins" prefHeight="58.0" prefWidth="163.0" styleClass="login-btn" stylesheets="@AcceuilUser.css" text="Afficher Admins" />
+                  <Button layoutX="22.0" layoutY="117.0" mnemonicParsing="false" onAction="#afficher_clients" prefHeight="58.0" prefWidth="163.0" styleClass="login-btn" stylesheets="@AcceuilUser.css" text="Afficher Clients" />
+                  <Button layoutX="22.0" layoutY="206.0" mnemonicParsing="false" onAction="#afficher_organisateurs" prefHeight="58.0" prefWidth="163.0" styleClass="login-btn" stylesheets="@AcceuilUser.css" text="Afficher Organisateurs" />
+                  <Button layoutX="22.0" layoutY="300.0" mnemonicParsing="false" onAction="#afficher_conducteurs" prefHeight="58.0" prefWidth="163.0" styleClass="login-btn" stylesheets="@AcceuilUser.css" text="Afficher Conducteurs" />
+                  <Button layoutX="21.0" layoutY="390.0" mnemonicParsing="false" onAction="#supprimer" prefHeight="58.0" prefWidth="163.0" styleClass="supprimer-btn" stylesheets="@AcceuilUser.css" text="Supprimer" />
+                  <Button layoutX="21.0" layoutY="479.0" mnemonicParsing="false" onAction="#OpenStatWindow" prefHeight="58.0" prefWidth="163.0" styleClass="statistique-btn" stylesheets="@AcceuilUser.css" text="Afficher Statistiques" />
+                  <Button layoutX="19.0" layoutY="566.0" mnemonicParsing="false" onAction="#exporter" prefHeight="58.0" prefWidth="163.0" styleClass="export-btn" stylesheets="@AcceuilUser.css" text="Exporter PDF" />
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="TableAdmins" layoutX="206.0" layoutY="8.0" prefHeight="610.0" prefWidth="633.0" visible="false">
+            <AnchorPane fx:id="TableAdmins" layoutX="206.0" layoutY="8.0" prefHeight="654.0" prefWidth="659.0" visible="false">
                <children>
-                  <TableView fx:id="tableView" layoutX="16.0" layoutY="14.0" prefHeight="593.0" prefWidth="618.0" AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <TableView fx:id="tableView" layoutX="8.0" layoutY="71.0" prefHeight="398.0" prefWidth="660.0" stylesheets="@AcceuilUser.css" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="71.0">
                      <columns>
                         <TableColumn fx:id="nom_admin" prefWidth="72.79995727539062" text="Nom" />
                         <TableColumn fx:id="prenom_admin" prefWidth="77.5999755859375" text="Prenom" />
@@ -68,11 +71,14 @@
                         <TableColumn fx:id="departement_admin" prefWidth="86.400146484375" text="Département" />
                      </columns>
                   </TableView>
+                  <TextField fx:id="nom_admin_a_rechercher" layoutX="14.0" layoutY="9.0" prefHeight="43.0" prefWidth="264.0" promptText="Entrez le nom a rechercher" stylesheets="@AcceuilUser.css" />
+                  <Button layoutX="282.0" layoutY="17.0" mnemonicParsing="false" onAction="#rechercher_admin" prefHeight="26.0" prefWidth="94.0" styleClass="rechercher-btn" stylesheets="@AcceuilUser.css" text="Rechercher" />
+                  <Button layoutX="383.0" layoutY="17.0" mnemonicParsing="false" onAction="#reset_admin" prefHeight="26.0" prefWidth="94.0" styleClass="reinitialiser-btn" stylesheets="@AcceuilUser.css" text="Réinitialiser" />
                </children>
             </AnchorPane>
             <AnchorPane fx:id="PageClients" layoutX="206.0" layoutY="14.0" prefHeight="634.0" prefWidth="618.0" visible="false">
                <children>
-                  <TableView fx:id="table_client" layoutX="46.0" layoutY="14.0" prefHeight="551.0" prefWidth="566.0">
+                  <TableView fx:id="table_client" layoutX="14.0" layoutY="57.0" prefHeight="551.0" prefWidth="535.0" stylesheets="@AcceuilUser.css">
                      <columns>
                         <TableColumn fx:id="nom_client" prefWidth="72.79995727539062" text="Nom" />
                         <TableColumn fx:id="prenom_client" prefWidth="77.5999755859375" text="Prenom" />
@@ -82,11 +88,14 @@
                         <TableColumn fx:id="role_client" prefWidth="84.7999267578125" text="Role" />
                      </columns>
                   </TableView>
+                  <TextField fx:id="nom_client_a_rechercher" layoutX="14.0" layoutY="13.0" prefHeight="37.0" prefWidth="253.0" promptText="Entrez le nom a rechercher" stylesheets="@AcceuilUser.css" />
+                  <Button layoutX="282.0" layoutY="14.0" mnemonicParsing="false" onAction="#rechercher_client" styleClass="rechercher-btn" stylesheets="@AcceuilUser.css" text="Rechercher" />
+                  <Button layoutX="385.0" layoutY="14.0" mnemonicParsing="false" onAction="#reset_client" styleClass="reinitialiser-btn" stylesheets="@AcceuilUser.css" text="Réinitialiser" />
                </children>
             </AnchorPane>
             <AnchorPane fx:id="Afficher_organisateurs" layoutX="206.0" layoutY="14.0" prefHeight="634.0" prefWidth="648.0" visible="false">
                <children>
-                  <TableView fx:id="table_organisateurs" layoutX="8.0" layoutY="2.0" prefHeight="583.0" prefWidth="682.0">
+                  <TableView fx:id="table_organisateurs" layoutX="4.0" layoutY="74.0" prefHeight="558.0" prefWidth="682.0" stylesheets="@AcceuilUser.css">
                      <columns>
                         <TableColumn fx:id="nom_organisateur" prefWidth="72.79995727539062" text="Nom" />
                         <TableColumn fx:id="prenom_organisateur" prefWidth="77.5999755859375" text="Prenom" />
@@ -97,11 +106,14 @@
                         <TableColumn fx:id="num_badge" prefWidth="75.0" text="Num Badge" />
                      </columns>
                   </TableView>
+                  <TextField fx:id="nom_organisateur_a_rechercher" layoutX="4.0" layoutY="19.0" prefHeight="43.0" prefWidth="236.0" promptText="Entrez le nom a rechercher" stylesheets="@AcceuilUser.css" />
+                  <Button layoutX="247.0" layoutY="23.0" mnemonicParsing="false" onAction="#rechercher_organisateur" styleClass="rechercher-btn" stylesheets="@AcceuilUser.css" text="Rechercher" />
+                  <Button layoutX="345.0" layoutY="23.0" mnemonicParsing="false" onAction="#reset_organisateur" styleClass="reinitialiser-btn" stylesheets="@AcceuilUser.css" text="Réinitialiser" />
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="afficher_conducteurs" layoutX="206.0" layoutY="14.0" prefHeight="634.0" prefWidth="770.0">
+            <AnchorPane fx:id="afficher_conducteurs" layoutX="206.0" layoutY="14.0" prefHeight="654.0" prefWidth="778.0">
                <children>
-                  <TableView fx:id="table_conducteurs" layoutX="14.0" layoutY="14.0" prefHeight="594.0" prefWidth="715.0">
+                  <TableView fx:id="table_conducteurs" layoutX="14.0" layoutY="51.0" prefHeight="594.0" prefWidth="715.0" stylesheets="@AcceuilUser.css">
                      <columns>
                         <TableColumn fx:id="nom_conducteur" prefWidth="72.79995727539062" text="Nom" />
                         <TableColumn fx:id="prenom_conducteur" prefWidth="77.5999755859375" text="Prenom" />
@@ -112,6 +124,9 @@
                         <TableColumn fx:id="num_permis" prefWidth="93.5999755859375" text="Numero Permis" />
                      </columns>
                   </TableView>
+                  <TextField fx:id="nom_conducteur_a_rechercher" layoutX="14.0" layoutY="6.0" prefHeight="38.0" prefWidth="242.0" promptText="Entrez le nom a rechercher" stylesheets="@AcceuilUser.css" />
+                  <Button layoutX="265.0" layoutY="7.0" mnemonicParsing="false" onAction="#rechercher_conducteur" prefHeight="37.0" prefWidth="94.0" styleClass="rechercher-btn" stylesheets="@AcceuilUser.css" text="Rechercher" />
+                  <Button layoutX="365.0" layoutY="7.0" mnemonicParsing="false" onAction="#reset_conducteur" styleClass="reinitialiser-btn" stylesheets="@AcceuilUser.css" text="Réinitialiser" />
                </children>
             </AnchorPane>
          </children>
@@ -121,7 +136,6 @@
             <TextField fx:id="nom" layoutX="25.0" layoutY="45.0" prefHeight="43.0" prefWidth="502.0" promptText="Nom" styleClass="text-field" stylesheets="@AcceuilUser.css" />
             <TextField fx:id="prenom" layoutX="25.0" layoutY="106.0" prefHeight="43.0" prefWidth="502.0" promptText="Prénom" styleClass="text-field" stylesheets="@AcceuilUser.css" />
             <TextField fx:id="email" layoutX="25.0" layoutY="230.0" prefHeight="43.0" prefWidth="502.0" promptText="Email" styleClass="text-field" stylesheets="@AcceuilUser.css" />
-            <TextField fx:id="mdp" layoutX="25.0" layoutY="289.0" prefHeight="43.0" prefWidth="502.0" promptText="Mot De Passe" styleClass="text-field" stylesheets="@AcceuilUser.css" />
             <TextField fx:id="nom_utilisateur" layoutX="25.0" layoutY="169.0" prefHeight="43.0" prefWidth="502.0" promptText="Nom D'utilisateur" styleClass="text-field" stylesheets="@AcceuilUser.css" />
             <Button layoutX="178.0" layoutY="455.0" mnemonicParsing="false" onAction="#modifier_compte" prefHeight="26.0" prefWidth="196.0" styleClass="login-btn" stylesheets="@AcceuilUser.css" text="Modifier Votre Compte">
                <font>
@@ -129,6 +143,7 @@
                </font>
             </Button>
             <TextField fx:id="departement" layoutX="25.0" layoutY="352.0" prefHeight="43.0" prefWidth="502.0" promptText="Département" styleClass="text-field" stylesheets="@AcceuilUser.css" />
+            <PasswordField fx:id="mdp" layoutX="25.0" layoutY="290.0" prefHeight="43.0" prefWidth="502.0" promptText="Mot De Passe" stylesheets="@AcceuilUser.css" />
          </children>
       </AnchorPane>
    </children>

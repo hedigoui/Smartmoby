@@ -34,12 +34,12 @@
                </font>
             </Label>
             <TextField fx:id="nom_utilisateur" layoutX="359.0" layoutY="218.0" prefHeight="43.0" prefWidth="502.0" promptText="Entrez votre nom d'utilisateur" styleClass="text-field" stylesheets="@AcceuilUser.css" />
-            <Button layoutX="359.0" layoutY="373.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="182.0" styleClass="login-btn" stylesheets="@AcceuilUser.css" text="Se Connecter">
+            <Button layoutX="359.0" layoutY="373.0" mnemonicParsing="false" onAction="#se_connecter" prefHeight="26.0" prefWidth="182.0" styleClass="login-btn" stylesheets="@AcceuilUser.css" text="Se Connecter">
                <font>
                   <Font name="Tahoma" size="14.0" />
                </font>
             </Button>
-            <Button layoutX="497.0" layoutY="437.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="196.0" styleClass="login-btn" stylesheets="@AcceuilUser.css" text="Créer un nouveau compte">
+            <Button layoutX="497.0" layoutY="437.0" mnemonicParsing="false" onAction="#register" prefHeight="26.0" prefWidth="196.0" styleClass="login-btn" stylesheets="@AcceuilUser.css" text="Créer un nouveau compte">
                <font>
                   <Font name="Tahoma" size="14.0" />
                </font>
@@ -49,7 +49,7 @@
                   <Font name="Tahoma" size="14.0" />
                </font>
             </Button>
-            <Button layoutX="861.0" layoutY="14.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="26.0" styleClass="login-btn" stylesheets="@AcceuilUser.css" text="X">
+            <Button layoutX="861.0" layoutY="14.0" mnemonicParsing="false" onAction="#x" prefHeight="26.0" prefWidth="26.0" styleClass="login-btn" stylesheets="@AcceuilUser.css" text="X">
                <font>
                   <Font name="Tahoma" size="14.0" />
                </font>

@@ -46,7 +46,7 @@
                   <Font name="Tahoma" size="14.0" />
                </font>
             </Button>
-            <Button layoutX="677.0" layoutY="373.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="182.0" styleClass="login-btn" stylesheets="@AcceuilUser.css" text="Mot De Passe Oublié">
+            <Button layoutX="677.0" layoutY="373.0" mnemonicParsing="false" onAction="#mot_de_passe_oublie" prefHeight="26.0" prefWidth="182.0" styleClass="login-btn" stylesheets="@AcceuilUser.css" text="Mot De Passe Oublié">
                <font>
                   <Font name="Tahoma" size="14.0" />
                </font>

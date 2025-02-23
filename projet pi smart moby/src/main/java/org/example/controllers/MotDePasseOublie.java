@@ -3,10 +3,16 @@ package org.example.controllers;
 import com.mailjet.client.errors.MailjetException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import org.example.services.EmailAPI;
 import org.example.utils.DataSource;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -56,6 +62,59 @@ public class MotDePasseOublie {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    void register(ActionEvent event) {
+        try {
+            // Charger le fichier FXML de la nouvelle scène
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Register.fxml"));
+            Parent root = loader.load();
+
+            // Créer une nouvelle scène avec le fichier FXML chargé
+            Scene scene = new Scene(root);
+
+            // Récupérer la scène actuelle
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            // Changer de scène
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace(); // Gérer l'erreur s'il y a un problème avec le chargement du fichier FXML
+        }
+
+    }
+
+    @FXML
+    void se_connecter(ActionEvent event) {
+        try {
+            // Charger le fichier FXML de la nouvelle scène
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Login.fxml"));
+            Parent root = loader.load();
+
+            // Créer une nouvelle scène avec le fichier FXML chargé
+            Scene scene = new Scene(root);
+
+            // Récupérer la scène actuelle
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            // Changer de scène
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace(); // Gérer l'erreur s'il y a un problème avec le chargement du fichier FXML
+        }
+
+    }
+
+    @FXML
+    void x(ActionEvent event) {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        // Fermer la fenêtre
+        stage.close();
+
     }
 
 }
