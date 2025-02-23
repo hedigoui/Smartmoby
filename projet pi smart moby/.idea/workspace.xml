@@ -6,24 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="68d15971-7a4c-46a9-9182-fb8edef44c78" name="Changes" comment="API">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/controllers/AcceuilAdmin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/controllers/AcceuilAdmin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/controllers/AcceuilUser.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/controllers/ChatBOT.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/controllers/ChatBOT.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/controllers/Login.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/controllers/Login.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/controllers/MotDePasseOublie.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/controllers/MotDePasseOublie.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/tests/MainGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/tests/MainGUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/AcceuilAdmin.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/AcceuilAdmin.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/AcceuilUser.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/AcceuilUser.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/AcceuilUser.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/ChatBOT.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/ChatBOT.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Login.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Login.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/aaa.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/aaa.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/mot_de_passe_oublie.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mot_de_passe_oublie.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/AcceuilAdmin.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/AcceuilAdmin.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/AcceuilUser.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/AcceuilUser.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/controllers/AcceuilAdmin.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/controllers/AcceuilAdmin.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/tests/MainGUI.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/tests/MainGUI.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/services/GoogleCalendar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/services/GoogleCalendar.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -187,6 +170,7 @@
       <workItem from="1740258288398" duration="3832000" />
       <workItem from="1740311320276" duration="931000" />
       <workItem from="1740329007324" duration="18282000" />
+      <workItem from="1740352487920" duration="76000" />
     </task>
     <task id="LOCAL-00001" summary="API">
       <option name="closed" value="true" />
