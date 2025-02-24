@@ -100,9 +100,56 @@ public class GoogleCalendar {
         }
     }
 
+    public static void ModifierEventInCalendar(String eventId, String newSummary, String newLocation, String newDescription, String newStartDateTime, String timeZone, String newEndDateTime) throws IOException, GeneralSecurityException {
+        Calendar service = getCalendarService();
+
+        Event event = service.events().get(CALENDAR_ID, eventId).execute();
+        event.setSummary(newSummary);
+        event.setLocation(newLocation);
+        event.setDescription(newDescription);
+        event.setStart(new EventDateTime().setDateTime(new DateTime(newStartDateTime)).setTimeZone(timeZone));
+        event.setEnd(new EventDateTime().setDateTime(new DateTime(newEndDateTime)).setTimeZone(timeZone));
+
+        service.events().update(CALENDAR_ID, eventId, event).execute();
+        System.out.printf("Event updated: %s\n", event.getHtmlLink());
+    }
+
+    public String recupererEventId(String description) throws IOException, GeneralSecurityException {
+        Calendar service = GoogleCalendar.getCalendarService();
+        DateTime now = new DateTime(System.currentTimeMillis());
+
+        Events events = service.events().list(CALENDAR_ID)
+                .setMaxResults(10)
+                .setTimeMin(now)
+                .setOrderBy("startTime")
+                .setSingleEvents(true)
+                .execute();
+
+        List<Event> items = events.getItems();
+        for (Event event : items) {
+            // Log the event description for debugging
+            System.out.println("Événement trouvé : " + event.getDescription());
+
+            if (event.getDescription() != null && event.getDescription().equalsIgnoreCase(description)) {
+                return event.getId(); // Return the event ID if the description matches
+            }
+        }
+        return null; // No match found
+    }
+
+
+
+    public static void SupprimerEventInCalendar(String eventId) throws IOException, GeneralSecurityException {
+        Calendar service = getCalendarService();
+        service.events().delete(CALENDAR_ID, eventId).execute();
+        System.out.println("Event deleted successfully.");
+    }
+
+
     public static void main(String... args) throws IOException, GeneralSecurityException {
         AjouterEventInCalendar("Evenement Smart Moby", "Tunis",
-                "A chance to hear more about Google's developer products.", "2025-02-22T09:00:00-07:00", "America/Los_Angeles","2025-02-22T09:00:00-07:00");
+                "A chance to hear more about Google's developer products.", "2025-02-25T09:00:00-07:00", "America/Los_Angeles","2025-02-25T09:00:00-07:00");
         AfficherEventInCalendar();
+
     }
 }

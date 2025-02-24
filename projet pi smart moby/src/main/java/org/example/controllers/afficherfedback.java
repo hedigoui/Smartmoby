@@ -1,4 +1,4 @@
-package org.example.controller;
+package org.example.controllers;
 
 import autovalue.shaded.com.google.common.collect.Table;
 import com.itextpdf.kernel.pdf.PdfDocument;
@@ -14,9 +14,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
-import org.example.modeles.fedback;
-import org.example.service.fedback_serv;
-import org.example.utilis.datasrc;
+import org.example.models.fedback;
+import org.example.services.fedback_serv;
+import org.example.utils.DataSource;
 
 import javax.swing.text.Document;
 import java.beans.Statement;
@@ -30,7 +30,7 @@ import java.util.List;
 
 public class afficherfedback {
 
-    Connection connection = datasrc.getInstance().getConnection();
+    Connection connection = DataSource.getInstance().getConnection();
 
     @FXML
     private ListView<fedback> feedbackList;  // ListView pour afficher les feedbacks sous forme d'objets fedback

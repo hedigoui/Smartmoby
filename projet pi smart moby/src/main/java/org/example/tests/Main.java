@@ -127,7 +127,7 @@ public class Main {
 
         //Oussema
 
-        event_serv e1 = new event_serv();
+        /*event_serv e1 = new event_serv();
         fedback_serv feedbackService = new fedback_serv();
         fedback newFeedback = new fedback("Super événement, très bien organisé!", 5);
         feedbackService.ajouter(newFeedback);
@@ -179,7 +179,7 @@ public class Main {
                 // Afficher les informations de chaque événement
                 System.out.println(ev);
             }
-        }
+        }*/
         //hazem
         while (true) {
             System.out.println("\n--- Main Menu ---");

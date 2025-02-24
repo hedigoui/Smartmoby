@@ -1,4 +1,4 @@
-package org.example.controller;
+package org.example.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -7,8 +7,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextArea;
-import org.example.modeles.fedback;
-import org.example.service.fedback_serv;
+import org.example.models.fedback;
+import org.example.services.fedback_serv;
 
 public class Modifierfedback {
 

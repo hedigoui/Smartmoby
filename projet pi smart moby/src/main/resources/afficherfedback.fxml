@@ -3,7 +3,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.Color?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="org.example.controller.ajouterfedback">
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="org.example.controllers.ajouterfedback">
     <!-- Définir une racine d'AnchorPane et ajouter une boîte verticale pour disposer les éléments -->
     <VBox alignment="TOP_CENTER" spacing="15" padding="20" style="-fx-background-color: #F0F0F0; -fx-border-radius: 10;">
 

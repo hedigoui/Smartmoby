@@ -1,4 +1,4 @@
-package org.example.controller;
+package org.example.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,10 +10,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import org.example.modeles.event;
-import org.example.modeles.fedback;
-import org.example.service.event_serv;
-import org.example.service.fedback_serv;
+import org.example.models.event;
+import org.example.models.fedback;
+import org.example.services.event_serv;
+import org.example.services.fedback_serv;
 
 import java.io.IOException;
 import java.util.ArrayList;
