@@ -23,13 +23,14 @@ public class Main {
         fedback_serv feedbackService = new fedback_serv();
 
         // Gestion des feedbacks
-        fedback newFeedback = new fedback("Super événement, très bien organisé!", 5);
+        int eventId = 1;  // Remplacez-le par l'ID réel de l'événement
+        fedback newFeedback = new fedback("Super événement, très bien organisé!", 5, eventId);  // Ajout de l'ID de l'événement
         feedbackService.ajouter(newFeedback);
 
-        fedback feedbackToModify = new fedback(1, "Événement génial, mais quelques améliorations.", 4);
+        fedback feedbackToModify = new fedback(1, "Événement génial, mais quelques améliorations.", 4, eventId);  // Ajout de l'ID de l'événement
         feedbackService.modifier(feedbackToModify);
 
-        fedback feedbackToDelete = new fedback(1, null, 0);
+        fedback feedbackToDelete = new fedback(1, null, 0, eventId);  // Ajout de l'ID de l'événement
         feedbackService.supprimer(feedbackToDelete);
 
         List<fedback> fedbacks = feedbackService.afficher();

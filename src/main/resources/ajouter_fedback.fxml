@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controller.ajouterfedback">
+
+    <VBox alignment="CENTER" prefHeight="600" prefWidth="600" spacing="10">
+
+        <!-- Champ de texte pour le feedback -->
+        <TextArea fx:id="feedbackInput" prefHeight="100" prefWidth="400" promptText="Écrire votre feedback..." styleClass="text-field" stylesheets="@AcceuilUser.css" />
+
+        <!-- Slider pour la note -->
+        <Slider fx:id="noteSlider" max="10" min="0" showTickLabels="true" showTickMarks="true" value="5" />
+
+        <!-- Label pour afficher la note -->
+        <Label fx:id="noteLabel" text="Note : 5" />
+
+        <!-- Bouton pour ajouter un feedback -->
+        <Button fx:id="ajouterFedbackButton" onAction="#ajouterFedback" styleClass="login-btn" stylesheets="@AcceuilUser.css" text="Ajouter Feedback" />
+
+        <!-- Nouveau bouton pour afficher les feedbacks -->
+        <Button fx:id="afficherFeedbacksButton" onAction="#voirFeedbacks" styleClass="login-btn" stylesheets="@AcceuilUser.css" text="Afficher Feedbacks" /><ListView fx:id="liste" prefHeight="388.0" prefWidth="600.0" styleClass="table-view" stylesheets="@AcceuilUser.css" />
+        <ListView fx:id="feedbackListView" styleClass="table-view" stylesheets="@AcceuilUser.css" />
+        <Button fx:id="modif" onAction="#modifier" styleClass="login-btn" stylesheets="@AcceuilUser.css" text="✏ Modifier" />
+        <Button fx:id="supp" onAction="#supprimer" styleClass="supprimer-btn" stylesheets="@AcceuilUser.css" text="🗑 Supprimer" />
+
+
+    </VBox>
+    
+</AnchorPane>
