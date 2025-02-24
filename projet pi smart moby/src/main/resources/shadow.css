@@ -1,0 +1,13 @@
+/* Style général des boutons */
+.button {
+    -fx-background-color: linear-gradient(to bottom, #F0F0F0, #A8E6CF); /* Dégradé vert */
+    -fx-text-fill: white; /* Texte en blanc */
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 8px 16px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-border-color: #2E7D32;
+    -fx-border-width: 2px;
+}
+

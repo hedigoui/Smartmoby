@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controllers.UpdateTrajet">
+   <children>
+      <AnchorPane layoutX="12.0" layoutY="28.0" prefHeight="450.0" prefWidth="576.0"
+                  styleClass="root" stylesheets="@shadow.css">
+         <children>
+            <Label layoutX="200.0" layoutY="20.0" text="Modifier Trajet" styleClass="title-label">
+               <font>
+                  <Font name="System Bold" size="24.0"/>
+               </font>
+            </Label>
+
+            <VBox spacing="20" layoutX="50.0" layoutY="80.0">
+               <HBox spacing="20" alignment="CENTER_LEFT">
+                  <Label text="Point de Départ:" styleClass="form-label">
+                     <font><Font name="System Bold" size="14.0"/></font>
+                  </Label>
+                  <TextField fx:id="pointd" prefWidth="200.0"/>
+               </HBox>
+
+               <HBox spacing="20" alignment="CENTER_LEFT">
+                  <Label text="Point d'Arrivée:" styleClass="form-label">
+                     <font><Font name="System Bold" size="14.0"/></font>
+                  </Label>
+                  <TextField fx:id="pointa" prefWidth="200.0"/>
+               </HBox>
+
+               <HBox spacing="20" alignment="CENTER_LEFT">
+                  <Label text="Date de Départ:" styleClass="form-label">
+                     <font><Font name="System Bold" size="14.0"/></font>
+                  </Label>
+                  <DatePicker fx:id="dated" prefWidth="200.0"/>
+               </HBox>
+
+               <HBox spacing="20" alignment="CENTER_LEFT">
+                  <Label text="Date d'Arrivée:" styleClass="form-label">
+                     <font><Font name="System Bold" size="14.0"/></font>
+                  </Label>
+                  <DatePicker fx:id="datea" prefWidth="200.0"/>
+               </HBox>
+
+               <HBox spacing="20" alignment="CENTER_LEFT">
+                  <Label text="Distance (km):" styleClass="form-label">
+                     <font><Font name="System Bold" size="14.0"/></font>
+                  </Label>
+                  <TextField fx:id="distance" prefWidth="100.0"/>
+               </HBox>
+
+               <HBox spacing="20" alignment="CENTER_LEFT">
+                  <Label text="Prix (DT):" styleClass="form-label">
+                     <font><Font name="System Bold" size="14.0"/></font>
+                  </Label>
+                  <TextField fx:id="prix" prefWidth="100.0"/>
+               </HBox>
+
+               <HBox spacing="20" alignment="CENTER_LEFT">
+                  <Label text="Véhicule:" styleClass="form-label">
+                     <font><Font name="System Bold" size="14.0"/></font>
+                  </Label>
+                  <ComboBox fx:id="id_veh" prefWidth="200.0"/>
+               </HBox>
+
+               <HBox spacing="20" alignment="CENTER" layoutY="50">
+                  <Button mnemonicParsing="false" onAction="#UpdateTrajet"
+                          styleClass="update-button" text="Mettre à jour"
+                          prefWidth="150.0" prefHeight="40.0"/>
+               </HBox>
+            </VBox>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

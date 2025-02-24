@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="670.0" prefWidth="1265.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controllers.AcceuilOrganisateur">
+   <children>
+      <AnchorPane prefHeight="680.0" prefWidth="299.0" styleClass="root" stylesheets="@aj.css">
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="56.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="104.0" fitWidth="107.0" layoutX="104.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@user.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="108.0" layoutY="128.0" text="Bienvenue">
+               <font>
+                  <Font name="Tahoma" size="24.0" />
+               </font>
+            </Label>
+            <Line endX="100.0" layoutX="156.0" layoutY="176.0" startX="-100.0" />
+            <Button layoutX="46.0" layoutY="212.0" mnemonicParsing="false" onAction="#show_acceuil" prefHeight="26.0" prefWidth="218.0" stylesheets="@AcceuilUser.css" text="Acceuil">
+               <styleClass>
+                  <String fx:value="nav-btn" />
+                  <String fx:value="nav-btn" />
+               </styleClass>
+            </Button>
+            <Button layoutX="45.0" layoutY="252.0" mnemonicParsing="false" onAction="#show_event" prefHeight="26.0" prefWidth="236.0" styleClass="nav-btn" stylesheets="@AcceuilUser.css" text="Organiser Un Evénement" />
+            <Button layoutX="47.0" layoutY="290.0" mnemonicParsing="false" onAction="#show_parametres" prefHeight="26.0" prefWidth="218.0" styleClass="nav-btn" stylesheets="@AcceuilUser.css" text="Paramétres" />
+            <Button layoutX="47.0" layoutY="327.0" mnemonicParsing="false" onAction="#show_se_deconnecter" prefHeight="26.0" prefWidth="218.0" styleClass="nav-btn" stylesheets="@AcceuilUser.css" text="Se Déconnecter" />
+            <Button layoutX="47.0" layoutY="367.0" mnemonicParsing="false" onAction="#quiiter" prefHeight="26.0" prefWidth="218.0" styleClass="nav-btn" stylesheets="@AcceuilUser.css" text="Quitter" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="Modifier" layoutX="299.0" layoutY="-2.0" prefHeight="690.0" prefWidth="965.0" visible="false">
+         <children>
+            <TextField fx:id="nom" layoutX="94.0" layoutY="80.0" prefHeight="43.0" prefWidth="502.0" promptText="Nom" styleClass="text-field" stylesheets="@AcceuilUser.css" />
+            <TextField fx:id="prenom" layoutX="94.0" layoutY="141.0" prefHeight="43.0" prefWidth="502.0" promptText="Prénom" styleClass="text-field" stylesheets="@AcceuilUser.css" />
+            <TextField fx:id="email" layoutX="94.0" layoutY="265.0" prefHeight="43.0" prefWidth="502.0" promptText="Email" styleClass="text-field" stylesheets="@AcceuilUser.css" />
+            <TextField fx:id="nom_utilisateur" layoutX="94.0" layoutY="204.0" prefHeight="43.0" prefWidth="502.0" promptText="Nom D'utilisateur" styleClass="text-field" stylesheets="@AcceuilUser.css" />
+            <Button layoutX="247.0" layoutY="490.0" mnemonicParsing="false" onAction="#modifier_compte" prefHeight="26.0" prefWidth="196.0" styleClass="root" stylesheets="@aj.css" text="Modifier Votre Compte">
+               <font>
+                  <Font name="Tahoma" size="14.0" />
+               </font>
+            </Button>
+            <TextField fx:id="num_badge" layoutX="94.0" layoutY="387.0" prefHeight="43.0" prefWidth="502.0" promptText="Numéro De Badge" styleClass="text-field" stylesheets="@AcceuilUser.css" />
+            <PasswordField fx:id="mdp" layoutX="94.0" layoutY="325.0" prefHeight="43.0" prefWidth="502.0" promptText="Mot De Passe" stylesheets="@AcceuilUser.css" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="afficher_event" layoutX="299.0" prefHeight="680.0" prefWidth="873.0">
+         <children>
+            <VBox layoutX="157.0" layoutY="77.0" prefHeight="542.0" prefWidth="422.0" spacing="15.0">
+               <children>
+                  <Label text="Nom de l'événement :" />
+                  <TextField fx:id="nom2" promptText="Nom de l'événement" styleClass="text-field" stylesheets="@AcceuilUser.css" />
+                  <Label text="Date de l'événement :" />
+                  <DatePicker fx:id="date" stylesheets="@AcceuilUser.css" />
+                  <Label text="Lieu de l'événement :" />
+                  <TextField fx:id="lieu" promptText="Lieu" stylesheets="@AcceuilUser.css" />
+                  <Label fx:id="errorLabel" textFill="RED" />
+                  <HBox spacing="10.0">
+                     <children>
+                        <Button onAction="#ajouterEvent" styleClass="login-btn" stylesheets="@AcceuilUser.css" text="Ajouter" />
+                        <Button fx:id="display" onAction="#afficherEvent" styleClass="login-btn" stylesheets="@AcceuilUser.css" text="Afficher" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
