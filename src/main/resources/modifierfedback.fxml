@@ -1,33 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.example.controller.Modifierfedback"
-            prefHeight="400.0" prefWidth="600.0">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controller.Modifierfedback">
 
     <!-- Label pour le commentaire -->
-    <Label text="Commentaire:" layoutX="20.0" layoutY="20.0" />
+    <Label layoutX="20.0" layoutY="20.0" text="Commentaire:" />
 
     <!-- TextArea pour modifier le commentaire -->
-    <TextArea fx:id="feedbackTextArea" layoutX="20.0" layoutY="50.0" prefHeight="150.0" prefWidth="560.0" />
+    <TextArea fx:id="feedbackTextArea" layoutX="20.0" layoutY="50.0" prefHeight="150.0" prefWidth="560.0" styleClass="text-field" stylesheets="@AcceuilUser.css" />
 
     <!-- Label pour la note -->
-    <Label text="Note:" layoutX="20.0" layoutY="220.0" />
+    <Label layoutX="20.0" layoutY="220.0" text="Note:" />
 
     <!-- Slider pour modifier la note -->
-    <Slider fx:id="noteSlider" layoutX="20.0" layoutY="250.0" max="10.0" min="0.0" value="5.0" blockIncrement="1.0" />
+    <Slider fx:id="noteSlider" blockIncrement="1.0" layoutX="20.0" layoutY="250.0" max="10.0" min="0.0" styleClass="nav-btn" stylesheets="@AcceuilUser.css" value="5.0" />
 
     <!-- Label pour afficher la valeur de la note -->
-    <Label fx:id="noteLabel" text="5" layoutX="500.0" layoutY="250.0" />
+    <Label fx:id="noteLabel" layoutX="500.0" layoutY="250.0" text="5" />
 
     <!-- Bouton pour enregistrer les modifications -->
-    <Button text="Modifier Feedback" fx:id="modifyButton" layoutX="240.0" layoutY="300.0" onAction="#modifierFeedback"/>
+    <Button fx:id="modifyButton" layoutX="240.0" layoutY="300.0" onAction="#modifierFeedback" styleClass="statistique-btn" stylesheets="@AcceuilUser.css" text="Modifier Feedback" />
 
 </AnchorPane>

@@ -29,7 +29,7 @@
          <!-- Boutons -->
          <HBox spacing="10.0">
             <Button onAction="#ajouterEvent" styleClass="login-btn" stylesheets="@AcceuilUser.css" text="Ajouter" />
-            <Button fx:id="display" onAction="#afficherEvent" styleClass="login-btn" stylesheets="@AcceuilUser.css" text="Afficher" />
+            <Button fx:id="display" onAction="#afficherEvent" styleClass= "login-btn" stylesheets="@AcceuilUser.css" text="Afficher" />
          </HBox>
       </VBox>
    </children>
