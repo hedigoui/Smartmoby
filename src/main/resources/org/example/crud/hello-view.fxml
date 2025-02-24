@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="511.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.crud.HelloController">
+   <children>
+
+      <!-- Sidebar -->
+      <VBox layoutX="0.0" layoutY="0.0" prefWidth="150.0" prefHeight="511.0" spacing="15" style="-fx-background-color: #2C3E50; -fx-padding: 20;">
+         <children>
+            <Text text="Menu" style="-fx-fill: white; -fx-font-size: 20px; -fx-font-weight: bold; -fx-underline: true;" />
+
+            <Button fx:id="btnDisplayService" text="📋 Display" onAction="#showDisplaySection"
+                    style="-fx-background-color: #3498DB; -fx-text-fill: white; -fx-font-size: 14px; -fx-background-radius: 10; -fx-padding: 8;" />
+            <Button fx:id="btnManageService" text="🛠 Manage" onAction="#showManageSection"
+                    style="-fx-background-color: #3498DB; -fx-text-fill: white; -fx-font-size: 14px; -fx-background-radius: 10; -fx-padding: 8;" />
+
+            <Button fx:id="Switch2" text="➡ Produit" onAction="#VersProduit"
+                    style="-fx-background-color: #F39C12; -fx-text-fill: white; -fx-font-size: 14px; -fx-background-radius: 10; -fx-padding: 8;" />
+         </children>
+      </VBox>
+
+      <!-- Content Pane -->
+      <StackPane layoutX="160.0" layoutY="10.0" prefWidth="680.0" prefHeight="491.0">
+         <children>
+
+            <!-- Display Section -->
+            <Pane fx:id="displayPane">
+               <TextField fx:id="searchService" layoutX="40.0" layoutY="40.0" prefWidth="348.0" promptText="🔍 Search Service..."
+                          onKeyReleased="#searchService" style="-fx-background-radius: 10; -fx-border-radius: 10;" />
+               <Text layoutX="80.0" layoutY="25.0" text="Services List" style="-fx-font-size: 20px; -fx-font-weight: bold;" />
+               <TableView fx:id="table" layoutX="40.0" layoutY="80.0" prefHeight="400.0" prefWidth="600.0">
+               <columns>
+                     <TableColumn fx:id="id_c" prefWidth="75.0" text="ID_SERVICE" />
+                     <TableColumn fx:id="nom_c" prefWidth="120.0" text="NOM" />
+                     <TableColumn fx:id="desc_c" prefWidth="200.0" text="DESCRIPTION" />
+                     <TableColumn fx:id="tarif_c" prefWidth="100.0" text="TARIF" />
+                  </columns>
+               </TableView>
+            </Pane>
+
+            <!-- Manage Section -->
+            <Pane fx:id="managePane" visible="false">
+               <Text layoutX="250.0" layoutY="40.0" text="Manage Services" style="-fx-font-size: 20px; -fx-font-weight: bold;" />
+
+               <Pane layoutX="190.0" layoutY="80.0" prefHeight="220.0" prefWidth="300.0" style="-fx-background-color: #27AE60; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 10;">
+                  <children>
+                     <Text layoutX="20.0" layoutY="40.0" text="Nom:" style="-fx-fill: white; -fx-font-size: 14px;" />
+                     <TextField fx:id="txtNom" layoutX="110.0" layoutY="25.0" prefWidth="180.0" style="-fx-background-radius: 10;" />
+
+                     <Text layoutX="20.0" layoutY="85.0" text="Description:" style="-fx-fill: white; -fx-font-size: 14px;" />
+                     <TextField fx:id="txtDescription" layoutX="110.0" layoutY="70.0" prefWidth="180.0" style="-fx-background-radius: 10;" />
+
+                     <Text layoutX="20.0" layoutY="130.0" text="Tarif:" style="-fx-fill: white; -fx-font-size: 14px;" />
+                     <TextField fx:id="txtTarif" layoutX="110.0" layoutY="115.0" prefWidth="180.0" style="-fx-background-radius: 10;" />
+                  </children>
+               </Pane>
+
+               <Button fx:id="btnAdd" layoutX="190.0" layoutY="320.0" text="➕ Add" onAction="#Add"
+                       style="-fx-background-color: #2980B9; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 8;" />
+               <Button fx:id="btnModifier" layoutX="290.0" layoutY="320.0" text="✏ Edit" onAction="#Modifier"
+                       style="-fx-background-color: #E67E22; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 8;" />
+               <Button fx:id="btnSupprimer" layoutX="390.0" layoutY="320.0" text="❌ Delete" onAction="#Supprimer"
+                       style="-fx-background-color: #C0392B; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 8;" />
+            </Pane>
+
+         </children>
+      </StackPane>
+
+   </children>
+</AnchorPane>
