@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Pagination?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="652.0" prefWidth="1254.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controllers.AcceuilClient">
+   <children>
+      <AnchorPane prefHeight="680.0" prefWidth="299.0" styleClass="root" stylesheets="@aj.css">
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="56.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="104.0" fitWidth="107.0" layoutX="104.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@user.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="108.0" layoutY="128.0" text="Bienvenue">
+               <font>
+                  <Font name="Tahoma" size="24.0" />
+               </font>
+            </Label>
+            <Line endX="100.0" layoutX="156.0" layoutY="176.0" startX="-100.0" />
+            <Button layoutX="20.0" layoutY="214.0" mnemonicParsing="false" onAction="#show_acceuil" prefHeight="26.0" prefWidth="218.0" styleClass="nav-btn" stylesheets="@AcceuilUser.css" text="Acceuil">
+               <graphic>
+                  <ImageView fitHeight="27.0" fitWidth="28.0">
+                     <image>
+                        <Image url="@images/home.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+
+            <Button layoutX="21.0" layoutY="257.0" mnemonicParsing="false" onAction="#show_transport" prefHeight="26.0" prefWidth="218.0" styleClass="nav-btn" stylesheets="@AcceuilUser.css" text="Transports ">
+               <graphic>
+                  <ImageView fitHeight="26.0" fitWidth="30.0">
+                     <image>
+                        <Image url="@images/trips.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button layoutX="21.0" layoutY="301.0" mnemonicParsing="false" onAction="#show_service" prefHeight="26.0" prefWidth="218.0" styleClass="nav-btn" stylesheets="@AcceuilUser.css" text="Services ">
+               <graphic>
+                  <ImageView fitHeight="26.0" fitWidth="26.0">
+                     <image>
+                        <Image url="@images/service.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+
+            <Button layoutX="21.0" layoutY="345.0" mnemonicParsing="false" onAction="#show_event" prefHeight="26.0" prefWidth="236.0" styleClass="nav-btn" stylesheets="@AcceuilUser.css" text="Evénements ">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0">
+                     <image>
+                        <Image url="@images/event.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button layoutX="21.0" layoutY="391.0" mnemonicParsing="false" onAction="#show_blog" prefHeight="26.0" prefWidth="218.0" styleClass="nav-btn" stylesheets="@AcceuilUser.css" text="Laissez vos avis !">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="32.0">
+                     <image>
+                        <Image url="@images/blog.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+
+            <Button layoutX="21.0" layoutY="474.0" mnemonicParsing="false" onAction="#show_parametres" prefHeight="26.0" prefWidth="218.0" styleClass="nav-btn" stylesheets="@AcceuilUser.css" text="Paramétres">
+               <graphic>
+                  <ImageView fitHeight="27.0" fitWidth="27.0">
+                     <image>
+                        <Image url="@images/settings.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button layoutX="21.0" layoutY="520.0" mnemonicParsing="false" onAction="#show_se_deconnecter" prefHeight="26.0" prefWidth="218.0" styleClass="nav-btn" stylesheets="@AcceuilUser.css" text="Se Déconnecter">
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="28.0">
+                     <image>
+                        <Image url="@images/logout.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button layoutX="20.0" layoutY="563.0" mnemonicParsing="false" onAction="#quiiter" prefHeight="26.0" prefWidth="218.0" styleClass="nav-btn" stylesheets="@AcceuilUser.css" text="Quitter">
+               <graphic>
+                  <ImageView fitHeight="28.0" fitWidth="30.0">
+                     <image>
+                        <Image url="@images/exit.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button layoutX="20.0" layoutY="435.0" mnemonicParsing="false" onAction="#AI" prefHeight="44.0" prefWidth="236.0" styleClass="nav-btn" stylesheets="@AcceuilUser.css" text="Testez Notre Nouveau IA !">
+               <graphic>
+                  <ImageView fitHeight="23.0" fitWidth="26.0">
+                     <image>
+                        <Image url="@images/ai.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="Modifier" layoutX="304.0" layoutY="12.0" prefHeight="666.0" prefWidth="950.0" visible="false">
+         <children>
+            <TextField fx:id="nom" layoutX="25.0" layoutY="45.0" prefHeight="43.0" prefWidth="502.0" promptText="Nom" styleClass="text-field" stylesheets="@AcceuilUser.css" />
+            <TextField fx:id="prenom" layoutX="25.0" layoutY="106.0" prefHeight="43.0" prefWidth="502.0" promptText="Prénom" styleClass="text-field" stylesheets="@AcceuilUser.css" />
+            <TextField fx:id="email" layoutX="25.0" layoutY="230.0" prefHeight="43.0" prefWidth="502.0" promptText="Email" styleClass="text-field" stylesheets="@AcceuilUser.css" />
+            <TextField fx:id="nom_utilisateur" layoutX="25.0" layoutY="169.0" prefHeight="43.0" prefWidth="502.0" promptText="Nom D'utilisateur" styleClass="text-field" stylesheets="@AcceuilUser.css" />
+            <Button layoutX="178.0" layoutY="455.0" mnemonicParsing="false" onAction="#modifier_compte" prefHeight="26.0" prefWidth="196.0" styleClass="login-btn" stylesheets="@AcceuilUser.css" text="Modifier Votre Compte">
+               <font>
+                  <Font name="Tahoma" size="14.0" />
+               </font>
+            </Button>
+            <PasswordField fx:id="mdp" layoutX="25.0" layoutY="290.0" prefHeight="43.0" prefWidth="502.0" promptText="Mot De Passe" stylesheets="@AcceuilUser.css" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="Afficher_Transport" layoutX="299.0" prefHeight="690.0" prefWidth="942.0" visible="false">
+         <children>
+            <TextField fx:id="chercherTF" layoutX="302.0" layoutY="62.0" promptText="Search..." styleClass="search-field" stylesheets="@trajet-view.css" />
+            <ComboBox fx:id="byCbox" layoutX="460.0" layoutY="62.0" prefWidth="150.0" styleClass="filter-combo" stylesheets="@trajet-view.css" />
+            <Button fx:id="statisticsButton" layoutX="388.0" layoutY="94.0" onAction="#showStatistics" prefHeight="41.0" prefWidth="147.0" styleClass="nav-button" stylesheets="@trajet-view.css" text="Véhicule Stat">
+               <graphic>
+                  <ImageView fitHeight="63.0" fitWidth="118.0">
+                     <image>
+                        <Image url="@images/statistics.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="weatherButton1" layoutX="709.0" layoutY="27.0" onAction="#showWeatherWidget" prefHeight="28.0" prefWidth="118.0" styleClass="nav-button" stylesheets="@trajet-view.css" text="Weather">
+               <graphic>
+                  <ImageView fitHeight="80.0" fitWidth="97.0">
+                     <image>
+                        <Image url="@images/weather.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Label layoutX="113.0" layoutY="53.0" prefHeight="50.0" prefWidth="110.0" styleClass="title-label" stylesheets="@trajet-view.css" text="Easy Way" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold Italic" size="24.0" />
+               </font>
+            </Label>
+            <VBox alignment="CENTER" layoutX="11.0" layoutY="153.0" prefHeight="536.0" prefWidth="814.0" styleClass="content-container" stylesheets="@trajet-view.css">
+               <children>
+                  <GridPane fx:id="grid" alignment="CENTER" prefHeight="38.0" prefWidth="796.0" styleClass="grid-container">
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                     </rowConstraints>
+                  </GridPane>
+                  <Pagination fx:id="pagination" prefHeight="520.0" prefWidth="788.0" styleClass="custom-pagination" />
+               </children>
+            </VBox>
+            <ImageView fx:id="exit" fitHeight="30.0" fitWidth="30.0" layoutX="914.0" layoutY="8.0" styleClass="exit-button" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="afficher_event" layoutX="298.0" layoutY="4.0" prefHeight="666.0" prefWidth="910.0">
+         <children>
+            <VBox alignment="CENTER" layoutX="114.0" layoutY="93.0" prefHeight="500" prefWidth="477.0" spacing="10" styleClass="table-view" stylesheets="@AcceuilUser.css">
+               <children>
+                  <TextField fx:id="searchField" promptText="🔍 Rechercher un événement..." styleClass="rechercher-btn" stylesheets="@AcceuilUser.css" />
+                  <ListView fx:id="liste" prefHeight="350" styleClass="table-view" stylesheets="@AcceuilUser.css" />
+                  <HBox alignment="CENTER" spacing="10">
+                     <children>
+                        <Button fx:id="feedback" onAction="#voirFeedback" styleClass="login-btn" stylesheets="@AcceuilUser.css" text="💬 Voir Feedback" />
+                        <ComboBox fx:id="triComboBox" layoutX="50" layoutY="50" prefWidth="200" styleClass="login-btn" stylesheets="@AcceuilUser.css" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

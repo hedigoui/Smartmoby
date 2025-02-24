@@ -1,0 +1,41 @@
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.Color?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="org.example.controllers.ajouterfedback">
+    <!-- Définir une racine d'AnchorPane et ajouter une boîte verticale pour disposer les éléments -->
+    <VBox alignment="TOP_CENTER" spacing="15" padding="20" style="-fx-background-color: #F0F0F0; -fx-border-radius: 10;">
+
+        <!-- Section pour la sélection de l'événement -->
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Label text="Sélectionnez un événement :" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+            <ListView fx:id="liste" prefWidth="300" prefHeight="150" style="-fx-background-color: #FFFFFF;"/>
+        </HBox>
+
+        <!-- Section pour la saisie du feedback -->
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Label text="Feedback :" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+            <TextArea fx:id="feedbackInput" prefWidth="300" prefHeight="100" wrapText="true" style="-fx-background-color: #FFFFFF; -fx-border-color: #CCCCCC; -fx-border-radius: 5;" />
+        </HBox>
+
+        <!-- Section pour le Slider de la note -->
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Label text="Note :" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+            <Slider fx:id="noteSlider" min="0" max="10" value="5" showTickMarks="true" showTickLabels="true" blockIncrement="1" style="-fx-background-color: #FFFFFF;"/>
+            <Label fx:id="noteLabel" text="5" style="-fx-font-size: 14px; font-weight: bold;"/>
+        </HBox>
+
+        <!-- Bouton pour ajouter le feedback -->
+        <HBox spacing="10" alignment="CENTER">
+            <Button fx:id="ajouterFedbackButton" text="Ajouter Feedback" onAction="#ajouterFedback"
+                    style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 14px; -fx-border-radius: 5; -fx-padding: 10px;"/>
+        </HBox>
+
+        <!-- Section pour voir les feedbacks -->
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Label text="Feedbacks pour cet événement :" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+            <ListView fx:id="feedbackListView" prefWidth="300" prefHeight="150" style="-fx-background-color: #FFFFFF;"/>
+        </HBox>
+    </VBox>
+</AnchorPane>
