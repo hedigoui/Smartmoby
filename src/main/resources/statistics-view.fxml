@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<AnchorPane prefHeight="630.0" prefWidth="961.0" styleClass="main-container"
+            stylesheets="@statistics-view.css" xmlns="http://javafx.com/javafx/19"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.esprit.controllers.StatisticsController">
+
+    <VBox spacing="20" alignment="CENTER" AnchorPane.topAnchor="0.0"
+          AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+          AnchorPane.rightAnchor="0.0">
+
+        <Label text="Vehicle Type Statistics" styleClass="title-label"/>
+
+        <HBox spacing="20" alignment="CENTER">
+            <PieChart fx:id="vehicleTypeChart" prefHeight="400.0" prefWidth="500.0"
+                      styleClass="pie-chart"/>
+
+            <VBox spacing="10" styleClass="stats-container">
+                <Label text="Statistics Details" styleClass="subtitle-label"/>
+                <Label fx:id="statisticsLabel" styleClass="stats-label" wrapText="true"/>
+            </VBox>
+        </HBox>
+
+        <Button fx:id="returnButton" text="Return" onAction="#returnToMain"
+                styleClass="return-button"/>
+    </VBox>
+</AnchorPane>

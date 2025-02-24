@@ -1,0 +1,122 @@
+.weather-container {
+    -fx-background-color: #1e1e2f;
+    -fx-padding: 20;
+}
+
+.main-content {
+    -fx-spacing: 20;
+}
+
+/* Header Styles */
+.dashboard-title {
+    -fx-text-fill: #2ecc71;
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(three-pass-box, rgba(46,204,113,0.2), 10, 0, 0, 0);
+}
+
+.info-label {
+    -fx-text-fill: #ecf0f1;
+    -fx-font-size: 12px;
+}
+
+/* Search Section */
+.search-section {
+    -fx-spacing: 10;
+    -fx-padding: 10;
+    -fx-background-color: rgba(255,255,255,0.05);
+    -fx-background-radius: 10;
+}
+
+.search-field {
+    -fx-background-color: rgba(255,255,255,0.1);
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: #95a5a6;
+    -fx-background-radius: 5;
+    -fx-padding: 8 12;
+    -fx-min-width: 250;
+}
+
+.search-button {
+    -fx-background-color: #2ecc71;
+    -fx-text-fill: white;
+    -fx-background-radius: 5;
+    -fx-padding: 8 15;
+}
+
+.search-button:hover {
+    -fx-background-color: #27ae60;
+}
+
+/* Weather Cards */
+.weather-card {
+    -fx-background-color: rgba(255,255,255,0.05);
+    -fx-padding: 15;
+    -fx-spacing: 10;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 0);
+}
+
+.weather-card:hover {
+    -fx-background-color: rgba(255,255,255,0.08);
+}
+
+.section-title {
+    -fx-text-fill: #3498db;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-padding: 0 0 10 0;
+}
+
+.city-label {
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+.temperature-label {
+    -fx-text-fill: #2ecc71;
+    -fx-font-size: 36px;
+    -fx-font-weight: bold;
+}
+
+.description-label {
+    -fx-text-fill: #bdc3c7;
+    -fx-font-size: 16px;
+}
+
+.detail-label {
+    -fx-text-fill: #95a5a6;
+    -fx-font-size: 14px;
+}
+
+.detail-value {
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+}
+
+/* Refresh Button */
+.refresh-button {
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+    -fx-background-radius: 5;
+    -fx-padding: 6 12;
+}
+
+.refresh-button:hover {
+    -fx-background-color: #2980b9;
+}
+
+/* Weather Grid */
+.weather-grid {
+    -fx-padding: 10;
+}
+.back-button:hover {
+    -fx-background-color: #e74c3c;
+}
+.back-button {
+    -fx-background-color: #e74c3c;
+    -fx-text-fill: white;
+    -fx-background-radius: 5;
+    -fx-padding: 8 15;
+}

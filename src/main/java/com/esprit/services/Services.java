@@ -1,19 +1,16 @@
 package com.esprit.services;
 
-import com.esprit.models.*;
 import com.esprit.JDBC.MyDataBase;
 import com.esprit.models.Trajet;
 
-import javax.sql.DataSource;
-import java.sql.Timestamp;
 import java.sql.*;
 import java.util.ArrayList;
 import com.esprit.models.Vehicule;
 
 public class Services {
-     private Connection cnx ;
-     public Services() {cnx = MyDataBase.getInstance().getCnx();
-     }
+    private Connection cnx ;
+    public Services() {cnx = MyDataBase.getInstance().getCnx();
+    }
 
     public void add(Vehicule vehicule) {
         String qry = "INSERT INTO `vehicule`(`type`, `capacite`, `statut`, `dispo`) VALUES (?, ?, ?, ?)";
@@ -73,23 +70,22 @@ public class Services {
         return vehicules;
     }
 
-    public void update(Vehicule vehicule) {
-        String qry = "UPDATE `vehicule` SET `id`=?,`type`=?,`capacite`=?,`statut`=?,`dispo`=? WHERE id = ?";
+    public boolean update(Vehicule vehicule) {
+        String qry = "UPDATE vehicule SET type=?, capacite=?, statut=?, dispo=? WHERE id=?";
         try {
             PreparedStatement stm = cnx.prepareStatement(qry);
-            stm.setString(2, vehicule.getType());
-            stm.setInt(3, vehicule.getCapacite());
-            stm.setString(4, vehicule.getStatut());
-            stm.setInt(5, vehicule.isDispo() ? 1 : 0);
-            stm.setInt(6, vehicule.getId());
-            int resultat = stm.executeUpdate();
-            if (resultat > 0) {
-                System.out.println("Véhicule modif avec succs !");
-            } else {
-                System.out.println("Erreur lors de la modification du véhicule.");
-            }
+            stm.setString(1, vehicule.getType());
+            stm.setInt(2, vehicule.getCapacite());
+            stm.setString(3, vehicule.getStatut());
+            stm.setBoolean(4, vehicule.isDispo());
+            stm.setInt(5, vehicule.getId());
+
+            int rowsAffected = stm.executeUpdate();
+            return rowsAffected > 0;
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.err.println("Error updating vehicle: " + e.getMessage());
+            e.printStackTrace();
+            return false;
         }
     }
     public boolean delete(Vehicule vehicule) {
@@ -136,8 +132,8 @@ public class Services {
 
     public ArrayList<Trajet> getAllTrajet() {
         ArrayList<Trajet> trajets = new ArrayList<>();
-        String qry = "SELECT * FROM `Trajet`"; // Requête SQL pour récupérer tous les trajets
-
+        String qry = "SELECT t.*, v.type as vehicule FROM Trajet t " +
+                "LEFT JOIN vehicule v ON t.id_veh = v.id";
         try {
             Statement stm = cnx.createStatement();
             ResultSet rs = stm.executeQuery(qry);
@@ -154,6 +150,7 @@ public class Services {
                 t.setDistance(rs.getDouble("distance"));  // Distance
                 t.setPrix(rs.getDouble("prix"));  // Prix
                 t.setId_veh(rs.getInt("id_veh"));
+                t.setVehicule(rs.getString("vehicule")); // Set the vehicle type
 
                 // Ajouter le trajet à la liste
                 trajets.add(t);
@@ -181,7 +178,8 @@ public class Services {
     }
 
     public boolean updateTrajet(Trajet trajet) {
-        String qry = "UPDATE Trajet SET pointD = ?, pointA = ?, dateD = ?, dateA = ?, distance = ?, prix = ? WHERE id = ?";
+        String qry = "UPDATE Trajet SET pointD = ?, pointA = ?, dateD = ?, dateA = ?, " +
+                "distance = ?, prix = ?, id_veh = ? WHERE id = ?";
 
         try (PreparedStatement pst = cnx.prepareStatement(qry)) {
             pst.setString(1, trajet.getPointD());
@@ -190,17 +188,18 @@ public class Services {
             pst.setTimestamp(4, trajet.getDateA());
             pst.setDouble(5, trajet.getDistance());
             pst.setDouble(6, trajet.getPrix());
-            pst.setInt(7, trajet.getId());
+            pst.setInt(7, trajet.getId_veh());
+            pst.setInt(8, trajet.getId());
 
             int affectedRows = pst.executeUpdate();
-            return affectedRows > 0; // Retourne true si la mise à jour a réussi
+            return affectedRows > 0;
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
     }
     public boolean UpdateVehicule(Vehicule vehicule) {
-        String qry = "UPDATE Vehicule SET type = ?, capacite = ?, statut = ?, disponibilite = ? WHERE id = ?";
+        String qry = "UPDATE Vehicule SET type = ?, capacite = ?, statut = ?, dispo = ? WHERE id = ?";
 
         try (PreparedStatement pst = cnx.prepareStatement(qry)) {
             // Assigner les valeurs des propriétés du véhicule aux paramètres de la requête
@@ -219,8 +218,28 @@ public class Services {
         }
     }
 
+    public Vehicule getVehiculeById(int id) {
+        String query = "SELECT * FROM vehicule WHERE id = ?";
+
+        try {
+            PreparedStatement pst = cnx.prepareStatement(query);
+            pst.setInt(1, id);
+            ResultSet rs = pst.executeQuery();
+
+            if (rs.next()) {
+                Vehicule v = new Vehicule();
+                v.setId(rs.getInt("id"));
+                v.setType(rs.getString("type"));
+                v.setCapacite(rs.getInt("capacite"));
+                v.setStatut(rs.getString("statut"));
+                v.setDispo(rs.getBoolean("dispo"));
+                return v;
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+        return null;
+    }
 }
-
-
-
 

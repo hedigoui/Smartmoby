@@ -20,12 +20,14 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
+import java.util.ResourceBundle;
 
 public class Affichuser implements Initializable{
     @FXML
@@ -33,6 +35,10 @@ public class Affichuser implements Initializable{
     @FXML
     public TextField chercherTF;
     Services t = new Services();
+    @FXML private Button weatherButton;
+    @FXML
+    private Button statisticsButton;
+    private Stage weatherStage;
 
     private ArrayList<Trajet> getlist(){
 
@@ -66,20 +72,20 @@ public class Affichuser implements Initializable{
     }
 
 
-//    @FXML
-//    void back(ActionEvent event) {
-//        try {
-//
-//            Parent root = FXMLLoader.load(getClass().getResource("/Stock.fxml"));
-//            stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-//            scene = new Scene(root);
-//            stage.setScene(scene);
-//            stage.show();
-//
-//        } catch (IOException e) {
-//            System.out.println(e.getMessage());
-//        }
-//    }
+    @FXML
+    void back(ActionEvent event) {
+        try {
+
+            Parent root = FXMLLoader.load(getClass().getResource("/affiche.fxml"));
+            stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -89,6 +95,7 @@ public class Affichuser implements Initializable{
         int row = 1;
         trajets.addAll(getData());
         Collections.sort(trajets, Comparator.comparing(Trajet::getPrix));
+
 
         try {
             for (int i = 0; i < trajets.size(); i++) {
@@ -117,8 +124,8 @@ public class Affichuser implements Initializable{
                 }
         );
         chercherTF.setOnKeyReleased(this::filterByProductId);
-        byCbox.getItems().addAll( "distance","prix","point depart");
-        byCbox.setValue("distance"); // Default selection
+        byCbox.getItems().addAll( "type vehicule","point destination","point depart" );
+        byCbox.setValue("type vehicule"); // Default selection
 
 
         byCbox.setOnAction(event -> filterBySelectedCriteria());
@@ -221,11 +228,11 @@ public class Affichuser implements Initializable{
                 for (Trajet trajet : trajets) {
                     String fieldValue = "";
                     switch (selectedCriteria) {
-                        case "distance":
-                            fieldValue = String.valueOf(trajet.getDistance());
+                        case "type vehicule":
+                            fieldValue = String.valueOf(trajet.getVehicule());
                             break;
-                        case "prix":
-                            fieldValue = String.valueOf(trajet.getPrix());
+                        case "point destination":
+                            fieldValue = String.valueOf(trajet.getPointA());
                             break;
                         case "point depart":
                             fieldValue = String.valueOf(trajet.getPointD());
@@ -249,5 +256,39 @@ public class Affichuser implements Initializable{
             filteredStock.addAll(trajets);
         }
         updateGridPane(pagination.getCurrentPageIndex(), itemsPerPage);
+    }
+
+    @FXML
+    void showWeatherWidget(ActionEvent event) {
+        try {
+            // Charger le fichier FXML de la nouvelle scène
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/weather-widget.fxml"));
+            Parent root = loader.load();
+
+            // Créer une nouvelle scène avec le fichier FXML chargé
+            Scene scene = new Scene(root);
+
+            // Récupérer la scène actuelle
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            // Changer de scène
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace(); // Gérer l'erreur s'il y a un problème avec le chargement du fichier FXML
+        }
+    }
+
+    @FXML
+    private void showStatistics(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/statistics-view.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

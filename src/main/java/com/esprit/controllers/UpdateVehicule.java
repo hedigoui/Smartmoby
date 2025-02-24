@@ -5,11 +5,12 @@ import com.esprit.services.Services;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import javafx.event.ActionEvent;
 
 public class UpdateVehicule {
 
     @FXML
-    private TextField idv, capacite, stat;
+    private TextField capacite, stat;
 
     @FXML
     private ComboBox<String> vtc;
@@ -20,76 +21,79 @@ public class UpdateVehicule {
     private Vehicule vehiculeToUpdate;
     private Services ps = new Services();
 
-    // Méthode pour initialiser les données dans le contrôleur
+    @FXML
+    public void initialize() {
+        // Initialize toggle group for radio buttons
+        ToggleGroup group = new ToggleGroup();
+        oui.setToggleGroup(group);
+        non.setToggleGroup(group);
+
+        // Initialize ComboBox
+        vtc.getItems().addAll("Car", "Bus", "Métro", "Vélo", "Trottinette");
+    }
+
     public void initData(Vehicule vehicule) {
         this.vehiculeToUpdate = vehicule;
 
-        // Remplir les champs avec les données du véhicule sélectionné
+        // Fill fields with selected vehicle data
         capacite.setText(String.valueOf(vehicule.getCapacite()));
         stat.setText(vehicule.getStatut());
-        // Initialiser le ComboBox avec le type de véhicule
-        vtc.getItems().addAll("Bus", "Métro", "Car", "Vélo", "Trottinette");
         vtc.setValue(vehicule.getType());
 
-//         Initialiser les boutons radio pour la disponibilité
-        if (vehicule.getDisponibilite().equals("Oui")) {
+        // Set radio button based on availability
+        if (vehicule.isDispo()) {
             oui.setSelected(true);
         } else {
-            non.setSelected(false);
+            non.setSelected(true);
         }
     }
 
-    // Méthode d'action pour mettre à jour un véhicule
     @FXML
-    private void update() {
+    void update(ActionEvent event) {
         try {
-            // Vérifier que tous les champs sont remplis
-            if ( capacite.getText().isEmpty() || stat.getText().isEmpty() ||
-                    vtc.getValue() == null ) {
-                showAlert("Erreur", "Veuillez remplir tous les champs !");
+            // Validation
+            if (capacite.getText().isEmpty() || stat.getText().isEmpty() || vtc.getValue() == null) {
+                showAlert("Erreur", "Veuillez remplir tous les champs!", Alert.AlertType.ERROR);
                 return;
             }
 
-            // Récupérer les nouvelles valeurs
+            // Get new values
             int capaciteValue = Integer.parseInt(capacite.getText());
             String statutValue = stat.getText();
-            String typeVtcValue = vtc.getValue();
-            String disponibilite = oui.isSelected() ? "oui" : "non";
+            String typeValue = vtc.getValue();
+            boolean disponibilite = oui.isSelected();
 
-            // Mettre à jour l'objet Vehicule
+            // Update vehicle object
+            vehiculeToUpdate.setType(typeValue);
             vehiculeToUpdate.setCapacite(capaciteValue);
             vehiculeToUpdate.setStatut(statutValue);
-            vehiculeToUpdate.setType(typeVtcValue);
-            vehiculeToUpdate.setDispo(vehiculeToUpdate.isDispo());
+            vehiculeToUpdate.setDispo(disponibilite);
 
-            // Appeler le service pour mettre à jour le véhicule
-            boolean success = ps.UpdateVehicule(vehiculeToUpdate);
-
-            if (success) {
-                showAlert("Succès", "Véhicule mis à jour avec succès.");
+            // Update in database
+            if (ps.update(vehiculeToUpdate)) {
+                showAlert("Succès", "Véhicule mis à jour avec succès!", Alert.AlertType.INFORMATION);
                 closeWindow();
             } else {
-                showAlert("Erreur", "Erreur lors de la mise à jour du véhicule.");
+                showAlert("Erreur", "Échec de la mise à jour du véhicule.", Alert.AlertType.ERROR);
             }
 
         } catch (NumberFormatException e) {
-            showAlert("Erreur", "Veuillez entrer des valeurs numériques valides pour la capacité.");
+            showAlert("Erreur", "La capacité doit être un nombre valide!", Alert.AlertType.ERROR);
+        } catch (Exception e) {
+            showAlert("Erreur", "Une erreur s'est produite: " + e.getMessage(), Alert.AlertType.ERROR);
         }
     }
 
-    // Méthode pour fermer la fenêtre
-    private void closeWindow() {
-        Stage stage = (Stage) idv.getScene().getWindow();
-        stage.close();
-    }
-
-    // Méthode pour afficher une alerte
-    private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
+    private void showAlert(String title, String message, Alert.AlertType alertType) {
+        Alert alert = new Alert(alertType);
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
     }
-}
 
+    private void closeWindow() {
+        Stage stage = (Stage) capacite.getScene().getWindow();
+        stage.close();
+    }
+}

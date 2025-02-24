@@ -29,5 +29,6 @@ public class MainProgGUI extends Application {
             e.printStackTrace();
             throw e;
         }
+
     }
 }

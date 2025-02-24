@@ -1,96 +1,119 @@
-.transparent {
-    -fx-background-color: #2d3436;
+/* Main Container */
+.main-container {
+    -fx-background-color: #f5f6fa;
+    -fx-background-radius: 50;
 }
 
-.selected-button-container {
-    -fx-background-color: #2d3436;
-    -fx-background-radius: 0 30 30 0;
+/* Left Panel */
+.left-panel {
+    -fx-background-color: #A8E6CF;
+    -fx-effect: dropshadow(three-pass-box, rgba(46,204,113,0.4), 10, 0, 0, 0);
 }
 
-.button-container-mouse-moved {
+/* Title Label */
+.title-label {
+    -fx-text-fill: #2ecc71;
+    -fx-effect: dropshadow(three-pass-box, rgba(46,204,113,0.4), 5, 0, 0, 0);
+}
+
+/* Search Field */
+.search-field {
+    -fx-background-color: white;
+    -fx-text-fill: #2c3e50;
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-border-color: #2ecc71;
+    -fx-border-width: 2;
+    -fx-padding: 5 15;
+    -fx-prompt-text-fill: #95a5a6;
+}
+
+.search-field:focused {
+    -fx-border-color: #27ae60;
+    -fx-effect: dropshadow(three-pass-box, rgba(46,204,113,0.2), 10, 0, 0, 0);
+}
+
+/* Combo Box */
+.filter-combo {
+    -fx-background-color: white;
+    -fx-text-fill: #2c3e50;
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-border-color: #2ecc71;
+    -fx-border-width: 2;
+}
+
+.filter-combo .list-cell {
+    -fx-text-fill: #2c3e50;
     -fx-background-color: transparent;
-    -fx-background-radius: 30;
-    -fx-cursor: hand;
 }
 
-.button-container-mouse-moved:hover {
-    -fx-background-color: #34495e;
+.filter-combo .list-view {
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+    -fx-border-color: #2ecc71;
+    -fx-border-radius: 10;
 }
 
-.add-button {
-    -fx-background-color: #3498db;
-    -fx-text-fill: white;
-    -fx-background-radius: 5;
-    -fx-padding: 8 15;
-    -fx-cursor: hand;
+/* Content Container */
+.content-container {
+    -fx-background-color: transparent;
+    -fx-padding: 20;
+    -fx-spacing: 10;
 }
 
-.add-button:hover {
-    -fx-background-color: #2980b9;
+/* Grid Container */
+.grid-container {
+    -fx-background-color: transparent;
+    -fx-padding: 10;
+    -fx-hgap: 15;
+    -fx-vgap: 15;
 }
 
-.text-field {
-    -fx-background-color: #34495e;
-    -fx-text-fill: white;
-    -fx-background-radius: 5;
-    -fx-border-radius: 5;
-    -fx-border-color: #3498db;
-    -fx-border-width: 0 0 2 0;
-}
-
-.combo-box {
-    -fx-background-color: #34495e;
-    -fx-text-fill: white;
-    -fx-background-radius: 5;
-    -fx-border-radius: 5;
-    -fx-border-color: #3498db;
-    -fx-border-width: 0 0 2 0;
-}
-
-.combo-box .list-cell {
-    -fx-text-fill: white;
-    -fx-background-color: #34495e;
-}
-
-.combo-box .list-view {
-    -fx-background-color: #34495e;
-}
-
-.pagination {
+/* Pagination */
+.custom-pagination {
     -fx-page-information-visible: false;
 }
 
-.pagination .pagination-control .number-button {
-    -fx-background-color: transparent;
+.custom-pagination .pagination-control .number-button {
+    -fx-background-color: white;
+    -fx-text-fill: #2c3e50;
+    -fx-background-radius: 15;
+    -fx-border-color: #2ecc71;
+    -fx-border-radius: 15;
+    -fx-border-width: 1;
+}
+
+.custom-pagination .pagination-control .number-button:selected {
+    -fx-background-color: #2ecc71;
     -fx-text-fill: white;
 }
 
-.pagination .pagination-control .number-button:selected {
-    -fx-background-color: #3498db;
+.custom-pagination .pagination-control .button {
+    -fx-background-color: white;
+    -fx-text-fill: #2ecc71;
+    -fx-border-color: #2ecc71;
+    -fx-border-radius: 15;
+    -fx-background-radius: 15;
 }
 
-.exit-button:hover {
+.custom-pagination .pagination-control .button:hover {
+    -fx-background-color: #2ecc71;
+    -fx-text-fill: white;
+}
+
+/* Exit Button */
+.exit-button {
     -fx-opacity: 0.8;
     -fx-cursor: hand;
 }
 
-/* GridPane styling */
-.grid-pane {
-    -fx-background-color: transparent;
-    -fx-padding: 10;
-    -fx-hgap: 10;
-    -fx-vgap: 10;
+.exit-button:hover {
+    -fx-opacity: 1;
+    -fx-effect: dropshadow(three-pass-box, #2ecc71, 10, 0, 0, 0);
 }
 
-/* ScrollPane styling */
-.scroll-pane {
-    -fx-background-color: transparent;
-}
-
-.scroll-pane > .viewport {
-    -fx-background-color: transparent;
-}
-
+/* Scrollbar */
 .scroll-bar:vertical,
 .scroll-bar:horizontal {
     -fx-background-color: transparent;
@@ -98,6 +121,136 @@
 
 .scroll-bar:vertical .thumb,
 .scroll-bar:horizontal .thumb {
-    -fx-background-color: #3498db;
+    -fx-background-color: #2ecc71;
     -fx-background-radius: 5;
+}
+
+/* Card Styling */
+.grid-item {
+    -fx-background-color: white;
+    -fx-background-radius: 15;
+    -fx-effect: dropshadow(three-pass-box, rgba(46,204,113,0.2), 10, 0, 0, 0);
+    -fx-padding: 15;
+}
+
+.grid-item:hover {
+    -fx-effect: dropshadow(three-pass-box, rgba(46,204,113,0.4), 15, 0, 0, 0);
+    -fx-scale-x: 1.02;
+    -fx-scale-y: 1.02;
+}
+
+/* Transitions */
+.search-field, .filter-combo, .grid-item {
+    -fx-transition: all 0.3s ease;
+}
+/* Add these styles for the weather widget */
+.weather-widget {
+    -fx-background-color: rgba(255,255,255,0.1);
+    -fx-padding: 10;
+    -fx-spacing: 5;
+    -fx-background-radius: 10;
+}
+
+.info-label {
+    -fx-text-fill: white;
+    -fx-font-size: 12px;
+    -fx-wrap-text: true;
+}
+
+.weather-title {
+    -fx-text-fill: #2ecc71;
+    -fx-font-weight: bold;
+}
+
+.temp-label {
+    -fx-text-fill: white;
+    -fx-font-size: 18px;
+}
+
+.desc-label, .humid-label, .wind-label {
+    -fx-text-fill: #ecf0f1;
+    -fx-font-size: 12px;
+}
+
+.weather-info {
+    -fx-background-color: rgba(0,0,0,0.2);
+    -fx-padding: 10;
+    -fx-background-radius: 5;
+}
+
+
+
+.app-logo {
+    -fx-effect: dropshadow(three-pass-box, rgba(46,204,113,0.2), 10, 0, 0, 0);
+}
+
+/* Navigation Buttons */
+.nav-buttons {
+    -fx-spacing: 8;
+    -fx-padding: 10 0;
+}
+
+.nav-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #ecf0f1;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 10 15;
+    -fx-font-size: 14px;
+    -fx-graphic-text-gap: 10;
+    -fx-pref-width: 140;
+    -fx-cursor: hand;
+}
+
+.nav-button:hover {
+    -fx-background-color: rgba(46,204,113,0.2);
+    -fx-text-fill: #2ecc71;
+}
+
+.nav-button:pressed {
+    -fx-background-color: rgba(46,204,113,0.4);
+}
+
+/* User Info Section */
+.user-info {
+    -fx-padding: 15;
+    -fx-background-color: rgba(255,255,255,0.05);
+    -fx-background-radius: 10;
+    -fx-spacing: 5;
+    -fx-margin-top: 20;
+}
+
+.user-avatar {
+    -fx-effect: dropshadow(three-pass-box, rgba(255,255,255,0.1), 5, 0, 0, 0);
+}
+
+.user-name {
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.user-role {
+    -fx-text-fill: #95a5a6;
+    -fx-font-size: 12px;
+}
+
+
+
+.content-container {
+    -fx-background-color: rgba(255,255,255,0.05);
+    -fx-background-radius: 10;
+    -fx-padding: 20;
+}
+
+
+
+
+/* Exit Button */
+.exit-button {
+    -fx-cursor: hand;
+    -fx-opacity: 0.8;
+}
+
+.exit-button:hover {
+    -fx-opacity: 1;
 }

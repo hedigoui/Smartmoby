@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Addtrajet {
 
@@ -61,6 +62,8 @@ public class Addtrajet {
 
     @FXML
     void initialize() {
+        loadVehicules();
+
         // Associer les colonnes aux attributs de Trajet
         idtar.setCellValueFactory(new PropertyValueFactory<>("id"));
         pd.setCellValueFactory(new PropertyValueFactory<>("pointD"));
@@ -99,11 +102,14 @@ public class Addtrajet {
                 showAlert("Erreur", "La date de départ doit être antérieure à la date d'arrivée.");
                 return;
             }
-
+            // Créer le trajet avec le type de véhicule
+            Trajet trajet = new Trajet(pointDepart, pointArrivee, dateDepart, dateArrivee,
+                    distanceValue, prixValue, selectedveh.getId());
+            trajet.setVehicule(selectedveh.getType()); // Set the vehicle type
             int id_veh = selectedveh.getId();
 
             // Créer un objet Trajet et l'ajouter
-            Trajet trajet = new Trajet(pointDepart, pointArrivee, dateDepart, dateArrivee, distanceValue, prixValue, id_veh);
+//            Trajet trajet = new Trajet(pointDepart, pointArrivee, dateDepart, dateArrivee, distanceValue, prixValue, id_veh);
             ps.addtrajet(trajet);
 
             // Ajouter le trajet à la TableView
@@ -208,4 +214,23 @@ public class Addtrajet {
             e.printStackTrace(); // Gérer l'erreur s'il y a un problème avec le chargement du fichier FXML
         }
     }
+    private void loadVehicules() {
+        Services service = new Services();
+        List<Vehicule> vehicules = service.getAllVehicule(); // You need to implement this method in Services
+        id_veh.setItems(FXCollections.observableArrayList(vehicules));
+
+        // Set a cell factory to display vehicle information in ComboBox
+        id_veh.setCellFactory(param -> new ListCell<Vehicule>() {
+            @Override
+            protected void updateItem(Vehicule item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(item.getType() + " - " + item.getCapacite()); // Adjust based on your Vehicule class
+                }
+            }
+        });
+    }
+
 }
