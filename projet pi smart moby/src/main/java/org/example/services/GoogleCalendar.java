@@ -30,7 +30,7 @@ public class GoogleCalendar {
     private static final JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
     private static final String CREDENTIALS_FILE_PATH = "/client_secret.json"; // Chemin vers votre fichier client_secret.json
     private static final String TOKENS_DIRECTORY_PATH = "/tokens"; // Répertoire pour stocker les tokens
-    /*private static final String CALENDAR_ID = /*"398fc7b488eeace3547f855cd05a40b64233feeaff4de8274e70017b2c1da90e@group.calendar.google.com";*/ // Remplacez par votre ID de calendrier
+    private static final String CALENDAR_ID = "398fc7b488eeace3547f855cd05a40b64233feeaff4de8274e70017b2c1da90e@group.calendar.google.com"; // Remplacez par votre ID de calendrier
 
     private static final List<String> SCOPES = Collections.singletonList(CalendarScopes.CALENDAR);
 

@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="68d15971-7a4c-46a9-9182-fb8edef44c78" name="Changes" comment="API">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Utilisateurs.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/Utilisateurs.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/services/GoogleCalendar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/services/GoogleCalendar.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -171,6 +172,8 @@
       <workItem from="1740311320276" duration="931000" />
       <workItem from="1740329007324" duration="18282000" />
       <workItem from="1740352487920" duration="76000" />
+      <workItem from="1740354933359" duration="135000" />
+      <workItem from="1740404167182" duration="1059000" />
     </task>
     <task id="LOCAL-00001" summary="API">
       <option name="closed" value="true" />
