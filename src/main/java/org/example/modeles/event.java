@@ -1,24 +1,26 @@
 package org.example.modeles;
 
+import javafx.beans.property.StringProperty;
+import javafx.beans.property.SimpleStringProperty;
 import java.util.Date;
 
 public class event {
     private int id;
-    private String nom;
+    private StringProperty nom;  // Change String en StringProperty
     private Date date;
     private String lieu;
 
     // ✅ Constructeur avec id (si utilisé pour la récupération depuis la BDD)
     public event(int id, String nom, Date date, String lieu) {
         this.id = id;
-        this.nom = nom;
+        this.nom = new SimpleStringProperty(nom);  // Initialisation avec SimpleStringProperty
         this.date = date;
         this.lieu = lieu;
     }
 
     // ✅ Constructeur sans id (utilisé pour l'ajout d'un nouvel événement)
     public event(String nom, Date date, String lieu) {
-        this.nom = nom;
+        this.nom = new SimpleStringProperty(nom);  // Initialisation avec SimpleStringProperty
         this.date = date;
         this.lieu = lieu;
     }
@@ -33,11 +35,15 @@ public class event {
     }
 
     public String getNom() {
-        return nom;
+        return nom.get();  // Récupérer la valeur de nom
     }
 
     public void setNom(String nom) {
-        this.nom = nom;
+        this.nom.set(nom);  // Mettre à jour la valeur de nom
+    }
+
+    public StringProperty nomProperty() {
+        return nom;  // Retourner la propriété StringProperty
     }
 
     public Date getDate() {
@@ -60,7 +66,7 @@ public class event {
     public String toString() {
         return "event{" +
                 "id=" + id +
-                ", nom='" + nom + '\'' +
+                ", nom='" + nom.get() + '\'' +  // Utilise nom.get() pour afficher la valeur
                 ", date=" + date +
                 ", lieu='" + lieu + '\'' +
                 '}';

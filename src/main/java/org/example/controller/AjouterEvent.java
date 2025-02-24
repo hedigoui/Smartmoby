@@ -74,6 +74,13 @@ public class AjouterEvent {
             return;
         }
 
+        // Vérification que la date est supérieure à aujourd'hui
+        LocalDate today = LocalDate.now();
+        if (!localDate.isAfter(today)) {
+            showAlert("Erreur", "La date de l'événement doit être après aujourd'hui.");
+            return;
+        }
+
         // Conversion de la date
         Date dateConverted = Date.valueOf(localDate);
 

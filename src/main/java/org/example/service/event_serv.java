@@ -18,6 +18,39 @@ public class event_serv implements Ievent {
         }
     }
 
+    // Méthode pour récupérer tous les événements
+    public List<event> getAllEvents() {
+        List<event> events = new ArrayList<>();
+        String req = "SELECT id_event, nom, date, lieu FROM evenment";
+
+        System.out.println("🔍 Exécution de la requête : " + req);  // Log de la requête exécutée
+
+        try (Statement st = connection.createStatement();
+             ResultSet rs = st.executeQuery(req)) {
+
+            while (rs.next()) {
+                int id = rs.getInt("id_event");
+                String nom = rs.getString("nom");
+                Date date = rs.getDate("date");
+                String lieu = rs.getString("lieu");
+
+                events.add(new event(id, nom, date, lieu));
+            }
+
+            if (events.isEmpty()) {
+                System.out.println("⚠️ Aucun événement trouvé dans la base de données.");
+            } else {
+                System.out.println("✅ " + events.size() + " événement(s) trouvé(s).");
+            }
+        } catch (SQLException e) {
+            System.out.println("❌ Erreur SQL lors de la récupération : " + e.getMessage());
+        }
+
+        return events;
+    }
+
+
+    // Ajouter un événement à la base de données
     @Override
     public void ajouter(event event) {
         String req = "INSERT INTO evenment (nom, date, lieu) VALUES (?, ?, ?)";
@@ -33,6 +66,7 @@ public class event_serv implements Ievent {
         }
     }
 
+    // Modifier un événement dans la base de données
     @Override
     public void modifier(event event) {
         String req = "UPDATE evenment SET nom=?, date=?, lieu=? WHERE id_event=?";
@@ -53,6 +87,7 @@ public class event_serv implements Ievent {
         }
     }
 
+    // Supprimer un événement de la base de données
     @Override
     public boolean supprimer(event event) {
         String req = "DELETE FROM evenment WHERE id_event=?";
@@ -73,26 +108,14 @@ public class event_serv implements Ievent {
         }
     }
 
+    // Afficher la liste des événements
     @Override
     public List<event> afficher() {
-        List<event> events = new ArrayList<>();
-        String req = "SELECT id_event, nom, date, lieu FROM evenment";
+        List<event> events = getAllEvents();
 
-        try (Statement st = connection.createStatement();
-             ResultSet rs = st.executeQuery(req)) {
-
-            while (rs.next()) {
-                int id = rs.getInt("id_event");
-                String nom = rs.getString("nom");
-                Date date = rs.getDate("date");
-                String lieu = rs.getString("lieu");
-
-                events.add(new event(id, nom, date, lieu));
-            }
-
-            System.out.println("✅ Récupération des événements réussie !");
-        } catch (SQLException e) {
-            System.out.println("❌ Erreur SQL lors de la récupération : " + e.getMessage());
+        // Si la liste est vide, afficher une alerte ou message d'erreur
+        if (events.isEmpty()) {
+            System.out.println("⚠️ Aucun événement trouvé en base.");
         }
 
         return events;
