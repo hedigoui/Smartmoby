@@ -132,7 +132,7 @@
                   <Button layoutX="22.0" layoutY="479.0" mnemonicParsing="false" onAction="#exporter" prefHeight="58.0" prefWidth="163.0" styleClass="export-btn" stylesheets="@AcceuilUser.css" text="Exporter PDF" />
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="TableAdmins" layoutX="206.0" layoutY="8.0" prefHeight="654.0" prefWidth="659.0" visible="false">
+            <AnchorPane fx:id="TableAdmins" layoutX="206.0" layoutY="8.0" prefHeight="654.0" prefWidth="659.0">
                <children>
                   <TableView fx:id="tableView" layoutX="8.0" layoutY="71.0" prefHeight="398.0" prefWidth="660.0" stylesheets="@AcceuilUser.css" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="71.0">
                      <columns>
@@ -185,7 +185,7 @@
                   <Button layoutX="345.0" layoutY="23.0" mnemonicParsing="false" onAction="#reset_organisateur" styleClass="reinitialiser-btn" stylesheets="@AcceuilUser.css" text="Réinitialiser" />
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="afficher_conducteurs" layoutX="206.0" layoutY="14.0" prefHeight="654.0" prefWidth="778.0">
+            <AnchorPane fx:id="afficher_conducteurs" layoutX="206.0" layoutY="14.0" prefHeight="654.0" prefWidth="778.0" visible="false">
                <children>
                   <TableView fx:id="table_conducteurs" layoutX="14.0" layoutY="51.0" prefHeight="594.0" prefWidth="715.0" stylesheets="@AcceuilUser.css">
                      <columns>
