@@ -1,5 +1,6 @@
 package org.example.controllers;
 
+import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.property.TextAlignment;
@@ -24,8 +25,8 @@ import com.itextpdf.layout.element.*;
 import com.itextpdf.layout.property.UnitValue;
 
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.awt.image.BufferedImage;
+import java.io.*;
 import java.sql.*;
 
 import java.sql.Connection;
@@ -33,15 +34,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
-
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.util.Map;
 
 import javafx.scene.Node;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.JFreeChart;
+import org.jfree.data.general.DefaultPieDataset;
 import org.mindrot.jbcrypt.BCrypt;
+
+import javax.imageio.ImageIO;
 
 
 public class AcceuilAdmin {
@@ -996,40 +1001,56 @@ public class AcceuilAdmin {
                     .setTextAlignment(TextAlignment.CENTER);
             document.add(title);
 
-            // Création du tableau
-            Table table = new Table(UnitValue.createPercentArray(new float[]{50, 50})) // Deux colonnes (50% - 50%)
-                    .useAllAvailableWidth();
-
-            // En-têtes du tableau
-            table.addHeaderCell(new Cell().add(new Paragraph("Rôle").setBold()));
-            table.addHeaderCell(new Cell().add(new Paragraph("Nombre d'utilisateurs").setBold()));
-
             // Récupérer les statistiques de la base de données
             String query = "SELECT role, COUNT(*) as count FROM utilisateur GROUP BY role";
+            Map<String, Integer> roleCounts = new HashMap<>();
+
             try (
-                    Connection conn = DataSource.getInstance().getConnection();
-                    Statement stmt = conn.createStatement();
+
+                    Statement stmt = connection.createStatement();
                     ResultSet rs = stmt.executeQuery(query)) {
 
                 while (rs.next()) {
-                    table.addCell(new Cell().add(new Paragraph(rs.getString("role"))));
-                    table.addCell(new Cell().add(new Paragraph(String.valueOf(rs.getInt("count")))));
+                    String role = rs.getString("role");
+                    int count = rs.getInt("count");
+                    roleCounts.put(role, count);
                 }
 
             } catch (SQLException e) {
                 System.out.println("Erreur SQL : " + e.getMessage());
             }
 
-            // Ajouter le tableau au document
-            document.add(table);
+            // Générer le graphique en camembert (Pie Chart)
+            DefaultPieDataset dataset = new DefaultPieDataset();
 
+            for (Map.Entry<String, Integer> entry : roleCounts.entrySet()) {
+                dataset.setValue(entry.getKey(), entry.getValue());
+            }
 
+            JFreeChart chart = ChartFactory.createPieChart(
+                    "Répartition des utilisateurs par rôle", // Titre du graphique
+                    dataset,                               // Données
+                    true,                                  // Légende visible
+                    true,                                  // URLs activées
+                    false                                  // Ne pas inclure des info tooltips
+            );
+
+            // Convertir le graphique en image
+            BufferedImage chartImage = chart.createBufferedImage(500, 300); // Taille du graphique
+
+            // Ajouter l'image du graphique au PDF
+            ByteArrayOutputStream os = new ByteArrayOutputStream();
+            ImageIO.write(chartImage, "PNG", os);
+            Image img = new Image(ImageDataFactory.create(os.toByteArray()));
+
+            // Ajouter l'image du graphique dans le PDF
+            document.add(img);
 
             // Fermer le document
             document.close();
             System.out.println("PDF généré avec succès : " + filePath);
 
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             System.out.println("Erreur : " + e.getMessage());
         }
     }
