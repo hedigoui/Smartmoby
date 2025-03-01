@@ -13,9 +13,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import org.example.models.*;
-import org.example.services.Admin_service;
-import org.example.services.Organisateur_service;
-import org.example.services.event_serv;
+import org.example.services.*;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.IOException;
 import java.sql.Date;
@@ -137,21 +136,60 @@ public class AcceuilOrganisateur {
             return;
         }
 
+
+
         int Num = Integer.valueOf(numBadgeText);
 
         // Si toutes les vérifications sont passées, effectuer la modification
         int userId = Session.getUserId();
         System.out.println("L'ID de l'utilisateur connecté est : " + userId);
+        String hashedPassword = hashPassword(Mot_de_passe);
 
         // Appel de la méthode de modification
         Organisateur_service organisateurService = new Organisateur_service();
-        organisateurService.modifier(new Organisateur(userId, Nom, Prenom, Nom_utilisateur, Email, Mot_de_passe, Utilisateur.Role.ORGANISATEUR, userId, Num),
-                new Utilisateur(userId, Nom, Prenom, Nom_utilisateur, Email, Mot_de_passe));
+        organisateurService.modifier(new Organisateur(userId, Nom, Prenom, Nom_utilisateur, Email, hashedPassword, Utilisateur.Role.ORGANISATEUR, userId, Num),
+                new Utilisateur(userId, Nom, Prenom, Nom_utilisateur, Email, hashedPassword));
 
         // Alerte de confirmation
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setContentText("Les informations ont été modifiées avec succès.");
         alert.show();
+    }
+
+    @FXML
+    void supprimer2(ActionEvent event){
+        int userId = Session.getUserId();
+        System.out.println("L'ID de l'utilisateur connecté est : " + userId);
+        Organisateur_service organisateurService = new Organisateur_service();
+        Utilisateur_service utilisateurService = new Utilisateur_service();
+
+        Organisateur organisateur = organisateurService.getOrganisateurById(userId);
+        Utilisateur utilisateur = utilisateurService.getUtilisateurById(userId);
+
+        if (organisateur != null && utilisateur != null) {
+            // Appeler la méthode de suppression
+            organisateurService.supprimer(organisateur, utilisateur);
+            System.out.println("Conducteur et Utilisateur supprimés avec succès !");
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Suppression");
+            alert.setHeaderText(null);
+            alert.setContentText("Votre compte a été supprimé !");
+            alert.showAndWait();
+            Session.setUserId(-1);
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/login.fxml"));
+                Parent root = loader.load();
+                Scene scene = new Scene(root);
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                stage.setScene(scene);
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("Client ou Utilisateur introuvable !");
+        }
     }
 
     @FXML
@@ -283,6 +321,10 @@ public class AcceuilOrganisateur {
         return newEvent.getNom() != null && !newEvent.getNom().isEmpty() &&
                 newEvent.getLieu() != null && !newEvent.getLieu().isEmpty() &&
                 newEvent.getDate() != null;
+    }
+
+    private String hashPassword(String password) {
+        return BCrypt.hashpw(password, BCrypt.gensalt());
     }
 
 }

@@ -1,14 +1,11 @@
 package org.example.services;
 
-import org.example.models.Client;
+import org.example.models.Conducteur;
 import org.example.models.Organisateur;
 import org.example.models.Utilisateur;
 import org.example.utils.DataSource;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -97,5 +94,35 @@ public class Organisateur_service implements IOrganisateur_service {
         }
 
         return organisateurs;
+    }
+
+    @Override
+    public Organisateur getOrganisateurById(int id) {
+        Organisateur organisateur = null;
+        try {
+            String query = "SELECT u.id, u.nom, u.prenom, u.nom_utilisateur, u.email, u.mot_de_passe, u.role , o.num_badge " +
+                    "FROM organisateur o " +
+                    "JOIN utilisateur u ON o.id = u.id " +
+                    "WHERE o.id = ?";
+            PreparedStatement stmt = connection.prepareStatement(query);
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                organisateur = new Organisateur(
+                        rs.getInt("id"),
+                        rs.getString("nom"),
+                        rs.getString("prenom"),
+                        rs.getString("nom_utilisateur"),
+                        rs.getString("email"),
+                        rs.getString("mot_de_passe"),
+                        Utilisateur.Role.valueOf(rs.getString("role").toUpperCase()),
+                        rs.getInt("num_badge")
+
+                );
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return organisateur;
     }
 }

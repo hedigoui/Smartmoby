@@ -42,7 +42,7 @@
             <Button layoutX="47.0" layoutY="367.0" mnemonicParsing="false" onAction="#quiiter" prefHeight="26.0" prefWidth="218.0" styleClass="nav-btn" stylesheets="@AcceuilUser.css" text="Quitter" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="Modifier" layoutX="299.0" layoutY="-2.0" prefHeight="690.0" prefWidth="965.0" visible="false">
+      <AnchorPane fx:id="Modifier" layoutX="299.0" layoutY="-2.0" prefHeight="690.0" prefWidth="965.0">
          <children>
             <TextField fx:id="nom" layoutX="94.0" layoutY="80.0" prefHeight="43.0" prefWidth="502.0" promptText="Nom" styleClass="text-field" stylesheets="@AcceuilUser.css" />
             <TextField fx:id="prenom" layoutX="94.0" layoutY="141.0" prefHeight="43.0" prefWidth="502.0" promptText="Prénom" styleClass="text-field" stylesheets="@AcceuilUser.css" />
@@ -55,9 +55,14 @@
             </Button>
             <TextField fx:id="num_badge" layoutX="94.0" layoutY="387.0" prefHeight="43.0" prefWidth="502.0" promptText="Numéro De Badge" styleClass="text-field" stylesheets="@AcceuilUser.css" />
             <PasswordField fx:id="mdp" layoutX="94.0" layoutY="325.0" prefHeight="43.0" prefWidth="502.0" promptText="Mot De Passe" stylesheets="@AcceuilUser.css" />
+            <Button layoutX="247.0" layoutY="545.0" mnemonicParsing="false" onAction="#supprimer2" prefHeight="26.0" prefWidth="196.0" styleClass="supprimer" stylesheets="@aj.css" text="Supprimer">
+               <font>
+                  <Font name="Tahoma" size="14.0" />
+               </font>
+            </Button>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="afficher_event" layoutX="299.0" prefHeight="680.0" prefWidth="873.0">
+      <AnchorPane fx:id="afficher_event" layoutX="299.0" prefHeight="680.0" prefWidth="873.0" visible="false">
          <children>
             <VBox layoutX="157.0" layoutY="77.0" prefHeight="542.0" prefWidth="422.0" spacing="15.0">
                <children>

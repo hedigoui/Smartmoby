@@ -9,9 +9,10 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controllers.MotDePasseOublie">
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controllers.VerificationDeCode">
    <children>
-      <AnchorPane layoutX="14.0" prefHeight="509.0" prefWidth="992.0">
+      <AnchorPane layoutX="12.0" layoutY="5.0" prefHeight="509.0" prefWidth="992.0">
          <children>
             <AnchorPane layoutX="-4.0" prefHeight="508.0" prefWidth="327.0" styleClass="root" stylesheets="@aj.css">
                <children>
@@ -28,12 +29,12 @@
                   <Image url="@login2.png" />
                </image>
             </ImageView>
-            <Label layoutX="459.0" layoutY="116.0" stylesheets="@AcceuilUser.css" text="Réinitialisez votre mot de passe" textFill="#4f8c7d">
+            <Label layoutX="459.0" layoutY="116.0" stylesheets="@AcceuilUser.css" text="Entrez le code de vérification" textFill="#4f8c7d">
                <font>
                   <Font name="Tahoma" size="24.0" />
                </font>
             </Label>
-            <TextField fx:id="email" layoutX="359.0" layoutY="218.0" prefHeight="43.0" prefWidth="502.0" promptText="Entrez votre email" styleClass="text-field" stylesheets="@AcceuilUser.css" />
+            <TextField fx:id="code" layoutX="359.0" layoutY="218.0" prefHeight="43.0" prefWidth="502.0" promptText="Entrez votre code" styleClass="text-field" stylesheets="@AcceuilUser.css" />
             <Button layoutX="359.0" layoutY="373.0" mnemonicParsing="false" onAction="#se_connecter" prefHeight="26.0" prefWidth="182.0" styleClass="root" stylesheets="@aj.css" text="Se Connecter">
                <font>
                   <Font name="Tahoma" size="14.0" />
@@ -44,7 +45,7 @@
                   <Font name="Tahoma" size="14.0" />
                </font>
             </Button>
-            <Button layoutX="677.0" layoutY="373.0" mnemonicParsing="false" onAction="#send_email" prefHeight="26.0" prefWidth="182.0" styleClass="root" stylesheets="@aj.css" text="Envoyer Un Email">
+            <Button layoutX="677.0" layoutY="373.0" mnemonicParsing="false" onAction="#verifier_code" prefHeight="26.0" prefWidth="182.0" styleClass="root" stylesheets="@aj.css" text="Vérifier le code">
                <font>
                   <Font name="Tahoma" size="14.0" />
                </font>

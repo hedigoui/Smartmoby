@@ -13,9 +13,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import org.example.models.*;
-import org.example.services.Admin_service;
-import org.example.services.Conducteur_service;
-import org.example.services.Services;
+import org.example.services.*;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.IOException;
 import java.sql.Timestamp;
@@ -201,20 +200,59 @@ public class AcceuilConducteur {
             return;
         }
 
+
+
         // Si toutes les vérifications sont passées, effectuer la modification
         int userId = Session.getUserId();
         System.out.println("L'ID de l'utilisateur connecté est : " + userId);
+        String hashedPassword = hashPassword(Mot_de_passe);
 
         // Appel de la méthode de modification
         Conducteur_service conducteurService = new Conducteur_service();
-        conducteurService.modifier(new Conducteur(userId, Nom, Prenom, Nom_utilisateur, Email, Mot_de_passe, Utilisateur.Role.CONDUCTEUR, userId,Num ),
-                new Utilisateur(userId, Nom, Prenom, Nom_utilisateur, Email, Mot_de_passe));
+        conducteurService.modifier(new Conducteur(userId, Nom, Prenom, Nom_utilisateur, Email, hashedPassword, Utilisateur.Role.CONDUCTEUR, userId,Num ),
+                new Utilisateur(userId, Nom, Prenom, Nom_utilisateur, Email, hashedPassword));
 
         // Alerte de confirmation
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setContentText("Les informations ont été modifiées avec succès.");
         alert.show();
 
+    }
+
+    @FXML
+    void supprimer2(ActionEvent event){
+        int userId = Session.getUserId();
+        System.out.println("L'ID de l'utilisateur connecté est : " + userId);
+        Conducteur_service conducteurService = new Conducteur_service();
+        Utilisateur_service utilisateurService = new Utilisateur_service();
+
+        Conducteur conducteur = conducteurService.getConducteurById(userId);
+        Utilisateur utilisateur = utilisateurService.getUtilisateurById(userId);
+
+        if (conducteur != null && utilisateur != null) {
+            // Appeler la méthode de suppression
+            conducteurService.supprimer(conducteur, utilisateur);
+            System.out.println("Conducteur et Utilisateur supprimés avec succès !");
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Suppression");
+            alert.setHeaderText(null);
+            alert.setContentText("Votre compte a été supprimé !");
+            alert.showAndWait();
+            Session.setUserId(-1);
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/login.fxml"));
+                Parent root = loader.load();
+                Scene scene = new Scene(root);
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                stage.setScene(scene);
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("Client ou Utilisateur introuvable !");
+        }
     }
 
     @FXML
@@ -534,6 +572,10 @@ public class AcceuilConducteur {
         ajouter_transport.setVisible(true);
         Modifier.setVisible(false);
 
+    }
+
+    private String hashPassword(String password) {
+        return BCrypt.hashpw(password, BCrypt.gensalt());
     }
 
 

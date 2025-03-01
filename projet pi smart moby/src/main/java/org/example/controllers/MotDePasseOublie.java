@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.example.services.EmailAPI;
@@ -17,51 +18,71 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Random;
 
 public class MotDePasseOublie {
     private Connection connection = DataSource.getInstance().getConnection();
 
     @FXML
-    private TextField nom_utilisateur;
+    private TextField email;
 
     @FXML
     void send_email(ActionEvent event) {
-        String username = nom_utilisateur.getText();
-        String email = null;
-        String password = null;
+        String Email = email.getText();
+        String code = String.format("%06d", new Random().nextInt(999999));
 
-        String sql = "SELECT email, mot_de_passe FROM utilisateur WHERE nom_utilisateur = ?";
-
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setString(1, username);
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
-                email = resultSet.getString("email");
-                password = resultSet.getString("mot_de_passe");
-                System.out.println("Email: " + email);
-                System.out.println("Mot de passe: " + password);
-
-                try {
-                    EmailAPI emailAPI = new EmailAPI();
-                    emailAPI.sendEmail(
-                            "haythemabdellaoui007@gmail.com",
-                            "Me",
-                            email,
-                            "You",
-                            "Récupération Du Mot De Passe",
-                            "Salutations de notre équipe de support technique ! Voici votre mot de passe : " + password,
-                            "<h3>Voici votre mot de passe : " + password + "</h3>"
-                    );
-                } catch (MailjetException e) {
-                    e.printStackTrace();
-                }
-            } else {
-                System.out.println("Aucun utilisateur trouvé avec ce nom d'utilisateur.");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        if (Email.isEmpty() || !Email.matches("^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$")){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Email invalide");
+            alert.setHeaderText(null);
+            alert.setContentText("Votre Email est invalide ! ");
+            alert.showAndWait();
         }
+        else {
+            String updateSQL = "UPDATE utilisateur SET reset_code = ? WHERE email = ?";
+            try (PreparedStatement updateStatement = connection.prepareStatement(updateSQL)) {
+                updateStatement.setString(1, code);
+                updateStatement.setString(2, Email);
+                updateStatement.executeUpdate();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+            try {
+                EmailAPI emailAPI = new EmailAPI();
+                emailAPI.sendEmail(
+                        "haythemabdellaoui007@gmail.com",
+                        "Me",
+                        Email,
+                        "You",
+                        "Code de vérification",
+                        "Salutations de notre équipe de support technique ! " ,
+                        "<h3>Voici votre code de verification : " + code + "</h3>"
+                );
+            } catch (MailjetException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                // Charger la nouvelle page
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/verification_de_code.fxml"));
+                Parent root = loader.load();
+
+                // Passer l'e-mail au contrôleur de la nouvelle page
+                VerificationDeCode verificationController = loader.getController();
+                verificationController.setEmail(Email); // Méthode à implémenter dans VerificationController
+
+                // Afficher la nouvelle page
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                stage.setScene(new Scene(root));
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+
     }
 
     @FXML

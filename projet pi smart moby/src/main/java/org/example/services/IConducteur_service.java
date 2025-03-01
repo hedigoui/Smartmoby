@@ -12,4 +12,6 @@ public interface IConducteur_service {
 
     void supprimer(Conducteur conducteur , Utilisateur utilisateur);
     public List<Conducteur> afficher();
+
+    Conducteur getConducteurById(int id);
 }

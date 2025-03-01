@@ -16,4 +16,5 @@ public interface IUtilisateur_service {
     List<Utilisateur> afficher();
 
 
+    Utilisateur getUtilisateurById(int id);
 }

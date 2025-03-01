@@ -18,8 +18,5 @@ public interface IAdmin_service {
     public List<Admin> afficher();
 
 
-
-
-
-
+    Admin getAdminById(int id);
 }

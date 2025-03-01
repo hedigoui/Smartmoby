@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import org.example.models.Session;
 import org.example.models.Utilisateur;
 import org.example.utils.DataSource;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -28,109 +29,120 @@ public class Login {
     @FXML
     private TextField nom_utilisateur;
 
+    private String hashPassword(String password) {
+        return BCrypt.hashpw(password, BCrypt.gensalt());
+    }
+
     @FXML
     void se_connecter(ActionEvent event) {
         String username = nom_utilisateur.getText();
         String password = mot_de_passe.getText();
+        System.out.println(password);
 
         // Connexion à la base de données
         Connection connection = DataSource.getInstance().getConnection();
-        String query = "SELECT * FROM utilisateur WHERE nom_utilisateur = ? AND mot_de_passe = ?";
+        String query = "SELECT * FROM utilisateur WHERE nom_utilisateur = ? ";
 
         try {
             // Préparer la requête SQL pour vérifier l'utilisateur
             PreparedStatement pst = connection.prepareStatement(query);
             pst.setString(1, username);
-            pst.setString(2, password);
 
-            // Exécuter la requête
             ResultSet rs = pst.executeQuery();
 
             if (rs.next()) {
-                System.out.println("Connexion réussie !");
-                // Récupérer l'ID de l'utilisateur connecté
-                int userId = rs.getInt("id");
 
-                // Stocker cet ID dans la classe Session
-                Session.setUserId(userId);
+                String hashedPassword = rs.getString("mot_de_passe");
+                System.out.println(hashedPassword);
 
-                String roleString = rs.getString("role");
-                Utilisateur.Role role = Utilisateur.Role.valueOf(roleString);
+                String enteredHashedPassword = hashPassword(password);
+                System.out.println(enteredHashedPassword);
 
-                if(role.equals(Utilisateur.Role.ADMIN)) {
-                    try {
-                        // Charger le fichier FXML de la nouvelle scène
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/AcceuilAdmin.fxml"));
-                        Parent root = loader.load();
+                if (BCrypt.checkpw(password, hashedPassword)) {
+                    System.out.println("Connexion réussie !");
+                    int userId = rs.getInt("id");
 
-                        // Créer une nouvelle scène avec le fichier FXML chargé
-                        Scene scene = new Scene(root);
 
-                        // Récupérer la scène actuelle
-                        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                    Session.setUserId(userId);
 
-                        // Changer de scène
-                        stage.setScene(scene);
-                        stage.show();
-                    } catch (IOException e) {
-                        e.printStackTrace(); // Gérer l'erreur s'il y a un problème avec le chargement du fichier FXML
+                    String roleString = rs.getString("role");
+                    Utilisateur.Role role = Utilisateur.Role.valueOf(roleString);
+
+                    if(role.equals(Utilisateur.Role.ADMIN)) {
+                        try {
+                            // Charger le fichier FXML de la nouvelle scène
+                            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AcceuilAdmin.fxml"));
+                            Parent root = loader.load();
+
+                            // Créer une nouvelle scène avec le fichier FXML chargé
+                            Scene scene = new Scene(root);
+
+                            // Récupérer la scène actuelle
+                            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+                            // Changer de scène
+                            stage.setScene(scene);
+                            stage.show();
+                        } catch (IOException e) {
+                            e.printStackTrace(); // Gérer l'erreur s'il y a un problème avec le chargement du fichier FXML
+                        }
                     }
-                }
-                if(role.equals(Utilisateur.Role.CONDUCTEUR)) {
-                    try {
-                        // Charger le fichier FXML de la nouvelle scène
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/AcceuilConducteur.fxml"));
-                        Parent root = loader.load();
+                    if(role.equals(Utilisateur.Role.CONDUCTEUR)) {
+                        try {
+                            // Charger le fichier FXML de la nouvelle scène
+                            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AcceuilConducteur.fxml"));
+                            Parent root = loader.load();
 
-                        // Créer une nouvelle scène avec le fichier FXML chargé
-                        Scene scene = new Scene(root);
+                            // Créer une nouvelle scène avec le fichier FXML chargé
+                            Scene scene = new Scene(root);
 
-                        // Récupérer la scène actuelle
-                        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                            // Récupérer la scène actuelle
+                            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-                        // Changer de scène
-                        stage.setScene(scene);
-                        stage.show();
-                    } catch (IOException e) {
-                        e.printStackTrace(); // Gérer l'erreur s'il y a un problème avec le chargement du fichier FXML
+                            // Changer de scène
+                            stage.setScene(scene);
+                            stage.show();
+                        } catch (IOException e) {
+                            e.printStackTrace(); // Gérer l'erreur s'il y a un problème avec le chargement du fichier FXML
+                        }
                     }
-                }
-                if(role.equals(Utilisateur.Role.ORGANISATEUR)) {
-                    try {
-                        // Charger le fichier FXML de la nouvelle scène
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/AcceuilOrganisateur.fxml"));
-                        Parent root = loader.load();
+                    if(role.equals(Utilisateur.Role.ORGANISATEUR)) {
+                        try {
+                            // Charger le fichier FXML de la nouvelle scène
+                            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AcceuilOrganisateur.fxml"));
+                            Parent root = loader.load();
 
-                        // Créer une nouvelle scène avec le fichier FXML chargé
-                        Scene scene = new Scene(root);
+                            // Créer une nouvelle scène avec le fichier FXML chargé
+                            Scene scene = new Scene(root);
 
-                        // Récupérer la scène actuelle
-                        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                            // Récupérer la scène actuelle
+                            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-                        // Changer de scène
-                        stage.setScene(scene);
-                        stage.show();
-                    } catch (IOException e) {
-                        e.printStackTrace(); // Gérer l'erreur s'il y a un problème avec le chargement du fichier FXML
+                            // Changer de scène
+                            stage.setScene(scene);
+                            stage.show();
+                        } catch (IOException e) {
+                            e.printStackTrace(); // Gérer l'erreur s'il y a un problème avec le chargement du fichier FXML
+                        }
                     }
-                }
-                if(role.equals(Utilisateur.Role.CLIENT)) {
-                    try {
-                        // Charger le fichier FXML de la nouvelle scène
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/AcceuilClient.fxml"));
-                        Parent root = loader.load();
+                    if(role.equals(Utilisateur.Role.CLIENT)) {
+                        try {
+                            // Charger le fichier FXML de la nouvelle scène
+                            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AcceuilClient.fxml"));
+                            Parent root = loader.load();
 
-                        // Créer une nouvelle scène avec le fichier FXML chargé
-                        Scene scene = new Scene(root);
+                            // Créer une nouvelle scène avec le fichier FXML chargé
+                            Scene scene = new Scene(root);
 
-                        // Récupérer la scène actuelle
-                        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                            // Récupérer la scène actuelle
+                            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-                        // Changer de scène
-                        stage.setScene(scene);
-                        stage.show();
-                    } catch (IOException e) {
-                        e.printStackTrace(); // Gérer l'erreur s'il y a un problème avec le chargement du fichier FXML
+                            // Changer de scène
+                            stage.setScene(scene);
+                            stage.show();
+                        } catch (IOException e) {
+                            e.printStackTrace(); // Gérer l'erreur s'il y a un problème avec le chargement du fichier FXML
+                        }
                     }
                 }
             } else {
