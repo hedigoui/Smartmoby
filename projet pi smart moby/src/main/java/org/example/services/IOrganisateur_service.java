@@ -11,4 +11,5 @@ public interface IOrganisateur_service {
     public void supprimer (Organisateur organisateur, Utilisateur utilisateur);
     public List<Organisateur> afficher();
 
+    Organisateur getOrganisateurById(int id);
 }

@@ -1,6 +1,8 @@
 package org.example.controllers;
 
+import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.layout.element.Cell;
+import com.itextpdf.layout.property.TextAlignment;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -39,7 +41,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 import javafx.scene.Node;
-
+import org.mindrot.jbcrypt.BCrypt;
 
 
 public class AcceuilAdmin {
@@ -727,14 +729,17 @@ public class AcceuilAdmin {
             return;
         }
 
+
+
         // Si toutes les vérifications sont passées, effectuer la modification
         int userId = Session.getUserId();
         System.out.println("L'ID de l'utilisateur connecté est : " + userId);
+        String hashedPassword = hashPassword(Mot_de_passe);
 
         // Appel de la méthode de modification
         Admin_service adminService = new Admin_service();
-        adminService.modifier(new Admin(userId, Nom, Prenom, Nom_utilisateur, Email, Mot_de_passe, Utilisateur.Role.ADMIN, userId, Departement),
-                new Utilisateur(userId, Nom, Prenom, Nom_utilisateur, Email, Mot_de_passe));
+        adminService.modifier(new Admin(userId, Nom, Prenom, Nom_utilisateur, Email, hashedPassword, Utilisateur.Role.ADMIN, userId, Departement),
+                new Utilisateur(userId, Nom, Prenom, Nom_utilisateur, Email, hashedPassword));
 
         // Alerte de confirmation
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -757,6 +762,42 @@ public class AcceuilAdmin {
         mot_de_passe_admin.setCellValueFactory(new PropertyValueFactory<>("mot_de_passe"));
         role_admin.setCellValueFactory(new PropertyValueFactory<>("role"));
         departement_admin.setCellValueFactory(new PropertyValueFactory<>("departement"));
+    }
+
+    @FXML
+    void supprimer2(ActionEvent event){
+        int userId = Session.getUserId();
+        System.out.println("L'ID de l'utilisateur connecté est : " + userId);
+        Admin_service adminService = new Admin_service();
+        Utilisateur_service utilisateurService = new Utilisateur_service();
+
+        Admin admin = adminService.getAdminById(userId);
+        Utilisateur utilisateur = utilisateurService.getUtilisateurById(userId);
+
+        if (admin != null && utilisateur != null) {
+            // Appeler la méthode de suppression
+            adminService.supprimer(admin, utilisateur);
+            System.out.println("Admin et Utilisateur supprimés avec succès !");
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Suppression");
+            alert.setHeaderText(null);
+            alert.setContentText("Votre compte a été supprimé !");
+            alert.showAndWait();
+            Session.setUserId(-1);
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/login.fxml"));
+                Parent root = loader.load();
+                Scene scene = new Scene(root);
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                stage.setScene(scene);
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("Admin ou Utilisateur introuvable !");
+        }
     }
 
     @FXML
@@ -939,60 +980,57 @@ public class AcceuilAdmin {
     }
 
     @FXML
-    void exporter(ActionEvent event) {
-        String filePath = "Utilisateurs.pdf";
+    public void exporter(ActionEvent event) {
+        String filePath = "Statistiques_Utilisateurs.pdf";
 
         try {
-            PdfWriter writer = new PdfWriter(new File(filePath));
+            // Création du document PDF
+            PdfWriter writer = new PdfWriter(new FileOutputStream(filePath));
             PdfDocument pdfDoc = new PdfDocument(writer);
             Document document = new Document(pdfDoc);
 
-            document.add(new Paragraph("Liste des Utilisateurs").setBold().setFontSize(14));
+            // Ajouter le titre
+            Paragraph title = new Paragraph("Statistiques des Utilisateurs\n\n")
+                    .setBold()
+                    .setFontSize(18)
+                    .setTextAlignment(TextAlignment.CENTER);
+            document.add(title);
 
-            // Création du tableau avec des colonnes ajustées
-            Table table = new Table(UnitValue.createPercentArray(new float[]{1.5f, 1.5f, 2, 2.5f, 2.5f, 1.5f, 2, 2, 2}))
+            // Création du tableau
+            Table table = new Table(UnitValue.createPercentArray(new float[]{50, 50})) // Deux colonnes (50% - 50%)
                     .useAllAvailableWidth();
 
-            // Ajouter les en-têtes avec une taille de police plus petite
-            String[] headers = {"Nom", "Prénom", "Nom d'utilisateur", "Email", "Mot de passe", "Rôle", "Département", "Num Badge", "Num Permis"};
-            for (String header : headers) {
-                table.addHeaderCell(new Cell().add(new Paragraph(header).setBold().setFontSize(10)));
-            }
+            // En-têtes du tableau
+            table.addHeaderCell(new Cell().add(new Paragraph("Rôle").setBold()));
+            table.addHeaderCell(new Cell().add(new Paragraph("Nombre d'utilisateurs").setBold()));
 
-            // Requête SQL pour récupérer tous les utilisateurs avec leurs infos spécifiques
-            String query = "SELECT u.nom, u.prenom, u.nom_utilisateur, u.email, u.mot_de_passe, u.role, " +
-                    "a.departement, o.num_badge, c.numero_permis " +
-                    "FROM utilisateur u " +
-                    "LEFT JOIN admin a ON u.id = a.id " +
-                    "LEFT JOIN organisateur o ON u.id = o.id " +
-                    "LEFT JOIN conducteur c ON u.id = c.id";
-
+            // Récupérer les statistiques de la base de données
+            String query = "SELECT role, COUNT(*) as count FROM utilisateur GROUP BY role";
             try (
-                 Statement stmt = connection.createStatement();
-                 ResultSet rs = stmt.executeQuery(query)) {
+                    Connection conn = DataSource.getInstance().getConnection();
+                    Statement stmt = conn.createStatement();
+                    ResultSet rs = stmt.executeQuery(query)) {
 
                 while (rs.next()) {
-                    table.addCell(new Cell().add(new Paragraph(rs.getString("nom")).setFontSize(9)));
-                    table.addCell(new Cell().add(new Paragraph(rs.getString("prenom")).setFontSize(9)));
-                    table.addCell(new Cell().add(new Paragraph(rs.getString("nom_utilisateur")).setFontSize(9)));
-                    table.addCell(new Cell().add(new Paragraph(rs.getString("email")).setFontSize(9)));
-                    table.addCell(new Cell().add(new Paragraph(rs.getString("mot_de_passe")).setFontSize(9)));
-                    table.addCell(new Cell().add(new Paragraph(rs.getString("role")).setFontSize(9)));
-                    table.addCell(new Cell().add(new Paragraph(rs.getString("departement") != null ? rs.getString("departement") : "N/A")).setFontSize(9));
-                    table.addCell(new Cell().add(new Paragraph(rs.getString("num_badge") != null ? rs.getString("num_badge") : "N/A")).setFontSize(9));
-                    table.addCell(new Cell().add(new Paragraph(rs.getString("numero_permis") != null ? rs.getString("numero_permis") : "N/A")).setFontSize(9));
+                    table.addCell(new Cell().add(new Paragraph(rs.getString("role"))));
+                    table.addCell(new Cell().add(new Paragraph(String.valueOf(rs.getInt("count")))));
                 }
 
             } catch (SQLException e) {
                 System.out.println("Erreur SQL : " + e.getMessage());
             }
 
+            // Ajouter le tableau au document
             document.add(table);
+
+
+
+            // Fermer le document
             document.close();
             System.out.println("PDF généré avec succès : " + filePath);
 
         } catch (FileNotFoundException e) {
-            System.out.println("Erreur de fichier : " + e.getMessage());
+            System.out.println("Erreur : " + e.getMessage());
         }
     }
 
@@ -1309,6 +1347,10 @@ public class AcceuilAdmin {
         return newEvent.getNom() != null && !newEvent.getNom().isEmpty() &&
                 newEvent.getLieu() != null && !newEvent.getLieu().isEmpty() &&
                 newEvent.getDate() != null;
+    }
+
+    private String hashPassword(String password) {
+        return BCrypt.hashpw(password, BCrypt.gensalt());
     }
 
 

@@ -119,7 +119,7 @@
             </Button>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="Modifier" layoutX="304.0" layoutY="12.0" prefHeight="666.0" prefWidth="950.0" visible="false">
+      <AnchorPane fx:id="Modifier" layoutX="304.0" layoutY="12.0" prefHeight="666.0" prefWidth="950.0">
          <children>
             <TextField fx:id="nom" layoutX="25.0" layoutY="45.0" prefHeight="43.0" prefWidth="502.0" promptText="Nom" styleClass="text-field" stylesheets="@AcceuilUser.css" />
             <TextField fx:id="prenom" layoutX="25.0" layoutY="106.0" prefHeight="43.0" prefWidth="502.0" promptText="Prénom" styleClass="text-field" stylesheets="@AcceuilUser.css" />
@@ -131,6 +131,11 @@
                </font>
             </Button>
             <PasswordField fx:id="mdp" layoutX="25.0" layoutY="290.0" prefHeight="43.0" prefWidth="502.0" promptText="Mot De Passe" stylesheets="@AcceuilUser.css" />
+            <Button layoutX="178.0" layoutY="502.0" mnemonicParsing="false" onAction="#supprimer2" prefHeight="26.0" prefWidth="196.0" styleClass="supprimer" stylesheets="@aj.css" text="Supprimer">
+               <font>
+                  <Font name="Tahoma" size="14.0" />
+               </font>
+            </Button>
          </children>
       </AnchorPane>
       <AnchorPane fx:id="Afficher_Transport" layoutX="299.0" prefHeight="690.0" prefWidth="942.0" visible="false">
@@ -173,7 +178,7 @@
             <ImageView fx:id="exit" fitHeight="30.0" fitWidth="30.0" layoutX="914.0" layoutY="8.0" styleClass="exit-button" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="afficher_event" layoutX="298.0" layoutY="4.0" prefHeight="666.0" prefWidth="910.0">
+      <AnchorPane fx:id="afficher_event" layoutX="298.0" layoutY="4.0" prefHeight="666.0" prefWidth="910.0" visible="false">
          <children>
             <VBox alignment="CENTER" layoutX="114.0" layoutY="93.0" prefHeight="500" prefWidth="477.0" spacing="10" styleClass="table-view" stylesheets="@AcceuilUser.css">
                <children>

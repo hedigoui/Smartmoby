@@ -10,7 +10,7 @@
 
 <AnchorPane prefHeight="518.0" prefWidth="884.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controllers.ChatBOT">
    <children>
-      <TextField fx:id="question" layoutX="371.0" layoutY="31.0" prefHeight="58.0" prefWidth="466.0" stylesheets="@AcceuilUser.css" />
+      <TextField fx:id="question" layoutX="371.0" layoutY="31.0" prefHeight="58.0" prefWidth="466.0" promptText="Donnez des questions sur Smart Moby ! ( Exemple : c'est quoi Smart Moby ? ) " stylesheets="@AcceuilUser.css" />
       <TextArea fx:id="answer" layoutX="371.0" layoutY="108.0" prefHeight="301.0" prefWidth="466.0" styleClass="text-field" stylesheets="@AcceuilUser.css" />
       <Button layoutX="371.0" layoutY="433.0" mnemonicParsing="false" onAction="#get_answer" prefHeight="46.0" prefWidth="161.0" styleClass="root" stylesheets="@aj.css" text="Répondez !" />
       <AnchorPane prefHeight="523.0" prefWidth="327.0" styleClass="root" stylesheets="@aj.css">

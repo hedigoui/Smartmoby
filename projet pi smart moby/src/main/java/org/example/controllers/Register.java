@@ -19,6 +19,7 @@ import javafx.stage.Stage;
 import org.example.models.*;
 import org.example.services.*;
 import org.example.utils.DataSource;
+import org.mindrot.jbcrypt.BCrypt;
 
 
 public class Register {
@@ -191,7 +192,27 @@ public class Register {
             System.out.println("Erreur lors de la vérification d'unicité : " + e.getMessage());
         }
 
-        // La requête SQL préparée avec des paramètres
+        try {
+            Connection connection2 = DataSource.getInstance().getConnection();
+            String checkQuery = "SELECT COUNT(*) FROM utilisateur WHERE email = ?";
+            PreparedStatement checkStmt = connection2.prepareStatement(checkQuery);
+            checkStmt.setString(1, email.getText()); // Remplacez 'email.getText()' par la variable qui contient l'email à vérifier
+            ResultSet rs = checkStmt.executeQuery();
+            rs.next();
+            if (rs.getInt(1) > 0) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Erreur de validation");
+                alert.setHeaderText(null);
+                alert.setContentText("Cet email est déjà utilisé.");
+                alert.showAndWait();
+                return;
+            }
+        } catch (SQLException e) {
+            System.out.println("Erreur lors de la vérification d'unicité de l'email : " + e.getMessage());
+        }
+
+
+        String hashedPassword = hashPassword(mot_de_passe.getText());
         String req = "INSERT INTO utilisateur (nom, prenom, nom_utilisateur, email, mot_de_passe, role) VALUES (?, ?, ?, ?, ?, ?)";
 
         try {
@@ -201,7 +222,7 @@ public class Register {
             pst.setString(2, prenom.getText());
             pst.setString(3, nom_utilisateur.getText());
             pst.setString(4, email.getText());
-            pst.setString(5, mot_de_passe.getText());
+            pst.setString(5, hashedPassword);
             pst.setString(6, role.getValue().toString()); // Convertir le rôle en String
 
             // Exécuter la requête
@@ -218,26 +239,28 @@ public class Register {
                         int numPermis = Integer.parseInt(num_permis.getText());
                         Conducteur_service c = new Conducteur_service();
                         c.ajouter(new Conducteur(userId, nom.getText(), prenom.getText(), nom_utilisateur.getText(),
-                                email.getText(), mot_de_passe.getText(), role.getValue(), userId, numPermis));
+                                email.getText(), hashedPassword, role.getValue(), userId, numPermis));
+                        System.out.println("Mot de passe haché : " + hashedPassword);
+
                     }
 
                     if (Utilisateur.Role.ADMIN == role.getValue()) {
                         Admin_service a = new Admin_service();
                         a.ajouter(new Admin(userId, nom.getText(), prenom.getText(), nom_utilisateur.getText(),
-                                email.getText(), mot_de_passe.getText(), role.getValue(), departement.getText()));
+                                email.getText(), hashedPassword, role.getValue(), departement.getText()));
                     }
 
                     if (Utilisateur.Role.ORGANISATEUR == role.getValue()) {
                         int numBadge = Integer.parseInt(num_badge.getText());
                         Organisateur_service o = new Organisateur_service();
                         o.ajouter(new Organisateur(userId, nom.getText(), prenom.getText(), nom_utilisateur.getText(),
-                                email.getText(), mot_de_passe.getText(), role.getValue(), numBadge));
+                                email.getText(), hashedPassword, role.getValue(), numBadge));
                     }
 
                     if (Utilisateur.Role.CLIENT == role.getValue()) {
                         Client_service c = new Client_service();
                         c.ajouter(new Client(userId, nom.getText(), prenom.getText(), nom_utilisateur.getText(),
-                                email.getText(), mot_de_passe.getText(), role.getValue(), userId));
+                                email.getText(), hashedPassword, role.getValue(), userId));
                     }
 
                     System.out.println("Utilisateur ajouté avec succès.");
@@ -279,6 +302,10 @@ public class Register {
         // Fermer la fenêtre
         stage.close();
 
+    }
+
+    private String hashPassword(String password) {
+        return BCrypt.hashpw(password, BCrypt.gensalt());
     }
 
 

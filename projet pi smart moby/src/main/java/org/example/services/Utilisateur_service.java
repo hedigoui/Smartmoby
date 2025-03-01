@@ -108,6 +108,23 @@ public class Utilisateur_service implements IUtilisateur_service {
         return utilisateurs;
     }
 
+    @Override
+    public Utilisateur getUtilisateurById(int id) {
+        Utilisateur utilisateur = null;
+        try {
+            String query = "SELECT * FROM utilisateur WHERE id = ?";
+            PreparedStatement stmt = connection.prepareStatement(query);
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                utilisateur = new Utilisateur(rs.getInt("id"), rs.getString("nom"), rs.getString("prenom"), rs.getString("nom_utilisateur"), rs.getString("email"), rs.getString("mot_de_passe"), Utilisateur.Role.valueOf(rs.getString("role").toUpperCase()));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return utilisateur;
+    }
+
 
 }
 

@@ -49,7 +49,7 @@
             <Button layoutX="47.0" layoutY="368.0" mnemonicParsing="false" onAction="#quiiter" prefHeight="26.0" prefWidth="218.0" styleClass="nav-btn" stylesheets="@AcceuilUser.css" text="Quitter" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="Modifier" layoutX="298.0" prefHeight="688.0" prefWidth="966.0" visible="false">
+      <AnchorPane fx:id="Modifier" layoutX="298.0" prefHeight="688.0" prefWidth="966.0">
          <children>
             <TextField fx:id="nom" layoutX="25.0" layoutY="45.0" prefHeight="43.0" prefWidth="502.0" promptText="Nom" styleClass="text-field" stylesheets="@AcceuilUser.css" />
             <TextField fx:id="prenom" layoutX="25.0" layoutY="106.0" prefHeight="43.0" prefWidth="502.0" promptText="Prénom" styleClass="text-field" stylesheets="@AcceuilUser.css" />
@@ -62,6 +62,11 @@
             </Button>
             <TextField fx:id="numero_permis" layoutX="25.0" layoutY="352.0" prefHeight="43.0" prefWidth="502.0" promptText="Numéro De Permis" styleClass="text-field" stylesheets="@AcceuilUser.css" />
             <PasswordField fx:id="mdp" layoutX="25.0" layoutY="290.0" prefHeight="43.0" prefWidth="502.0" promptText="Mot De Passe" stylesheets="@AcceuilUser.css" />
+            <Button layoutX="178.0" layoutY="507.0" mnemonicParsing="false" onAction="#supprimer2" prefHeight="26.0" prefWidth="196.0" styleClass="supprimer" stylesheets="@aj.css" text="Supprimer">
+               <font>
+                  <Font name="Tahoma" size="14.0" />
+               </font>
+            </Button>
          </children>
       </AnchorPane>
       <AnchorPane fx:id="ajouter_transport" layoutX="299.0" prefHeight="688.0" prefWidth="946.0" visible="false">
@@ -135,7 +140,7 @@
             </AnchorPane>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="ajout_trajet" layoutX="299.0" layoutY="8.0" prefHeight="675.0" prefWidth="953.0">
+      <AnchorPane fx:id="ajout_trajet" layoutX="299.0" layoutY="8.0" prefHeight="675.0" prefWidth="953.0" visible="false">
          <children>
             <AnchorPane layoutX="40.0" layoutY="64.0" prefHeight="547.0" prefWidth="943.0">
                <children>

@@ -2,8 +2,6 @@ package org.example.services;
 
 import org.example.models.Admin;
 import org.example.models.Utilisateur;
-import org.example.models.Trajet;
-import org.example.models.Utilisateur;
 import org.example.utils.DataSource;
 
 import java.sql.*;
@@ -97,6 +95,35 @@ public class Admin_service implements IAdmin_service {
         }
 
         return admins;
+    }
+
+    @Override
+    public Admin getAdminById(int id) {
+        Admin admin = null;
+        try {
+            String query = "SELECT u.id, u.nom, u.prenom, u.nom_utilisateur, u.email, u.mot_de_passe, u.role, a.departement " +
+                    "FROM admin a " +
+                    "JOIN utilisateur u ON a.id = u.id " +
+                    "WHERE a.id = ?";
+            PreparedStatement stmt = connection.prepareStatement(query);
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                admin = new Admin(
+                        rs.getInt("id"),
+                        rs.getString("nom"),
+                        rs.getString("prenom"),
+                        rs.getString("nom_utilisateur"),
+                        rs.getString("email"),
+                        rs.getString("mot_de_passe"),
+                        Utilisateur.Role.valueOf(rs.getString("role").toUpperCase()),
+                        rs.getString("departement")
+                );
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return admin;
     }
 
 

@@ -1,5 +1,6 @@
 package org.example.services;
 
+import org.example.models.Admin;
 import org.example.models.Client;
 import org.example.models.Utilisateur;
 
@@ -10,4 +11,8 @@ public interface IClient_service {
     public void modifier (Client client, Utilisateur utilisateur);
     public void supprimer (Client client, Utilisateur utilisateur);
     public List<Client> afficher();
+
+
+
+    Client getClientById(int id);
 }

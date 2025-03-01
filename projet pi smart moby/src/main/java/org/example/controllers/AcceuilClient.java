@@ -21,10 +21,8 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.example.models.*;
-import org.example.services.Admin_service;
-import org.example.services.Client_service;
-import org.example.services.Services;
-import org.example.services.event_serv;
+import org.example.services.*;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.IOException;
 import java.net.URL;
@@ -440,14 +438,17 @@ public class AcceuilClient implements Initializable {
 
 
 
+
+
         // Si toutes les vérifications sont passées, effectuer la modification
         int userId = Session.getUserId();
         System.out.println("L'ID de l'utilisateur connecté est : " + userId);
+        String hashedPassword = hashPassword(Mot_de_passe);
 
         // Appel de la méthode de modification
         Client_service clientService = new Client_service();
-        clientService.modifier(new Client(userId, Nom, Prenom, Nom_utilisateur, Email, Mot_de_passe, Utilisateur.Role.CLIENT, userId),
-                new Utilisateur(userId, Nom, Prenom, Nom_utilisateur, Email, Mot_de_passe));
+        clientService.modifier(new Client(userId, Nom, Prenom, Nom_utilisateur, Email, hashedPassword, Utilisateur.Role.CLIENT, userId),
+                new Utilisateur(userId, Nom, Prenom, Nom_utilisateur, Email, hashedPassword));
 
         // Alerte de confirmation
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -455,6 +456,42 @@ public class AcceuilClient implements Initializable {
         alert.show();
 
 
+    }
+
+    @FXML
+    void supprimer2(ActionEvent event){
+        int userId = Session.getUserId();
+        System.out.println("L'ID de l'utilisateur connecté est : " + userId);
+        Client_service clientService = new Client_service();
+        Utilisateur_service utilisateurService = new Utilisateur_service();
+
+        Client client = clientService.getClientById(userId);
+        Utilisateur utilisateur = utilisateurService.getUtilisateurById(userId);
+
+        if (client != null && utilisateur != null) {
+            // Appeler la méthode de suppression
+            clientService.supprimer(client, utilisateur);
+            System.out.println("Client et Utilisateur supprimés avec succès !");
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Suppression");
+            alert.setHeaderText(null);
+            alert.setContentText("Votre compte a été supprimé !");
+            alert.showAndWait();
+            Session.setUserId(-1);
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/login.fxml"));
+                Parent root = loader.load();
+                Scene scene = new Scene(root);
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                stage.setScene(scene);
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("Client ou Utilisateur introuvable !");
+        }
     }
 
     @FXML
@@ -657,6 +694,10 @@ public class AcceuilClient implements Initializable {
                 break;
         }
         liste.setItems(eventList);
+    }
+
+    private String hashPassword(String password) {
+        return BCrypt.hashpw(password, BCrypt.gensalt());
     }
 
 

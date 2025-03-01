@@ -1,15 +1,12 @@
 package org.example.services;
 
+import org.example.models.Client;
 import org.example.models.Conducteur;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.example.models.Organisateur;
 import org.example.models.Utilisateur;
 import org.example.utils.DataSource;
 
@@ -99,5 +96,35 @@ public class Conducteur_service implements IConducteur_service{
         }
 
         return conducteurs;
+    }
+
+    @Override
+    public Conducteur getConducteurById(int id) {
+        Conducteur conducteur = null;
+        try {
+            String query = "SELECT u.id, u.nom, u.prenom, u.nom_utilisateur, u.email, u.mot_de_passe, u.role , c.numero_permis " +
+                    "FROM conducteur c " +
+                    "JOIN utilisateur u ON c.id = u.id " +
+                    "WHERE c.id = ?";
+            PreparedStatement stmt = connection.prepareStatement(query);
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                conducteur = new Conducteur(
+                        rs.getInt("id"),
+                        rs.getString("nom"),
+                        rs.getString("prenom"),
+                        rs.getString("nom_utilisateur"),
+                        rs.getString("email"),
+                        rs.getString("mot_de_passe"),
+                        Utilisateur.Role.valueOf(rs.getString("role").toUpperCase()),
+                        rs.getInt("numero_permis")
+
+                );
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return conducteur;
     }
 }
