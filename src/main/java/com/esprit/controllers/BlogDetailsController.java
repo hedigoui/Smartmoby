@@ -3,7 +3,9 @@ package com.esprit.controllers;
 import com.esprit.models.Blog;
 import com.esprit.models.Avis;
 import com.esprit.services.AvisService;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -50,8 +52,8 @@ public class BlogDetailsController {
 
         // Example: Fetch comments from a database or service
         // Here, we're just adding some dummy data
-        comments.add(new Avis(1, "John Doe", "Great post!", new Date()));
-        comments.add(new Avis(2, "Jane Smith", "Very informative.", new Date()));
+        //comments.add(new Avis(1, "John Doe", "Great post!", new Date()));
+        //comments.add(new Avis(2, "Jane Smith", "Very informative.", new Date()));
 
         return comments;
     }
@@ -79,5 +81,32 @@ public class BlogDetailsController {
     private void addCommentToDataSource(Avis comment) {
         // Example: Save the comment to a database or service
         System.out.println("New comment added: " + comment.getComment());
+    }
+
+    @FXML
+    private void DeleteComment(ActionEvent event) {
+        // Get the selected comment from the ListView
+        Avis selectedComment = commentsListView.getSelectionModel().getSelectedItem();
+
+        if (selectedComment != null) {
+            // Delete the comment from the database
+            avisService.supprimer(selectedComment);
+
+            // Remove the comment from the ListView
+            commentsListView.getItems().remove(selectedComment);
+
+            System.out.println("Comment deleted: " + selectedComment.getComment());
+        } else {
+            // Show a warning if no comment is selected
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("No Comment Selected");
+            alert.setHeaderText(null);
+            alert.setContentText("Please select a comment to delete.");
+            alert.showAndWait();
+        }
+    }
+
+    @FXML
+    void UpdateComment(ActionEvent event) {
     }
 }

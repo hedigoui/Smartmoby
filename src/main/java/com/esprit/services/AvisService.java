@@ -54,11 +54,11 @@ public class AvisService implements IAvisService<Avis> { // Assuming IService is
 
     @Override
     public void supprimer(Avis avis) {
-        String req = "DELETE FROM avis WHERE id=?";
+        String req = "DELETE FROM avis WHERE avis_id=?";
         try (PreparedStatement pst = connection.prepareStatement(req)) {
             pst.setInt(1, avis.getAvisId());
             pst.executeUpdate();
-            System.out.println("Avis supprimé");
+            System.out.println("Commentaire supprimé");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }

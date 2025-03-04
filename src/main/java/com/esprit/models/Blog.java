@@ -28,6 +28,9 @@ public class Blog {
 
     }
 
+    public Blog(String blogTitle, String blogContent) {
+    }
+
     public int getId() {
         return id;
     }

@@ -17,9 +17,11 @@
         </Pane>
         <Pane layoutX="83.0" layoutY="289.0" prefHeight="278.0" prefWidth="734.0">
             <children>
-                <TextField fx:id="commentTextField" layoutX="33.0" layoutY="235.0" prefHeight="25.0" prefWidth="592.0" promptText="Enter your comment..." />
+                <TextField fx:id="commentTextField" layoutX="33.0" layoutY="235.0" prefHeight="25.0" prefWidth="442.0" promptText="Enter your comment..." />
                 <ListView fx:id="commentsListView" layoutX="33.0" layoutY="14.0" prefHeight="200.0" prefWidth="667.0" />
-                <Button fx:id="commentButton" layoutX="629.0" layoutY="233.0" mnemonicParsing="false" onAction="#handleAddComment" text="Comment" />
+                <Button fx:id="commentButton" layoutX="632.0" layoutY="233.0" mnemonicParsing="false" onAction="#handleAddComment" text="Comment" />
+            <Button fx:id="deletebutton" layoutX="557.0" layoutY="233.0" mnemonicParsing="false" onAction="#DeleteComment" prefHeight="25.0" prefWidth="68.0" text="Delete" />
+            <Button fx:id="updatebutton" layoutX="481.0" layoutY="234.0" mnemonicParsing="false" onAction="#UpdateComment" prefHeight="25.0" prefWidth="68.0" text="Update" />
             </children>
         </Pane>
     </children>

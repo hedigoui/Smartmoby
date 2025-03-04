@@ -77,6 +77,54 @@ public class BlogController {
 
         //    refreshTableView();
     }
+
+    @FXML
+    void addBlog(ActionEvent event) {
+        BlogService service = new BlogService();
+        String titreText = title.getText();
+        String descriptionText = content.getText();
+        if (titreText.isEmpty() || descriptionText.isEmpty() ) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Veuillez remplir tous les champs obligatoires.");
+            alert.show();
+            return;
+        }
+        if (descriptionText.length() < 5) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("La description doit avoir au moins 5 caractères.");
+            alert.show();
+            return;
+        }
+        Date currentDate = new Date();
+        Blog blog = new Blog(0, title.getText(), content.getText(), currentDate);
+        service.ajouter(blog);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setContentText("Blog ajouté avec succès");
+        alert.show();
+        showblog();
+        // Rafraîchir la TableView après l'ajout du blog
+        //navigateToBlogList();
+        //    refreshTableView();
+    }
+
+    @FXML
+    void navigateToBlogList(MouseEvent event) {
+        System.out.println("Je navigue");
+
+        FXMLLoader loader;
+        Parent root;
+        try {
+            loader = new FXMLLoader(getClass().getResource("/BlogList.fxml"));
+            root = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return;
+        }
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.show();
+
+    }
     @FXML
     public void showblog() {
         BlogService blogServiceback = new BlogService();
@@ -85,6 +133,10 @@ public class BlogController {
         coltitle.setCellValueFactory(new PropertyValueFactory<>("title"));
         colcontent.setCellValueFactory(new PropertyValueFactory<>("content"));
         coldate.setCellValueFactory(new PropertyValueFactory<>("date"));
+    }
+
+    public void initialize() {
+        showblog();
     }
 
    /* @FXML
@@ -171,4 +223,34 @@ public class BlogController {
         //refreshTableView();
     }
 
+    public void show_acceuil(ActionEvent actionEvent) {
+    }
+
+    public void show_transport(ActionEvent actionEvent) {
+    }
+
+    public void show_service(ActionEvent actionEvent) {
+    }
+
+    public void show_event(ActionEvent actionEvent) {
+    }
+
+    public void show_blog(ActionEvent actionEvent) {
+    }
+
+    public void show_parametres(ActionEvent actionEvent) {
+    }
+
+    public void show_se_deconnecter(ActionEvent actionEvent) {
+    }
+
+    public void quiiter(ActionEvent actionEvent) {
+    }
+
+    public void show_utilisateurs(ActionEvent actionEvent) {
+    }
+
+    public void onPDF(ActionEvent actionEvent) {
+        PDFExporter.exportTableViewToPDF(table);
+    }
 }
