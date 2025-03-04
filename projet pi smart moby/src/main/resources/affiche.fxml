@@ -20,7 +20,7 @@
         <ImageView fx:id="exit" fitHeight="30.0" fitWidth="30.0" layoutX="917.0" layoutY="14.0" styleClass="exit-button" />
 
         <!-- Title -->
-        <Label layoutX="629.0" layoutY="18.0" prefHeight="50.0" prefWidth="110.0" styleClass="title-label" text="Easy Way" textAlignment="CENTER">
+        <Label layoutX="594.0" layoutY="18.0" prefHeight="50.0" prefWidth="145.0" styleClass="title-label" text="Easy Way" textAlignment="CENTER">
             <font>
                 <Font name="System Bold Italic" size="24.0" />
             </font>
@@ -43,88 +43,23 @@
                 <Pagination fx:id="pagination" prefHeight="520.0" prefWidth="788.0" styleClass="custom-pagination" />
             </children>
         </VBox>
-      <AnchorPane layoutX="-1.0" layoutY="96.0" prefHeight="538.0" prefWidth="170.0" styleClass="root" stylesheets="@aj.css">
-         <children>
-            <Button fx:id="homeButton" layoutX="24.0" layoutY="132.0" prefHeight="28.0" prefWidth="117.0" styleClass="nav-button" text="Home">
-               <graphic>
-                  <ImageView fitHeight="20" fitWidth="20">
-                     <image>
-                        <Image url="@images/home.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button fx:id="profileButton" layoutX="25.0" layoutY="185.0" prefHeight="28.0" prefWidth="118.0" styleClass="nav-button" text="Profile">
-               <graphic>
-                  <ImageView fitHeight="20" fitWidth="20">
-                     <image>
-                        <Image url="@images/profile.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button fx:id="tripsButton" layoutX="25.0" layoutY="241.0" prefHeight="28.0" prefWidth="118.0" styleClass="nav-button" text="My Trips">
-               <graphic>
-                  <ImageView fitHeight="20" fitWidth="20">
-                     <image>
-                        <Image url="@images/trips.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button fx:id="weatherButton" layoutX="15.0" layoutY="411.0" onAction="#showWeatherWidget" prefHeight="28.0" prefWidth="118.0" styleClass="nav-button" text="Weather">
-               <graphic>
-                  <ImageView fitHeight="80.0" fitWidth="97.0">
-                     <image>
+        <Button fx:id="weatherButton1" layoutX="784.0" layoutY="3.0" onAction="#showWeatherWidget" prefHeight="28.0" prefWidth="118.0" styleClass="nav-button" text="Weather">
+            <graphic>
+                <ImageView fitHeight="80.0" fitWidth="97.0">
+                    <image>
                         <Image url="@images/weather.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button fx:id="settingsButton" layoutX="25.0" layoutY="306.0" prefHeight="28.0" prefWidth="118.0" styleClass="nav-button" text="Settings">
-               <graphic>
-                  <ImageView fitHeight="20" fitWidth="20">
-                     <image>
-                        <Image url="@images/settings.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <VBox alignment="CENTER" layoutX="6.0" layoutY="6.0" prefHeight="86.0" prefWidth="158.0" spacing="5" styleClass="user-info">
-               <children>
-                  <ImageView fitHeight="40.0" fitWidth="40.0" styleClass="user-avatar">
-                     <image>
-                        <Image url="@images/user-avatar.png" />
-                     </image>
-                  </ImageView>
-                  <Label fx:id="userNameLabel" styleClass="user-name" text="hedigoui" />
-                  <Label fx:id="userRoleLabel" styleClass="user-role" text="User" />
-               </children>
-            </VBox>
-         </children>
-      </AnchorPane>
-      <ImageView fitHeight="75.0" fitWidth="137.0" layoutX="9.0" layoutY="3.0" styleClass="app-logo">
-         <image>
-            <Image url="@images/logo.png" />
-         </image>
-      </ImageView>
-      <Button fx:id="weatherButton1" layoutX="784.0" layoutY="11.0" onAction="#showWeatherWidget" prefHeight="28.0" prefWidth="118.0" styleClass="nav-button" text="Weather">
-         <graphic>
-            <ImageView fitHeight="80.0" fitWidth="97.0">
-               <image>
-                  <Image url="@images/weather.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
-      <Button fx:id="statisticsButton" layoutX="616.0" layoutY="68.0" onAction="#showStatistics" prefHeight="41.0" prefWidth="147.0" styleClass="nav-button" text="Véhicule Stat">
-         <graphic>
-            <ImageView fitHeight="63.0" fitWidth="118.0">
-               <image>
-                  <Image url="@images/statistics.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
+                    </image>
+                </ImageView>
+            </graphic>
+        </Button>
+        <Button fx:id="statisticsButton" layoutX="616.0" layoutY="68.0" onAction="#showStatistics" prefHeight="41.0" prefWidth="147.0" styleClass="nav-button" text="Véhicule Stat">
+            <graphic>
+                <ImageView fitHeight="63.0" fitWidth="118.0">
+                    <image>
+                        <Image url="@images/statistics.png" />
+                    </image>
+                </ImageView>
+            </graphic>
+        </Button>
     </children>
 </AnchorPane>

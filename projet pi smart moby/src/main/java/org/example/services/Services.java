@@ -1,74 +1,114 @@
 package org.example.services;
 
+import org.example.models.Conducteur;
 import org.example.utils.DataSource;
 import org.example.models.Trajet;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
+
 import org.example.models.Vehicule;
 
+
+
 public class Services {
-    private Connection cnx ;
-    public Services() {cnx = DataSource.getInstance().getConnection();
+    private Connection cnx;
+
+    public Services() {
+        cnx =   DataSource.getInstance().getConnection();
     }
 
     public void add(Vehicule vehicule) {
-        String qry = "INSERT INTO `vehicule`(`type`, `capacite`, `statut`, `dispo`) VALUES (?, ?, ?, ?)";
-
+        String query = "INSERT INTO vehicule (type, capacite, statut, dispo, conducteur_id) VALUES (?, ?, ?, ?, ?)";
         try {
-            // Création de la requête préparée avec récupération de l'ID généré
-            PreparedStatement stm = cnx.prepareStatement(qry, Statement.RETURN_GENERATED_KEYS);
-
-            stm.setString(1, vehicule.getType());
-            stm.setInt(2, vehicule.getCapacite());
-            stm.setString(3, vehicule.getStatut());
-            stm.setBoolean(4, vehicule.isDispo());
-
-            // Exécution de la requête
-            int affectedRows = stm.executeUpdate();
-
-            if (affectedRows > 0) {
-                ResultSet generatedKeys = stm.getGeneratedKeys();
-                if (generatedKeys.next()) {
-                    vehicule.setId(generatedKeys.getInt(1)); // Récupération de l'ID auto-incrémenté
-                    System.out.println("Véhicule ajouté avec ID : " + vehicule.getId());
-                }
+            PreparedStatement pst = cnx.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
+            pst.setString(1, vehicule.getType());
+            pst.setInt(2, vehicule.getCapacite());
+            pst.setString(3, vehicule.getStatut());
+            pst.setBoolean(4, vehicule.isDispo());
+            if (vehicule.getConducteurId() != null) {
+                pst.setInt(5, vehicule.getConducteurId());
+            } else {
+                pst.setNull(5, java.sql.Types.INTEGER);
             }
-
+            pst.executeUpdate();
+            ResultSet rs = pst.getGeneratedKeys();
+            if (rs.next()) {
+                vehicule.setId(rs.getInt(1));
+            }
         } catch (SQLException e) {
-            System.out.println("Erreur lors de l'ajout du véhicule : " + e.getMessage());
             e.printStackTrace();
         }
     }
-
-
-
     public ArrayList<Vehicule> getAllVehicule() {
         ArrayList<Vehicule> vehicules = new ArrayList<>();
-        String qry = "SELECT * FROM `Vehicule`";
-
+        String query = "SELECT v.*, u.nom as conducteur_nom, u.prenom as conducteur_prenom, c.numero_permis as conducteur_numero_permis " +
+                "FROM vehicule v " +
+                "LEFT JOIN utilisateur u ON v.conducteur_id = u.id " +
+                "LEFT JOIN conducteur c ON v.conducteur_id = c.id";
         try {
-            Statement stm = cnx.createStatement();
-            ResultSet rs = stm.executeQuery(qry);
-
+            System.out.println("Préparation de la requête : " + query);
+            PreparedStatement pst = cnx.prepareStatement(query);
+            System.out.println("Exécution de la requête...");
+            ResultSet rs = pst.executeQuery();
             while (rs.next()) {
-                Vehicule s = new Vehicule();
-                s.setId(rs.getInt("id"));  // Correction : utilisation du nom de colonne
-                s.setType(rs.getString("type"));
-                s.setCapacite(rs.getInt("capacite")); // Correction de l’index
-                s.setStatut(rs.getString("statut"));
-                s.setDispo(rs.getBoolean("dispo")); // Correction de l’index
-
-                vehicules.add(s);
+                Vehicule v = new Vehicule();
+                v.setId(rs.getInt("id"));
+                v.setType(rs.getString("type"));
+                v.setCapacite(rs.getInt("capacite"));
+                v.setStatut(rs.getString("statut"));
+                v.setDispo(rs.getBoolean("dispo"));
+                int conducteurId = rs.getInt("conducteur_id");
+                if (!rs.wasNull()) {
+                    v.setConducteurId(conducteurId);
+                    String nomComplet = rs.getString("conducteur_nom") + " " + rs.getString("conducteur_prenom");
+                    v.setConducteurNom(nomComplet);
+                    v.setConducteurTelephone(rs.getInt("conducteur_numero_permis"));
+                    System.out.println("Conducteur trouvé : " + nomComplet + ", Numéro de permis : " + v.getConducteurTelephone());
+                } else {
+                    System.out.println("Aucun conducteur trouvé pour le véhicule avec ID : " + v.getId());
+                }
+                vehicules.add(v);
+                System.out.println("Véhicule ajouté : ID=" + v.getId() + ", Type=" + v.getType() + ", Conducteur=" + v.getConducteurNom());
             }
-
         } catch (SQLException e) {
-            System.out.println("Erreur lors de la récupération des véhicules : " + e.getMessage());
             e.printStackTrace();
+            System.err.println("Erreur lors de l'exécution de la requête : " + e.getMessage());
         }
-
         return vehicules;
     }
+
+    public ArrayList<Conducteur> getAllConducteurs() {
+        ArrayList<Conducteur> conducteurs = new ArrayList<>();
+        String query = "SELECT utilisateur.id, utilisateur.nom, utilisateur.prenom, conducteur.numero_permis " +
+                "FROM utilisateur " +
+                "INNER JOIN conducteur ON utilisateur.id = conducteur.id " +
+                "WHERE utilisateur.role = 'CONDUCTEUR'";
+        try {
+            PreparedStatement pst = cnx.prepareStatement(query);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                Conducteur c = new Conducteur(
+                        rs.getInt("id"),
+                        rs.getString("nom"),
+                        rs.getString("prenom"),
+                        rs.getInt("numero_permis")
+                );
+                System.out.println("Conducteur récupéré: ID=" + c.getId() +
+                        ", Nom=" + c.getNom() +
+                        ", Prénom=" + c.getPrenom() +
+                        ", numero=" + c.getNumero_permis());
+                conducteurs.add(c);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return conducteurs;
+    }
+
+
+
 
     public boolean update(Vehicule vehicule) {
         String qry = "UPDATE vehicule SET type=?, capacite=?, statut=?, dispo=? WHERE id=?";
@@ -88,15 +128,16 @@ public class Services {
             return false;
         }
     }
+
     public boolean delete(Vehicule vehicule) {
-        String qry ="DELETE FROM `vehicule` WHERE `id`=?";
-        try{
+        String qry = "DELETE FROM `vehicule` WHERE `id`=?";
+        try {
             PreparedStatement stm = cnx.prepareStatement(qry);
-            stm.setInt(1,vehicule.getId());
+            stm.setInt(1, vehicule.getId());
 
             int affectedRows = stm.executeUpdate();
-            return affectedRows > 0 ;
-        }catch (SQLException e){
+            return affectedRows > 0;
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
             return false;
         }
@@ -198,6 +239,7 @@ public class Services {
             return false;
         }
     }
+
     public boolean UpdateVehicule(Vehicule vehicule) {
         String qry = "UPDATE Vehicule SET type = ?, capacite = ?, statut = ?, dispo = ? WHERE id = ?";
 
@@ -219,13 +261,15 @@ public class Services {
     }
 
     public Vehicule getVehiculeById(int id) {
-        String query = "SELECT * FROM vehicule WHERE id = ?";
-
+        String query = "SELECT v.*, u.nom as conducteur_nom, u.prenom as conducteur_prenom, c.numero_permis as conducteur_telephone " +
+                "FROM vehicule v " +
+                "LEFT JOIN utilisateur u ON v.conducteur_id = u.id " +
+                "LEFT JOIN conducteur c ON u.id = c.id " +
+                "WHERE v.id = ?";
         try {
             PreparedStatement pst = cnx.prepareStatement(query);
             pst.setInt(1, id);
             ResultSet rs = pst.executeQuery();
-
             if (rs.next()) {
                 Vehicule v = new Vehicule();
                 v.setId(rs.getInt("id"));
@@ -233,13 +277,36 @@ public class Services {
                 v.setCapacite(rs.getInt("capacite"));
                 v.setStatut(rs.getString("statut"));
                 v.setDispo(rs.getBoolean("dispo"));
+                int conducteurId = rs.getInt("conducteur_id");
+                if (!rs.wasNull()) {
+                    v.setConducteurId(conducteurId);
+                    String nomComplet = rs.getString("conducteur_nom") + " " + rs.getString("conducteur_prenom");
+                    v.setConducteurNom(nomComplet);
+                    v.setConducteurTelephone(rs.getInt("conducteur_telephone")); // Set the telephone number
+                }
                 return v;
             }
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            ex.printStackTrace();
         }
-
         return null;
     }
-}
 
+
+
+
+    public List<Vehicule> getVehiculesByConducteurId(int conducteurId) {
+        List<Vehicule> allVehicules = getAllVehicule();
+        List<Vehicule> filteredVehicules = new ArrayList<>();
+        for (Vehicule vehicule : allVehicules) {
+            if (vehicule.getConducteurId() == conducteurId) {
+                filteredVehicules.add(vehicule);
+            }
+        }
+        return filteredVehicules;
+    }
+
+
+
+
+}

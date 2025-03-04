@@ -99,6 +99,7 @@ public class event_serv implements Ievent {
                 System.out.println("✅ Événement modifié avec succès !");
 
                 String eventId = googlecalendar.recupererEventId(event.getNom());
+                System.out.println(eventId);
                 if (eventId != null) {
 
                     String startDateTime = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX").format(event.getDate());

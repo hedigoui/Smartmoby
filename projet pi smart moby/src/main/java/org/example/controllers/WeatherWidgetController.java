@@ -25,6 +25,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
+
+
 public class WeatherWidgetController implements Initializable {
     // Existing FXML injections
     @FXML private Label cityLabel;

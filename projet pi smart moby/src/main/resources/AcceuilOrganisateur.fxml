@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.String?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -30,12 +31,6 @@
                </font>
             </Label>
             <Line endX="100.0" layoutX="156.0" layoutY="176.0" startX="-100.0" />
-            <Button layoutX="46.0" layoutY="212.0" mnemonicParsing="false" onAction="#show_acceuil" prefHeight="26.0" prefWidth="218.0" stylesheets="@AcceuilUser.css" text="Acceuil">
-               <styleClass>
-                  <String fx:value="nav-btn" />
-                  <String fx:value="nav-btn" />
-               </styleClass>
-            </Button>
             <Button layoutX="45.0" layoutY="252.0" mnemonicParsing="false" onAction="#show_event" prefHeight="26.0" prefWidth="236.0" styleClass="nav-btn" stylesheets="@AcceuilUser.css" text="Organiser Un Evénement" />
             <Button layoutX="47.0" layoutY="290.0" mnemonicParsing="false" onAction="#show_parametres" prefHeight="26.0" prefWidth="218.0" styleClass="nav-btn" stylesheets="@AcceuilUser.css" text="Paramétres" />
             <Button layoutX="47.0" layoutY="327.0" mnemonicParsing="false" onAction="#show_se_deconnecter" prefHeight="26.0" prefWidth="218.0" styleClass="nav-btn" stylesheets="@AcceuilUser.css" text="Se Déconnecter" />
@@ -55,7 +50,7 @@
             </Button>
             <TextField fx:id="num_badge" layoutX="94.0" layoutY="387.0" prefHeight="43.0" prefWidth="502.0" promptText="Numéro De Badge" styleClass="text-field" stylesheets="@AcceuilUser.css" />
             <PasswordField fx:id="mdp" layoutX="94.0" layoutY="325.0" prefHeight="43.0" prefWidth="502.0" promptText="Mot De Passe" stylesheets="@AcceuilUser.css" />
-            <Button layoutX="247.0" layoutY="545.0" mnemonicParsing="false" onAction="#supprimer2" prefHeight="26.0" prefWidth="196.0" styleClass="supprimer" stylesheets="@aj.css" text="Supprimer">
+            <Button layoutX="247.0" layoutY="545.0" mnemonicParsing="false" onAction="#supprimer2" prefHeight="26.0" prefWidth="196.0" styleClass="delete-button" stylesheets="@buttons.css" text="Supprimer">
                <font>
                   <Font name="Tahoma" size="14.0" />
                </font>
@@ -66,21 +61,40 @@
          <children>
             <VBox layoutX="157.0" layoutY="77.0" prefHeight="542.0" prefWidth="422.0" spacing="15.0">
                <children>
-                  <Label text="Nom de l'événement :" />
+                  <Label stylesheets="@aj.css" text="Nom de l'événement :" />
                   <TextField fx:id="nom2" promptText="Nom de l'événement" styleClass="text-field" stylesheets="@AcceuilUser.css" />
-                  <Label text="Date de l'événement :" />
+                  <Label stylesheets="@aj.css" text="Date de l'événement :" />
                   <DatePicker fx:id="date" stylesheets="@AcceuilUser.css" />
-                  <Label text="Lieu de l'événement :" />
+                  <Label stylesheets="@aj.css" text="Lieu de l'événement :" />
                   <TextField fx:id="lieu" promptText="Lieu" stylesheets="@AcceuilUser.css" />
                   <Label fx:id="errorLabel" textFill="RED" />
                   <HBox spacing="10.0">
                      <children>
-                        <Button onAction="#ajouterEvent" styleClass="login-btn" stylesheets="@AcceuilUser.css" text="Ajouter" />
-                        <Button fx:id="display" onAction="#afficherEvent" styleClass="login-btn" stylesheets="@AcceuilUser.css" text="Afficher" />
+                        <Button onAction="#ajouterEvent" styleClass="add-button" stylesheets="@buttons.css" text="Ajouter" />
+                        <Button fx:id="display" onAction="#afficherEvent" styleClass="green-button" stylesheets="@buttons.css" text="Afficher" />
                      </children>
                   </HBox>
                </children>
             </VBox>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="afficher_evenement" layoutX="307.0" layoutY="17.0" prefHeight="678.0" prefWidth="935.0" visible="false">
+         <children>
+            <VBox alignment="CENTER" layoutX="181.0" layoutY="44.0" prefHeight="500" prefWidth="477.0" spacing="10" styleClass="table-view" stylesheets="@AcceuilUser.css">
+               <children>
+                  <TextField fx:id="searchField" promptText="🔍 Rechercher un événement..." styleClass="rechercher-btn" stylesheets="@AcceuilUser.css" />
+                  <ListView fx:id="liste" prefHeight="350" styleClass="table-view" stylesheets="@AcceuilUser.css" />
+                  <HBox alignment="CENTER" spacing="10">
+                     <children>
+                        <Button fx:id="modif" onAction="#modifier" prefHeight="26.0" prefWidth="147.0" styleClass="login-btn" stylesheets="@AcceuilUser.css" text="✏ Modifier" />
+                        <Button fx:id="supp" onAction="#supprimer_event" prefHeight="26.0" prefWidth="148.0" styleClass="supprimer-btn" stylesheets="@AcceuilUser.css" text="🗑 Supprimer" />
+                        <Button fx:id="feedback" onAction="#voirFeedback" styleClass="login-btn" stylesheets="@AcceuilUser.css" text="💬 Voir Feedback" />
+                        <ComboBox fx:id="triComboBox" layoutX="50" layoutY="50" prefWidth="200" styleClass="login-btn" stylesheets="@AcceuilUser.css" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <Button layoutX="14.0" layoutY="82.0" onAction="#retour_ajouter_event" prefHeight="41.0" prefWidth="150.0" styleClass="login-btn" stylesheets="@AcceuilUser.css" text="Ajouter Evenement" />
          </children>
       </AnchorPane>
    </children>

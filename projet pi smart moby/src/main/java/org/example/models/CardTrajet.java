@@ -1,5 +1,10 @@
 package org.example.models;
 
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import org.example.controllers.TrajetDetailController;
 import org.example.utils.DataSource;
 import org.example.services.Services;
 import javafx.event.ActionEvent;
@@ -21,7 +26,12 @@ import java.util.Optional;
 
 import static com.sun.javafx.event.EventUtil.fireEvent;
 
+
+
 public class CardTrajet {
+    @FXML
+    public Button voirDetails;
+
     @FXML
     public Button update;
     @FXML
@@ -44,6 +54,9 @@ public class CardTrajet {
     private Connection cnx;
     @FXML
     private Label vehiculeType;
+
+    @FXML private Button btnDetails;
+
 
     public void ServiceStock() {
         cnx = DataSource.getInstance().getConnection();
@@ -95,14 +108,38 @@ public class CardTrajet {
                 style += "-fx-background-color: #fce4ec; -fx-text-fill: #c2185b;";
                 break;
             default:
-                style += "-fx-background-color: #fafafa; -fx-text-fill: #616161;";
+                style += "-fx-background-color: #f2fd00; -fx-text-fill: #070707;";
                 break;
         }
 
         vehiculeType.setStyle(style);
     }
-    private String formatDate(Timestamp timestamp) {
+    private String formatDatStringe(Timestamp timestamp) {
         if (timestamp == null) return "";
         return timestamp.toLocalDateTime().format(DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm"));
+    }
+    @FXML
+    private void voirDetails(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/TrajetDetail.fxml"));
+            Parent root = loader.load();
+
+            TrajetDetailController controller = loader.getController();
+            controller.initData(this.trajet);
+
+            Stage stage = new Stage();
+            stage.setTitle("Détails du trajet");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Erreur lors de l'ouverture des détails: " + e.getMessage());
+        }
+    }
+
+    private String formatDate(Timestamp timestamp) {
+        if (timestamp == null) return "Non défini";
+        return timestamp.toLocalDateTime()
+                .format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
     }
 }

@@ -34,12 +34,12 @@
          </font>
       </Label>
       <TextField fx:id="nom" layoutX="368.0" layoutY="208.0" prefHeight="43.0" prefWidth="502.0" promptText="Nom" styleClass="text-field" stylesheets="@AcceuilUser.css" />
-      <Button fx:id="login" layoutX="688.0" layoutY="720.0" mnemonicParsing="false" onAction="#login" prefHeight="26.0" prefWidth="182.0" styleClass="root" stylesheets="@aj.css" text="Se Connecter">
+      <Button fx:id="login" layoutX="688.0" layoutY="720.0" mnemonicParsing="false" onAction="#login" prefHeight="26.0" prefWidth="182.0" styleClass="green-button" stylesheets="@buttons.css" text="Se Connecter">
          <font>
             <Font name="Tahoma" size="14.0" />
          </font>
       </Button>
-      <Button layoutX="345.0" layoutY="720.0" mnemonicParsing="false" onAction="#ajouter_compte" prefHeight="26.0" prefWidth="196.0" styleClass="root" stylesheets="@aj.css" text="Créer un nouveau compte">
+      <Button layoutX="345.0" layoutY="720.0" mnemonicParsing="false" onAction="#ajouter_compte" prefHeight="41.0" prefWidth="225.0" styleClass="add-button" stylesheets="@buttons.css" text="Créer un nouveau compte">
          <font>
             <Font name="Tahoma" size="14.0" />
          </font>
@@ -56,6 +56,6 @@
       <PasswordField fx:id="mot_de_passe" layoutX="369.0" layoutY="434.0" prefHeight="43.0" prefWidth="502.0" promptText="Mot De Passe" styleClass="text-field" stylesheets="@AcceuilUser.css" />
       <TextField fx:id="departement" layoutX="369.0" layoutY="541.0" prefHeight="43.0" prefWidth="502.0" promptText="Département" styleClass="text-field" stylesheets="@AcceuilUser.css" />
       <TextField fx:id="num_badge" layoutX="368.0" layoutY="597.0" prefHeight="43.0" prefWidth="502.0" promptText="Numéro De Badge" styleClass="text-field" stylesheets="@AcceuilUser.css" />
-      <TextField fx:id="num_permis" layoutX="369.0" layoutY="653.0" prefHeight="43.0" prefWidth="502.0" promptText="Numéro De Permis" styleClass="text-field" stylesheets="@AcceuilUser.css" />
+      <TextField fx:id="num_permis" layoutX="369.0" layoutY="653.0" prefHeight="43.0" prefWidth="502.0" promptText="Numéro de téléphone" styleClass="text-field" stylesheets="@AcceuilUser.css" />
    </children>
 </AnchorPane>

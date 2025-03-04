@@ -28,6 +28,33 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
+
+import org.example.services.PDFGenerator;
+import org.example.services.SMSService;
+
+
+import java.sql.*;
+import java.util.List;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
+import org.example.models.Service;
+import org.example.services.ServiceDAO;
+
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
+
+import static org.example.services.ServiceDAO.conn;
+
 public class AcceuilClient implements Initializable {
 
     @FXML
@@ -120,6 +147,40 @@ public class AcceuilClient implements Initializable {
     @FXML
     private AnchorPane afficher_event;
 
+    @FXML private TextField txtNomP, txtTypeP, txtPrixP;
+    @FXML private ListView<String> listViewP;
+    @FXML private TextField searchProduit;
+    @FXML private Button btnAjouterP, btnModifierP, btnSuppP, btnVersService;
+
+    @FXML private Pane displayPane;
+    @FXML private Pane managePane;
+
+    @FXML private Button btnAdd, btnModifier, btnSupprimer;
+    @FXML private TableColumn<Service, String> desc_c;
+    @FXML private TableColumn<Service, Integer> id_c;
+    @FXML private TableColumn<Service, String> nom_c;
+    @FXML private TableView<Service> table;
+    @FXML private TableColumn<Service, Double> tarif_c;
+    @FXML private TextField txtDescription, txtNom, txtTarif;
+    @FXML private TextField searchService;
+
+    @FXML
+    private AnchorPane afficher_produit;
+
+    @FXML
+    private AnchorPane afficher_service;
+
+    @FXML
+    private AnchorPane acceuil1;
+
+
+    private ObservableList<Service> serviceList = FXCollections.observableArrayList();
+
+
+    public SMSService smsService = new SMSService();
+
+    private ObservableList<String> produitList = FXCollections.observableArrayList();
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -195,6 +256,36 @@ public class AcceuilClient implements Initializable {
                     box.getChildren().addAll(nomEvent, dateEvent, lieuEvent);
                     setGraphic(box);
                 }
+            }
+        });
+
+        loadProduits();
+        listViewP.setItems(produitList);
+
+        // Sélectionner un élément pour affichage dans les champs
+        listViewP.setOnMouseClicked(event -> {
+            String selected = listViewP.getSelectionModel().getSelectedItem();
+            if (selected != null && !selected.equals("ID  --  Nom  --  Type  --  Prix")) {
+                String[] parts = selected.split(" -- ");
+                txtNomP.setText(parts[1]);
+                txtTypeP.setText(parts[2]);
+                txtPrixP.setText(parts[3]);
+            }
+        });
+
+        id_c.setCellValueFactory(cellData -> new javafx.beans.property.SimpleIntegerProperty(cellData.getValue().getId()).asObject());
+        nom_c.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getNom()));
+        desc_c.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getDescription()));
+        tarif_c.setCellValueFactory(cellData -> new javafx.beans.property.SimpleDoubleProperty(cellData.getValue().getTarif()).asObject());
+
+        loadServices();
+
+        table.setOnMouseClicked(event -> {
+            if (!table.getSelectionModel().isEmpty()) {
+                Service selectedService = table.getSelectionModel().getSelectedItem();
+                txtNom.setText(selectedService.getNom());
+                txtDescription.setText(selectedService.getDescription());
+                txtTarif.setText(String.valueOf(selectedService.getTarif()));
             }
         });
     }
@@ -505,6 +596,9 @@ public class AcceuilClient implements Initializable {
         Modifier.setVisible(false);
         Afficher_Transport.setVisible(false);
         afficher_event.setVisible(false);
+        afficher_produit.setVisible(false);
+        afficher_service.setVisible(false);
+        acceuil1.setVisible(true);
 
 
     }
@@ -519,6 +613,9 @@ public class AcceuilClient implements Initializable {
         Modifier.setVisible(false);
         Afficher_Transport.setVisible(false);
         afficher_event.setVisible(true);
+        afficher_produit.setVisible(false);
+        afficher_service.setVisible(false);
+        acceuil1.setVisible(false);
 
     }
 
@@ -527,6 +624,9 @@ public class AcceuilClient implements Initializable {
         Modifier.setVisible(true);
         Afficher_Transport.setVisible(false);
         afficher_event.setVisible(false);
+        afficher_produit.setVisible(false);
+        afficher_service.setVisible(false);
+        acceuil1.setVisible(false);
     }
 
     @FXML
@@ -552,6 +652,12 @@ public class AcceuilClient implements Initializable {
 
     @FXML
     void show_service(ActionEvent event) {
+        Modifier.setVisible(false);
+        Afficher_Transport.setVisible(false);
+        afficher_event.setVisible(false);
+        afficher_produit.setVisible(true);
+        afficher_service.setVisible(false);
+        acceuil1.setVisible(false);
 
     }
 
@@ -560,6 +666,9 @@ public class AcceuilClient implements Initializable {
         Modifier.setVisible(false);
         Afficher_Transport.setVisible(true);
         afficher_event.setVisible(false);
+        afficher_produit.setVisible(false);
+        afficher_service.setVisible(false);
+        acceuil1.setVisible(false);
 
     }
 
@@ -698,6 +807,336 @@ public class AcceuilClient implements Initializable {
 
     private String hashPassword(String password) {
         return BCrypt.hashpw(password, BCrypt.gensalt());
+    }
+
+    @FXML
+    public void showDisplaySection() {
+        displayPane.setVisible(true);
+        managePane.setVisible(false);
+    }
+
+    @FXML
+    public void showManageSection() {
+        displayPane.setVisible(false);
+        managePane.setVisible(true);
+    }
+    @FXML
+    public void searchProduit() {
+        String filter = searchProduit.getText().toLowerCase();
+        ObservableList<String> filteredList = FXCollections.observableArrayList();
+
+        for (String item : produitList) {
+            if (item.toLowerCase().contains(filter)) {
+                filteredList.add(item);
+            }
+        }
+
+        listViewP.setItems(filteredList);
+    }
+
+    private void loadProduits() {
+        produitList.clear();
+        produitList.add("ID -- Nom -- Type -- Prix"); // En-tête
+
+        try (
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery("SELECT * FROM produit")) {
+            while (rs.next()) {
+                produitList.add(rs.getInt("idproduit") + " -- " + rs.getString("nom") +
+                        " -- " + rs.getString("type") + " -- " + rs.getDouble("prix"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void generatePDF() {
+        List<String> products = listViewP.getItems();
+
+        if (!products.isEmpty()) {
+            try {
+                // Spécifiez le chemin de votre fichier PDF
+                String filePath = "product_list.pdf";
+
+
+                PDFGenerator.generatePDFFromStringList(products, filePath);
+
+                // Afficher une alerte de succès
+                showAlert(Alert.AlertType.INFORMATION, "PDF généré avec succès", "Le PDF a été créé avec succès à l'emplacement : " + filePath);
+            } catch (IOException e) {
+                showAlert(Alert.AlertType.ERROR, "Erreur lors de la génération du PDF", "Une erreur est survenue : " + e.getMessage());
+            }
+        } else {
+            showAlert(Alert.AlertType.WARNING, "Liste vide", "Il n'y a pas de produits dans la liste.");
+        }
+    }
+    private void showAlert(Alert.AlertType alertType, String title, String content) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+    @FXML
+    void AjouterProduit(ActionEvent event) {
+        String nom = txtNomP.getText();
+        String type = txtTypeP.getText();
+        double prix;
+
+        if (nom.isEmpty() || type.isEmpty()) {
+            showAlert("Erreur", "Tous les champs doivent être remplis.", Alert.AlertType.ERROR);
+            return;
+        }
+
+        try {
+            prix = Double.parseDouble(txtPrixP.getText());
+        } catch (NumberFormatException e) {
+            showAlert("Erreur", "Le prix doit être un nombre valide.", Alert.AlertType.ERROR);
+            return;
+        }
+
+        String query = "INSERT INTO produit (nom, type, prix) VALUES (?, ?, ?)";
+        try (
+                PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, nom);
+            stmt.setString(2, type);
+            stmt.setDouble(3, prix);
+            stmt.executeUpdate();
+            showAlert("Succès", "Produit ajouté avec succès !", Alert.AlertType.INFORMATION);
+
+            //   smsService.sendSMS("+21623039225","produit crée");
+            loadProduits();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void ModifierProduit(ActionEvent event) {
+        String selected = listViewP.getSelectionModel().getSelectedItem();
+        if (selected == null || selected.equals("ID -- Nom -- Type -- Prix")) {
+            showAlert("Erreur", "Veuillez sélectionner un produit à modifier.", Alert.AlertType.ERROR);
+            return;
+        }
+
+        int id = Integer.parseInt(selected.split(" -- ")[0]);
+        String nom = txtNomP.getText();
+        String type = txtTypeP.getText();
+        double prix;
+
+        if (nom.isEmpty() || type.isEmpty()) {
+            showAlert("Erreur", "Tous les champs doivent être remplis.", Alert.AlertType.ERROR);
+            return;
+        }
+
+        try {
+            prix = Double.parseDouble(txtPrixP.getText());
+        } catch (NumberFormatException e) {
+            showAlert("Erreur", "Le prix doit être un nombre valide.", Alert.AlertType.ERROR);
+            return;
+        }
+
+        String query = "UPDATE produit SET nom = ?, type = ?, prix = ? WHERE idproduit = ?";
+        try (
+                PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, nom);
+            stmt.setString(2, type);
+            stmt.setDouble(3, prix);
+            stmt.setInt(4, id);
+            stmt.executeUpdate();
+            showAlert("Succès", "Produit modifié avec succès !", Alert.AlertType.INFORMATION);
+            loadProduits();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void SupprimerProduit(ActionEvent event) {
+        String selected = listViewP.getSelectionModel().getSelectedItem();
+        if (selected == null || selected.equals("ID -- Nom -- Type -- Prix")) {
+            showAlert("Erreur", "Veuillez sélectionner un produit à supprimer.", Alert.AlertType.ERROR);
+            return;
+        }
+
+        int id = Integer.parseInt(selected.split(" -- ")[0]);
+
+        Alert confirm = new Alert(Alert.AlertType.CONFIRMATION, "Voulez-vous vraiment supprimer ce produit ?", ButtonType.YES, ButtonType.NO);
+        confirm.showAndWait();
+        if (confirm.getResult() == ButtonType.YES) {
+            String query = "DELETE FROM produit WHERE idproduit = ?";
+            try (
+                    PreparedStatement stmt = conn.prepareStatement(query)) {
+                stmt.setInt(1, id);
+                stmt.executeUpdate();
+                showAlert("Succès", "Produit supprimé avec succès !", Alert.AlertType.INFORMATION);
+                loadProduits();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @FXML
+    void VersService(ActionEvent event) {
+        Modifier.setVisible(false);
+        Afficher_Transport.setVisible(false);
+        afficher_event.setVisible(false);
+        afficher_produit.setVisible(false);
+        afficher_service.setVisible(true);
+
+    }
+
+    private void switchScene(ActionEvent event, String fxmlFile) {
+        try {
+            Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+            Parent root = loader.load();
+            stage.setScene(new Scene(root));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void showAlert(String title, String content, Alert.AlertType type) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+
+    private void loadServices() {
+        serviceList.clear();
+        try {
+            List<Service> services = ServiceDAO.getAllServices();
+            serviceList.addAll(services);
+            table.setItems(serviceList);
+        } catch (SQLException e) {
+            showAlert("Erreur", "Impossible de charger les services.", Alert.AlertType.ERROR);
+        }
+    }
+
+
+
+    @FXML
+    public void searchService() {
+        String filter = searchService.getText().toLowerCase();
+        ObservableList<Service> filteredList = FXCollections.observableArrayList();
+
+        for (Service service : serviceList) {
+            if (service.getNom().toLowerCase().contains(filter) ||
+                    service.getDescription().toLowerCase().contains(filter) ||
+                    Double.valueOf(service.getTarif()).toString().toLowerCase().contains(filter)) {
+                filteredList.add(service);
+            }
+        }
+
+        table.setItems(filteredList);
+    }
+    @FXML
+    void Add(ActionEvent event) {
+        if (!validerChamps()) return; // Validation avant ajout
+
+        try {
+            String nom = txtNom.getText();
+            String description = txtDescription.getText();
+            double tarif = Double.parseDouble(txtTarif.getText());
+
+            ServiceDAO.ajouterService(new Service(0, nom, description, tarif));
+            showAlert("Succès", "Service ajouté avec succès.", Alert.AlertType.INFORMATION);
+            loadServices();
+            clearFields();
+        } catch (SQLException e) {
+            showAlert("Erreur", "Impossible d'ajouter le service.", Alert.AlertType.ERROR);
+        }
+    }
+
+    @FXML
+    void Modifier(ActionEvent event) {
+        Service selectedService = table.getSelectionModel().getSelectedItem();
+        if (selectedService == null) {
+            showAlert("Erreur", "Veuillez sélectionner un service à modifier.", Alert.AlertType.ERROR);
+            return;
+        }
+
+        if (!validerChamps()) return; // Validation avant modification
+
+        try {
+            selectedService = new Service(selectedService.getId(), txtNom.getText(), txtDescription.getText(), Double.parseDouble(txtTarif.getText()));
+            ServiceDAO.modifierService(selectedService);
+            showAlert("Succès", "Service modifié avec succès.", Alert.AlertType.INFORMATION);
+            loadServices();
+            clearFields();
+        } catch (SQLException e) {
+            showAlert("Erreur", "Impossible de modifier le service.", Alert.AlertType.ERROR);
+        }
+    }
+
+    @FXML
+    void Supprimer(ActionEvent event) {
+        Service selectedService = table.getSelectionModel().getSelectedItem();
+        if (selectedService == null) {
+            showAlert("Erreur", "Veuillez sélectionner un service à supprimer.", Alert.AlertType.ERROR);
+            return;
+        }
+
+        Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION, "Voulez-vous vraiment supprimer ce service ?", ButtonType.YES, ButtonType.NO);
+        confirmation.showAndWait();
+        if (confirmation.getResult() == ButtonType.YES) {
+            try {
+                ServiceDAO.supprimerService(selectedService.getId());
+                showAlert("Succès", "Service supprimé avec succès.", Alert.AlertType.INFORMATION);
+                loadServices();
+                clearFields();
+            } catch (SQLException e) {
+                showAlert("Erreur", "Impossible de supprimer le service.", Alert.AlertType.ERROR);
+            }
+        }
+    }
+
+    @FXML
+    void VersProduit(ActionEvent event) {
+        Modifier.setVisible(false);
+        Afficher_Transport.setVisible(false);
+        afficher_event.setVisible(false);
+        afficher_produit.setVisible(true);
+        afficher_service.setVisible(false);
+    }
+
+
+    /**
+     * Vérifie si les champs sont bien remplis avant d'ajouter ou modifier un service.
+     */
+    private boolean validerChamps() {
+        String nom = txtNom.getText().trim();
+        String description = txtDescription.getText().trim();
+        String tarifStr = txtTarif.getText().trim();
+
+        if (nom.isEmpty() || description.isEmpty() || tarifStr.isEmpty()) {
+            showAlert("Erreur", "Tous les champs doivent être remplis.", Alert.AlertType.ERROR);
+            return false;
+        }
+
+        try {
+            double tarif = Double.parseDouble(tarifStr);
+            if (tarif <= 0) {
+                showAlert("Erreur", "Le tarif doit être un nombre positif.", Alert.AlertType.ERROR);
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            showAlert("Erreur", "Le tarif doit être un nombre valide.", Alert.AlertType.ERROR);
+            return false;
+        }
+
+        return true;
+    }
+
+    private void clearFields() {
+        txtNom.clear();
+        txtDescription.clear();
+        txtTarif.clear();
     }
 
 

@@ -26,6 +26,16 @@ public class Conducteur extends Utilisateur{
         this.numero_permis = numero_permis;
     }
 
+    public Conducteur(int id , String nom , String prenom , String email ) {
+        super(id , nom , prenom , email);
+    }
+
+    public Conducteur(int id , String nom , String prenom  , int numero_permis) {
+        super(id , nom , prenom );
+        this.numero_permis=numero_permis;
+    }
+
+
     public int getId_conducteur() {
         return id_conducteur;
     }

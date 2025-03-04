@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+
+
 public class StatisticsController implements Initializable {
     @FXML private PieChart vehicleTypeChart;
     @FXML private Label statisticsLabel;
@@ -48,8 +50,10 @@ public class StatisticsController implements Initializable {
 
         // Create pie chart data
         ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
+        int total = trajets.size();
         for (Map.Entry<String, Integer> entry : vehicleCount.entrySet()) {
-            pieChartData.add(new PieChart.Data(entry.getKey(), entry.getValue()));
+            double percentage = (entry.getValue() * 100.0) / total;
+            pieChartData.add(new PieChart.Data(entry.getKey() + " "  + String.format("%.1f", percentage) , entry.getValue()));
         }
 
         // Set chart data
@@ -57,12 +61,10 @@ public class StatisticsController implements Initializable {
         vehicleTypeChart.setTitle("Vehicle Type Distribution");
 
         // Calculate and display percentages
-        int total = trajets.size();
         StringBuilder stats = new StringBuilder("Vehicle Statistics:\n\n");
         for (Map.Entry<String, Integer> entry : vehicleCount.entrySet()) {
             double percentage = (entry.getValue() * 100.0) / total;
-            stats.append(String.format("%s: %d (%.1f%%)\n",
-                    entry.getKey(), entry.getValue(), percentage));
+            stats.append(String.format("%s: %d (%.1f%%)\n", entry.getKey(), entry.getValue(), percentage));
         }
         statisticsLabel.setText(stats.toString());
 

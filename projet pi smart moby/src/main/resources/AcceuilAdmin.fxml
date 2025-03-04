@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.String?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TableColumn?>
@@ -13,10 +13,16 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane prefHeight="678.0" prefWidth="1293.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controllers.AcceuilAdmin">
    <children>
@@ -34,18 +40,6 @@
                </font>
             </Label>
             <Line endX="100.0" layoutX="156.0" layoutY="176.0" startX="-100.0" />
-            <Button layoutX="46.0" layoutY="212.0" mnemonicParsing="false" onAction="#show_acceuil" prefHeight="26.0" prefWidth="218.0" stylesheets="@AcceuilUser.css" text="Acceuil">
-               <graphic>
-                  <ImageView fitHeight="20.0" fitWidth="20.0">
-                     <image>
-                        <Image url="@images/home.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-               <styleClass>
-                  <String fx:value="nav-btn" />
-               </styleClass>
-            </Button>
             <Button layoutX="47.0" layoutY="255.0" mnemonicParsing="false" onAction="#show_transport" prefHeight="26.0" prefWidth="218.0" styleClass="nav-btn" stylesheets="@AcceuilUser.css" text="Transports">
                <graphic>
                   <ImageView fitHeight="20.0" fitWidth="20.0">
@@ -120,7 +114,7 @@
                </graphic>
             </Button>         </children>
       </AnchorPane>
-      <AnchorPane fx:id="page_utilisateurs" layoutX="296.8" prefHeight="668.0" prefWidth="1203.0" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="297.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane fx:id="page_utilisateurs" layoutX="296.8" prefHeight="668.0" prefWidth="1203.0" visible="false" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="297.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="0.0">
          <children>
             <AnchorPane layoutX="-2.0" prefHeight="668.0" prefWidth="208.0">
                <children>
@@ -218,7 +212,7 @@
             </Button>
             <TextField fx:id="departement" layoutX="129.0" layoutY="421.0" prefHeight="43.0" prefWidth="502.0" promptText="Département" styleClass="text-field" stylesheets="@AcceuilUser.css" />
             <PasswordField fx:id="mdp" layoutX="129.0" layoutY="359.0" prefHeight="43.0" prefWidth="502.0" promptText="Mot De Passe" stylesheets="@AcceuilUser.css" />
-            <Button layoutX="282.0" layoutY="574.0" mnemonicParsing="false" onAction="#supprimer2" prefHeight="26.0" prefWidth="196.0" styleClass="supprimer" stylesheets="@aj.css" text="Supprimer">
+            <Button layoutX="282.0" layoutY="574.0" mnemonicParsing="false" onAction="#supprimer2" prefHeight="27.0" prefWidth="196.0" styleClass="delete-button" stylesheets="@buttons.css" text="Supprimer">
                <font>
                   <Font name="Tahoma" size="14.0" />
                </font>
@@ -227,141 +221,173 @@
       </AnchorPane>
       <AnchorPane fx:id="ajouter_transport" layoutX="295.0" layoutY="7.0" prefHeight="668.0" prefWidth="873.0" visible="false">
          <children>
-            <AnchorPane layoutX="69.0" layoutY="75.0" prefHeight="524.0" prefWidth="886.0">
+            <VBox layoutX="113.0" layoutY="14.0" prefHeight="691.0" prefWidth="618.0" spacing="20" styleClass="main-container">
                <children>
-                  <AnchorPane layoutX="189.0" layoutY="95.0" prefHeight="554.4" prefWidth="700.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <GridPane hgap="10" styleClass="form-grid" vgap="10">
+                     <columnConstraints>
+                        <ColumnConstraints />
+                        <ColumnConstraints />
+                        <ColumnConstraints />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints />
+                        <RowConstraints />
+                        <RowConstraints />
+                        <RowConstraints />
+                        <RowConstraints />
+                     </rowConstraints>
                      <children>
-                        <Button layoutX="80.0" layoutY="61.0" mnemonicParsing="false" prefHeight="335.0" prefWidth="425.0" text="Button" />
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane layoutX="170.0" layoutY="119.0" prefHeight="554.4" prefWidth="700.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <children>
-                        <AnchorPane layoutX="14.0" layoutY="18.0" prefHeight="518.0" prefWidth="253.0" styleClass="root" stylesheets="@shadow.css">
+                        <Label text="Type de véhicule:" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                           <font>
+                              <Font name="Tahoma" size="15.0" />
+                           </font>
+                        </Label>
+                        <ComboBox fx:id="vtc" stylesheets="@buttons.css" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                        <ImageView fx:id="vehicleImageView" fitHeight="100" fitWidth="100" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                        <Label text="Capacité:" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="Tahoma" size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="capacite" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label text="Statut:" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                           <font>
+                              <Font name="Tahoma" size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="stat" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label text="Disponibilité:" GridPane.columnIndex="0" GridPane.rowIndex="3">
+                           <font>
+                              <Font name="Tahoma" size="15.0" />
+                           </font>
+                        </Label>
+                        <HBox spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="3">
                            <children>
-                              <Label layoutX="18.0" layoutY="82.0" text="Type Véhicule :">
+                              <RadioButton fx:id="oui" text="Oui">
                                  <font>
-                                    <Font name="Tahoma" size="14.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="29.0" layoutY="132.0" text="Capacité :">
-                                 <font>
-                                    <Font name="Tahoma" size="14.0" />
-                                 </font>
-                              </Label>
-                              <TextField fx:id="capacite" layoutX="116.0" layoutY="128.0" prefHeight="26.0" prefWidth="41.0" />
-                              <Label layoutX="16.0" layoutY="239.0" text="Disponibilité :">
-                                 <font>
-                                    <Font name="Tahoma" size="14.0" />
-                                 </font>
-                              </Label>
-                              <RadioButton fx:id="non" layoutX="119.0" layoutY="279.0" mnemonicParsing="false" text="Non">
-                                 <font>
-                                    <Font size="14.0" />
+                                    <Font name="Tahoma" size="15.0" />
                                  </font>
                               </RadioButton>
-                              <RadioButton fx:id="oui" layoutX="119.0" layoutY="238.0" mnemonicParsing="false" text="oui">
+                              <RadioButton fx:id="non" text="Non">
                                  <font>
-                                    <Font size="14.0" />
+                                    <Font name="Tahoma" size="15.0" />
                                  </font>
                               </RadioButton>
-                              <Label layoutX="35.0" layoutY="187.0" text="Statut :">
-                                 <font>
-                                    <Font name="Tahoma" size="14.0" />
-                                 </font>
-                              </Label>
-                              <Button layoutX="19.0" layoutY="385.0" mnemonicParsing="false" onAction="#add" prefHeight="46.0" prefWidth="81.0" text="Add" />
-                              <ComboBox fx:id="vtc" layoutX="117.0" layoutY="78.0" prefHeight="26.0" prefWidth="130.0" promptText="Choose..." visibleRowCount="3" />
-                              <TextField fx:id="stat" layoutX="115.0" layoutY="183.0" prefHeight="26.0" prefWidth="126.0" />
-                              <Button fx:id="delete" layoutX="78.0" layoutY="448.0" mnemonicParsing="false" onAction="#delete" prefHeight="46.0" prefWidth="81.0" text="Delete" />
-                              <Button fx:id="update" layoutX="132.0" layoutY="385.0" mnemonicParsing="false" onAction="#update" prefHeight="46.0" prefWidth="92.0" text="Update" textFill="#90dc71" />
-                              <Button layoutX="35.0" layoutY="328.0" mnemonicParsing="false" onAction="#gotrajet" prefHeight="35.0" prefWidth="150.0" text="Add trajets" />
                            </children>
-                        </AnchorPane>
-                        <AnchorPane layoutX="290.0" layoutY="18.0" prefHeight="518.0" prefWidth="401.0" styleClass="root" stylesheets="@shadow.css">
-                           <children>
-                              <TableView fx:id="tabv" layoutX="3.0" layoutY="61.0" prefHeight="370.0" prefWidth="590.0" stylesheets="@aj.css">
-                                 <columns>
-                                    <TableColumn fx:id="idveh" prefWidth="71.20001220703125" text="Véhicule ID" />
-                                    <TableColumn fx:id="type" prefWidth="110.4000244140625" text="Type" />
-                                    <TableColumn fx:id="ca" prefWidth="112.79998779296875" text="Capacite" />
-                                    <TableColumn fx:id="st" prefWidth="180.79998779296875" text="Statut" />
-                                    <TableColumn fx:id="disp" prefWidth="112.0001220703125" text="Disponibilite" />
-                                 </columns>
-                              </TableView>
-                           </children>
-                        </AnchorPane>
+                        </HBox>
+                        <Label text="Conducteur:" GridPane.columnIndex="0" GridPane.rowIndex="4">
+                           <font>
+                              <Font name="Tahoma" size="15.0" />
+                           </font>
+                        </Label>
+                        <ComboBox fx:id="conducteurCombo" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                      </children>
-                  </AnchorPane>
+                  </GridPane>
+                  <HBox alignment="CENTER" spacing="10">
+                     <children>
+                        <Button onAction="#add" styleClass="add-button" stylesheets="@buttons.css" text="Ajouter" />
+                        <Button onAction="#delete" styleClass="delete-button" stylesheets="@buttons.css" text="Supprimer" />
+                        <Button onAction="#update" styleClass="green-button" stylesheets="@buttons.css" text="Mettre à jour" />
+                        <Button onAction="#gotrajet" styleClass="black-button" stylesheets="@buttons.css" text="Gérer les trajets" />
+                     </children>
+                  </HBox>
+                  <TableView fx:id="tabv" styleClass="table-view">
+                     <columns>
+                        <TableColumn fx:id="idveh" text="ID" />
+                        <TableColumn fx:id="type" text="Type" />
+                        <TableColumn fx:id="ca" text="Capacité" />
+                        <TableColumn fx:id="st" text="Statut" />
+                        <TableColumn fx:id="disp" text="Disponibilité" />
+                     </columns>
+                  </TableView>
                </children>
-            </AnchorPane>
+            </VBox>
          </children>
       </AnchorPane>
       <AnchorPane fx:id="ajout_trajet" layoutX="295.0" layoutY="7.0" prefHeight="666.0" prefWidth="914.0" visible="false">
          <children>
-            <AnchorPane layoutX="63.0" layoutY="83.0" prefHeight="547.0" prefWidth="943.0">
+            <VBox layoutX="216.0" layoutY="3.0" spacing="20" styleClass="main-container">
                <children>
-                  <AnchorPane layoutX="51.0" layoutY="18.0" prefHeight="518.0" prefWidth="198.0" styleClass="root" stylesheets="@shadow.css">
+                  <GridPane hgap="10" styleClass="form-grid" vgap="10">
+                     <columnConstraints>
+                        <ColumnConstraints />
+                        <ColumnConstraints />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints />
+                        <RowConstraints />
+                        <RowConstraints />
+                        <RowConstraints />
+                        <RowConstraints />
+                        <RowConstraints />
+                        <RowConstraints />
+                     </rowConstraints>
                      <children>
-                        <Label layoutX="18.0" layoutY="138.0" text="Point_Arrivé :">
+                        <Label text="Point de départ:" GridPane.columnIndex="0" GridPane.rowIndex="0">
                            <font>
-                              <Font name="Tahoma" size="14.0" />
+                              <Font name="Tahoma" size="15.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="pointa" layoutX="119.0" layoutY="134.0" prefHeight="26.0" prefWidth="126.0" />
-                        <Label layoutX="16.0" layoutY="187.0" text="Date_Départ :">
+                        <TextField fx:id="pointd" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                        <Label text="Point d'arrivée:" GridPane.columnIndex="0" GridPane.rowIndex="1">
                            <font>
-                              <Font name="Tahoma" size="14.0" />
+                              <Font name="Tahoma" size="15.0" />
                            </font>
                         </Label>
-                        <Button layoutX="16.0" layoutY="410.0" mnemonicParsing="false" onAction="#addtrajet" prefHeight="46.0" prefWidth="81.0" text="Add" />
-                        <Label layoutX="18.0" layoutY="87.0" text=" Point_Départ :">
+                        <TextField fx:id="pointa" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label text="Date de départ:" GridPane.columnIndex="0" GridPane.rowIndex="2">
                            <font>
-                              <Font name="Tahoma" size="14.0" />
+                              <Font name="Tahoma" size="15.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="pointd" layoutX="119.0" layoutY="83.0" prefHeight="26.0" prefWidth="126.0" />
-                        <DatePicker fx:id="dated" layoutX="112.0" layoutY="183.0" prefHeight="26.0" prefWidth="129.0" />
-                        <Label layoutX="19.0" layoutY="243.0" text="Date_Arrivé :">
+                        <DatePicker fx:id="dated" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label text="Date d'arrivée:" GridPane.columnIndex="0" GridPane.rowIndex="3">
                            <font>
-                              <Font name="Tahoma" size="14.0" />
+                              <Font name="Tahoma" size="15.0" />
                            </font>
                         </Label>
-                        <DatePicker fx:id="datea" layoutX="112.0" layoutY="239.0" prefHeight="26.0" prefWidth="129.0" />
-                        <TextField fx:id="distance" layoutX="112.0" layoutY="292.0" prefHeight="26.0" prefWidth="42.0" />
-                        <Label layoutX="24.0" layoutY="296.0" text="Distance :">
+                        <DatePicker fx:id="datea" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label text="Distance:" GridPane.columnIndex="0" GridPane.rowIndex="4">
                            <font>
-                              <Font name="Tahoma" size="14.0" />
+                              <Font name="Tahoma" size="15.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="prix" layoutX="111.0" layoutY="335.0" prefHeight="26.0" prefWidth="45.0" />
-                        <Label layoutX="24.0" layoutY="339.0" text="Prix :">
+                        <TextField fx:id="distance" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <Label text="Prix:" GridPane.columnIndex="0" GridPane.rowIndex="5">
                            <font>
-                              <Font name="Tahoma" size="14.0" />
+                              <Font name="Tahoma" size="15.0" />
                            </font>
                         </Label>
-                        <Button layoutX="82.0" layoutY="457.0" mnemonicParsing="false" onAction="#deletetrajet" prefHeight="46.0" prefWidth="81.0" text="Delete" />
-                        <Button layoutX="151.0" layoutY="410.0" mnemonicParsing="false" onAction="#updatetrajet" prefHeight="46.0" prefWidth="90.0" text="Update" />
-                        <ComboBox fx:id="id_veh" layoutX="48.0" layoutY="374.0" prefWidth="150.0" />
+                        <TextField fx:id="prix" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <Label text="Véhicule:" GridPane.columnIndex="0" GridPane.rowIndex="6">
+                           <font>
+                              <Font name="Tahoma" size="15.0" />
+                           </font>
+                        </Label>
+                        <ComboBox fx:id="id_veh" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                      </children>
-                  </AnchorPane>
-                  <AnchorPane layoutX="318.0" layoutY="35.0" prefHeight="500.0" prefWidth="550.0" styleClass="root" stylesheets="@shadow.css">
+                  </GridPane>
+                  <HBox alignment="CENTER" spacing="10">
                      <children>
-                        <TableView fx:id="tabt" layoutX="34.0" layoutY="51.0" prefHeight="370.0" prefWidth="590.0" stylesheets="@aj.css">
-                           <columns>
-                              <TableColumn fx:id="idtar" prefWidth="40.0" text="Trajet Id" />
-                              <TableColumn fx:id="pd" prefWidth="93.5999755859375" text="Point départ" />
-                              <TableColumn fx:id="pa" prefWidth="87.99996948242188" text="Point Arrivé" />
-                              <TableColumn fx:id="dd" prefWidth="125.60003662109375" text="D départ" />
-                              <TableColumn fx:id="da" prefWidth="131.2000732421875" text="D Arrivé" />
-                              <TableColumn fx:id="dis" prefWidth="66.4000244140625" text="Distance" />
-                              <TableColumn fx:id="px" prefWidth="33.600024414062545" text="Prix" />
-                           </columns>
-                        </TableView>
-                        <Button layoutX="43.0" layoutY="445.0" mnemonicParsing="false" onAction="#gotransport" prefHeight="35.0" prefWidth="150.0" text="Add transports" />
+                        <Button onAction="#addtrajet" styleClass="add-button" stylesheets="@buttons.css" text="Ajouter" />
+                        <Button onAction="#updatetrajet" styleClass="green-button" stylesheets="@buttons.css" text="Mettre à jour" />
+                        <Button onAction="#deletetrajet" styleClass="delete-button" stylesheets="@buttons.css" text="Supprimer" />
+                        <Button onAction="#gotransport" styleClass="black-button" stylesheets="@buttons.css" text="Gérer les transports" />
                      </children>
-                  </AnchorPane>
+                  </HBox>
+                  <TableView fx:id="tabt" styleClass="table-view">
+                     <columns>
+                        <TableColumn fx:id="idtar" text="ID" />
+                        <TableColumn fx:id="pd" text="Point de départ" />
+                        <TableColumn fx:id="pa" text="Point d'arrivée" />
+                        <TableColumn fx:id="dd" text="Date de départ" />
+                        <TableColumn fx:id="da" text="Date d'arrivée" />
+                        <TableColumn fx:id="dis" text="Distance" />
+                        <TableColumn fx:id="px" text="Prix" />
+                     </columns>
+                  </TableView>
                </children>
-            </AnchorPane>
+            </VBox>
          </children>
       </AnchorPane>
       <AnchorPane fx:id="afficher_event" layoutX="297.0" layoutY="7.0" prefHeight="668.0" prefWidth="971.0" visible="false">
@@ -383,6 +409,113 @@
                   </HBox>
                </children>
             </VBox>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="afficher_produit" layoutX="297.0" layoutY="7.0" prefHeight="678.0" prefWidth="935.0" visible="false">
+         <children>
+            <VBox prefHeight="678.0" prefWidth="150.0" spacing="15" style="-fx-background-color: #2C3E50; -fx-padding: 20; -fx-border-radius: 10;">
+               <children>
+                  <Button fx:id="btnDisplay" onAction="#showDisplaySection" style="-fx-background-color: #3498DB; -fx-text-fill: white; -fx-font-size: 14px; -fx-background-radius: 10; -fx-padding: 8;" text="📋 Display" />
+                  <Button fx:id="btnManage" onAction="#showManageSection" style="-fx-background-color: #3498DB; -fx-text-fill: white; -fx-font-size: 14px; -fx-background-radius: 10; -fx-padding: 8;" text="🛠 Manage" />
+                  <Button fx:id="btnVersService" onAction="#VersService" style="-fx-background-color: #F39C12; -fx-text-fill: white; -fx-font-size: 14px; -fx-background-radius: 10; -fx-padding: 8;" text="➡ Service" />
+               </children>
+            </VBox>
+            <StackPane layoutX="226.0" layoutY="85.0" prefHeight="541.0" prefWidth="680.0">
+               <children>
+                  <Pane fx:id="displayPane">
+                     <children>
+                        <TextField fx:id="searchProduit" layoutX="40" layoutY="60.0" onKeyReleased="#searchProduit" prefWidth="423.0" promptText="🔍 Search Product..." style="-fx-background-radius: 10; -fx-border-radius: 10;" />
+                        <Text layoutX="250.0" layoutY="40.0" style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Product List" />
+                        <ListView fx:id="listViewP" layoutX="40.0" layoutY="90.0" prefHeight="400.0" prefWidth="600.0" style="-fx-border-color: #3498DB; -fx-border-radius: 10; -fx-background-radius: 10;" />
+                        <Button layoutX="519.0" layoutY="60.0" mnemonicParsing="false" onAction="#generatePDF" text="generate pdf" />
+                     </children>
+                  </Pane>
+                  <Pane fx:id="managePane" visible="false">
+                     <children>
+                        <Text layoutX="250.0" layoutY="40.0" style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Manage Products" />
+                        <Pane layoutX="190.0" layoutY="80.0" prefHeight="220.0" prefWidth="300.0" style="-fx-background-color: #27AE60; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 10;">
+                           <children>
+                              <Text layoutX="20.0" layoutY="40.0" style="-fx-fill: white; -fx-font-size: 14px;" text="Nom:" />
+                              <TextField fx:id="txtNomP" layoutX="80.0" layoutY="25.0" prefWidth="180.0" style="-fx-background-radius: 10;" />
+                              <Text layoutX="20.0" layoutY="85.0" style="-fx-fill: white; -fx-font-size: 14px;" text="Type:" />
+                              <TextField fx:id="txtTypeP" layoutX="80.0" layoutY="70.0" prefWidth="180.0" style="-fx-background-radius: 10;" />
+                              <Text layoutX="20.0" layoutY="130.0" style="-fx-fill: white; -fx-font-size: 14px;" text="Prix:" />
+                              <TextField fx:id="txtPrixP" layoutX="80.0" layoutY="115.0" prefWidth="180.0" style="-fx-background-radius: 10;" />
+                           </children>
+                        </Pane>
+                        <Button fx:id="btnAjouterP" layoutX="190.0" layoutY="320.0" onAction="#AjouterProduit" style="-fx-background-color: #2980B9; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 8;" text="➕ Add" />
+                        <Button fx:id="btnModifierP" layoutX="290.0" layoutY="320.0" onAction="#ModifierProduit" style="-fx-background-color: #E67E22; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 8;" text="✏ Edit" />
+                        <Button fx:id="btnSuppP" layoutX="390.0" layoutY="320.0" onAction="#SupprimerProduit" style="-fx-background-color: #C0392B; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 8;" text="❌ Delete" />
+                     </children>
+                  </Pane>
+               </children>
+            </StackPane>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="afficher_service" layoutX="303.0" layoutY="12.0" prefHeight="668.0" prefWidth="960.0" visible="false">
+         <children>
+            <VBox layoutX="-5.0" prefHeight="668.0" prefWidth="163.0" spacing="15" style="-fx-background-color: #2C3E50; -fx-padding: 20;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="797.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Button fx:id="btnDisplayService" onAction="#showDisplaySection2" style="-fx-background-color: #3498DB; -fx-text-fill: white; -fx-font-size: 14px; -fx-background-radius: 10; -fx-padding: 8;" text="📋 Display" />
+                  <Button fx:id="btnManageService" onAction="#showManageSection2" style="-fx-background-color: #3498DB; -fx-text-fill: white; -fx-font-size: 14px; -fx-background-radius: 10; -fx-padding: 8;" text="🛠 Manage" />
+                  <Button fx:id="Switch2" onAction="#VersProduit" style="-fx-background-color: #F39C12; -fx-text-fill: white; -fx-font-size: 14px; -fx-background-radius: 10; -fx-padding: 8;" text="➡ Produit" />
+               </children>
+            </VBox>
+            <StackPane layoutX="216.0" layoutY="71.0" prefHeight="491.0" prefWidth="680.0">
+               <children>
+                  <Pane fx:id="displayPane1">
+                     <children>
+                        <TextField fx:id="searchService" layoutX="40.0" layoutY="40.0" onKeyReleased="#searchService" prefWidth="348.0" promptText="🔍 Search Service..." style="-fx-background-radius: 10; -fx-border-radius: 10;" />
+                        <Text layoutX="80.0" layoutY="25.0" style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Services List" />
+                        <TableView fx:id="table" layoutX="40.0" layoutY="80.0" prefHeight="400.0" prefWidth="600.0">
+                           <columns>
+                              <TableColumn fx:id="id_c" prefWidth="75.0" text="ID_SERVICE" />
+                              <TableColumn fx:id="nom_c" prefWidth="120.0" text="NOM" />
+                              <TableColumn fx:id="desc_c" prefWidth="200.0" text="DESCRIPTION" />
+                              <TableColumn fx:id="tarif_c" prefWidth="100.0" text="TARIF" />
+                           </columns>
+                        </TableView>
+                     </children>
+                  </Pane>
+                  <Pane fx:id="managePane1" visible="false">
+                     <children>
+                        <Text layoutX="250.0" layoutY="40.0" style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Manage Services" />
+                        <Pane layoutX="190.0" layoutY="80.0" prefHeight="220.0" prefWidth="300.0" style="-fx-background-color: #27AE60; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 10;">
+                           <children>
+                              <Text layoutX="20.0" layoutY="40.0" style="-fx-fill: white; -fx-font-size: 14px;" text="Nom:" />
+                              <TextField fx:id="txtNom" layoutX="110.0" layoutY="25.0" prefWidth="180.0" style="-fx-background-radius: 10;" />
+                              <Text layoutX="20.0" layoutY="85.0" style="-fx-fill: white; -fx-font-size: 14px;" text="Description:" />
+                              <TextField fx:id="txtDescription" layoutX="110.0" layoutY="70.0" prefWidth="180.0" style="-fx-background-radius: 10;" />
+                              <Text layoutX="20.0" layoutY="130.0" style="-fx-fill: white; -fx-font-size: 14px;" text="Tarif:" />
+                              <TextField fx:id="txtTarif" layoutX="110.0" layoutY="115.0" prefWidth="180.0" style="-fx-background-radius: 10;" />
+                           </children>
+                        </Pane>
+                        <Button fx:id="btnAdd" layoutX="190.0" layoutY="320.0" onAction="#Add" style="-fx-background-color: #2980B9; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 8;" text="➕ Add" />
+                        <Button fx:id="btnModifier" layoutX="290.0" layoutY="320.0" onAction="#Modifier" style="-fx-background-color: #E67E22; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 8;" text="✏ Edit" />
+                        <Button fx:id="btnSupprimer" layoutX="390.0" layoutY="320.0" onAction="#Supprimer" style="-fx-background-color: #C0392B; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 8;" text="❌ Delete" />
+                     </children>
+                  </Pane>
+               </children>
+            </StackPane>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="afficher_evenement" layoutX="297.0" layoutY="7.0" prefHeight="678.0" prefWidth="935.0" visible="false">
+         <children>
+            <VBox alignment="CENTER" layoutX="181.0" layoutY="44.0" prefHeight="500" prefWidth="477.0" spacing="10" styleClass="table-view" stylesheets="@AcceuilUser.css">
+               <children>
+                  <TextField fx:id="searchField" promptText="🔍 Rechercher un événement..." styleClass="black-button" stylesheets="@buttons.css" />
+                  <ListView fx:id="liste" prefHeight="350" styleClass="table-view" stylesheets="@AcceuilUser.css" />
+                  <HBox alignment="CENTER" spacing="10">
+                     <children>
+                        <Button fx:id="modif" onAction="#modifier" prefHeight="26.0" prefWidth="147.0" styleClass="add-button" stylesheets="@buttons.css" text="✏ Modifier" />
+                        <Button fx:id="supp" onAction="#supprimer_event" prefHeight="26.0" prefWidth="148.0" styleClass="delete-button" stylesheets="@buttons.css" text="🗑 Supprimer" />
+                        <Button fx:id="feedback" onAction="#voirFeedback" styleClass="black-button" stylesheets="@buttons.css" text="💬 Voir Feedback" />
+                        <ComboBox fx:id="triComboBox" layoutX="50" layoutY="50" prefWidth="200" styleClass="black-button" stylesheets="@buttons.css" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <Button layoutX="14.0" layoutY="82.0" onAction="#retour_ajouter_event" prefHeight="41.0" prefWidth="150.0" styleClass="black-button" stylesheets="@buttons.css" text="Ajouter Evenement" />
          </children>
       </AnchorPane>
    </children>

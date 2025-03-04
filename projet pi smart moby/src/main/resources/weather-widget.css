@@ -1,122 +1,127 @@
 .weather-container {
-    -fx-background-color: #1e1e2f;
-    -fx-padding: 20;
+    -fx-background-color: #e6f7e6; /* Light green background */
 }
 
 .main-content {
-    -fx-spacing: 20;
+    -fx-padding: 20px;
+    -fx-spacing: 20px;
+    -fx-font-family: 'Arial';
 }
 
-/* Header Styles */
+.header-section {
+    -fx-background-color: #ffffff;
+    -fx-padding: 15px;
+    -fx-background-radius: 10px;
+    -fx-border-color: #ccc;
+    -fx-border-radius: 10px;
+    -fx-border-width: 1px;
+}
+
 .dashboard-title {
-    -fx-text-fill: #2ecc71;
+    -fx-text-fill: #2c3e50;
     -fx-font-size: 24px;
     -fx-font-weight: bold;
-    -fx-effect: dropshadow(three-pass-box, rgba(46,204,113,0.2), 10, 0, 0, 0);
 }
 
 .info-label {
-    -fx-text-fill: #ecf0f1;
-    -fx-font-size: 12px;
+    -fx-font-size: 14px;
+    -fx-text-fill: #34495e;
 }
 
-/* Search Section */
 .search-section {
-    -fx-spacing: 10;
-    -fx-padding: 10;
-    -fx-background-color: rgba(255,255,255,0.05);
-    -fx-background-radius: 10;
+    -fx-alignment: CENTER;
+    -fx-spacing: 10px;
 }
 
 .search-field {
-    -fx-background-color: rgba(255,255,255,0.1);
-    -fx-text-fill: white;
-    -fx-prompt-text-fill: #95a5a6;
-    -fx-background-radius: 5;
-    -fx-padding: 8 12;
-    -fx-min-width: 250;
+    -fx-pref-width: 200px;
+    -fx-background-color: #ffffff;
+    -fx-border-color: #27ae60;
+    -fx-border-width: 1px;
+    -fx-background-radius: 20px;
+    -fx-padding: 5px 10px;
 }
 
 .search-button {
-    -fx-background-color: #2ecc71;
+    -fx-background-color: #27ae60;
     -fx-text-fill: white;
-    -fx-background-radius: 5;
-    -fx-padding: 8 15;
+    -fx-font-size: 14px;
+    -fx-padding: 5px 15px;
+    -fx-background-radius: 20px;
 }
 
 .search-button:hover {
-    -fx-background-color: #27ae60;
+    -fx-background-color: #229954;
 }
 
-/* Weather Cards */
+.weather-grid {
+    -fx-padding: 20px;
+}
+
 .weather-card {
-    -fx-background-color: rgba(255,255,255,0.05);
-    -fx-padding: 15;
-    -fx-spacing: 10;
-    -fx-background-radius: 10;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 0);
-}
-
-.weather-card:hover {
-    -fx-background-color: rgba(255,255,255,0.08);
+    -fx-background-color: #ffffff;
+    -fx-padding: 20px;
+    -fx-background-radius: 10px;
+    -fx-border-color: #ccc;
+    -fx-border-radius: 10px;
+    -fx-border-width: 1px;
 }
 
 .section-title {
-    -fx-text-fill: #3498db;
     -fx-font-size: 18px;
     -fx-font-weight: bold;
-    -fx-padding: 0 0 10 0;
+    -fx-text-fill: #2c3e50;
+    -fx-padding-bottom: 10px;
 }
 
 .city-label {
-    -fx-text-fill: white;
-    -fx-font-size: 20px;
+    -fx-font-size: 16px;
     -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
 }
 
 .temperature-label {
-    -fx-text-fill: #2ecc71;
-    -fx-font-size: 36px;
+    -fx-font-size: 24px;
     -fx-font-weight: bold;
+    -fx-text-fill: #e74c3c;
 }
 
 .description-label {
-    -fx-text-fill: #bdc3c7;
-    -fx-font-size: 16px;
+    -fx-font-size: 14px;
+    -fx-text-fill: #34495e;
 }
 
 .detail-label {
-    -fx-text-fill: #95a5a6;
     -fx-font-size: 14px;
+    -fx-text-fill: #7f8c8d;
 }
 
 .detail-value {
-    -fx-text-fill: white;
     -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
 }
 
-/* Refresh Button */
 .refresh-button {
-    -fx-background-color: #3498db;
+    -fx-background-color: #2980b9;
     -fx-text-fill: white;
-    -fx-background-radius: 5;
-    -fx-padding: 6 12;
+    -fx-font-size: 14px;
+    -fx-padding: 5px 15px;
+    -fx-background-radius: 20px;
 }
 
 .refresh-button:hover {
-    -fx-background-color: #2980b9;
+    -fx-background-color: #2471a3;
 }
 
-/* Weather Grid */
-.weather-grid {
-    -fx-padding: 10;
-}
-.back-button:hover {
-    -fx-background-color: #e74c3c;
-}
 .back-button {
-    -fx-background-color: #e74c3c;
+    -fx-background-color: #2980b9;
     -fx-text-fill: white;
-    -fx-background-radius: 5;
-    -fx-padding: 8 15;
+    -fx-font-size: 14px;
+    -fx-padding: 5px 15px;
+    -fx-background-radius: 20px;
+}
+
+.back-button:hover {
+    -fx-background-color: #2471a3;
 }

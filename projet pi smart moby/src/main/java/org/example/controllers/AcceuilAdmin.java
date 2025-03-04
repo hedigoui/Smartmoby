@@ -14,6 +14,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.example.models.*;
 import org.example.services.*;
@@ -47,6 +50,64 @@ import org.jfree.data.general.DefaultPieDataset;
 import org.mindrot.jbcrypt.BCrypt;
 
 import javax.imageio.ImageIO;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
+import org.example.models.Produit;
+import org.example.services.PDFGenerator;
+import org.example.services.SMSService;
+import org.example.utils.DataSource;
+
+import java.io.IOException;
+import java.sql.*;
+import java.util.List;
+
+import static org.example.services.ServiceDAO.conn;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
+import org.example.models.Service;
+import org.example.services.ServiceDAO;
+
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
+
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import org.example.models.event;
+import org.example.models.fedback;
+import org.example.services.event_serv;
+import org.example.services.fedback_serv;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 
 
 public class AcceuilAdmin {
@@ -216,7 +277,9 @@ public class AcceuilAdmin {
     @FXML
     private TextField nom_admin_a_rechercher;
 
-    public TableColumn idveh;
+    @FXML
+    private TableColumn<Vehicule, Integer> idveh;
+
     @FXML
     private TableColumn<Vehicule, Integer> ca;
 
@@ -311,7 +374,97 @@ public class AcceuilAdmin {
     @FXML
     private AnchorPane afficher_event;
 
+    @FXML
+    private ComboBox<Conducteur> conducteurCombo;
+
     private event_serv ps2 = new event_serv();
+
+    @FXML private TextField txtNomP, txtTypeP, txtPrixP;
+    @FXML private ListView<String> listViewP;
+    @FXML private TextField searchProduit;
+    @FXML private Button btnAjouterP, btnModifierP, btnSuppP, btnVersService;
+
+    @FXML private Pane displayPane;
+    @FXML private Pane managePane;
+
+    @FXML private Pane displayPane1;
+    @FXML private Pane managePane1;
+
+    public SMSService smsService = new SMSService();
+
+    private ObservableList<String> produitList = FXCollections.observableArrayList();
+
+    @FXML private Button btnAdd, btnModifier, btnSupprimer;
+    @FXML private TableColumn<Service, String> desc_c;
+    @FXML private TableColumn<Service, Integer> id_c;
+    @FXML private TableColumn<Service, String> nom_c;
+    @FXML private TableView<Service> table;
+    @FXML private TableColumn<Service, Double> tarif_c;
+    @FXML private TextField txtDescription, txtNom, txtTarif;
+    @FXML private TextField searchService;
+
+    private ObservableList<Service> serviceList = FXCollections.observableArrayList();
+
+    @FXML
+    private AnchorPane afficher_produit;
+
+    @FXML
+    private AnchorPane afficher_service;
+
+    @FXML
+    private ListView<event> liste;
+
+    @FXML
+    private TextField searchField;
+
+    @FXML
+    private Button supp;
+
+    @FXML
+    private Button modif;
+
+    @FXML
+    private Button feedback;
+
+    @FXML
+    private ComboBox<String> triComboBox;
+
+
+    private final event_serv eventService = new event_serv();
+    private final ObservableList<event> eventList = FXCollections.observableArrayList();
+
+    @FXML
+    private AnchorPane afficher_evenement;
+
+    @FXML
+    private ListView<event> liste1; // ListView pour afficher les événements
+
+
+
+    @FXML
+    private TextArea feedbackInput; // TextArea pour le feedback
+
+    @FXML
+    private Slider noteSlider; // Slider pour la note
+
+    @FXML
+    private Label noteLabel; // Label pour afficher la note
+
+    @FXML
+    private Button ajouterFedbackButton; // Bouton pour ajouter un feedback
+
+
+
+
+    private final fedback_serv fedbackService = new fedback_serv();
+    private event selectedEvent; // L'événement sélectionné
+    private fedback selectedFeedback;
+
+
+
+
+
+
 
 
 
@@ -391,10 +544,10 @@ public class AcceuilAdmin {
         num_permis.setCellValueFactory(new PropertyValueFactory<>("numero_permis"));
 
 
-        vtc.getItems().addAll("Bus", "Métro", "Car", "Vélo", "Trottinette");
+        vtc.getItems().addAll("Car", "Taxi", "Métro", "Bus", "Moto");
 
         // Associer les colonnes du TableView aux attributs de l'objet Vehicule
-        idveh.setCellValueFactory(new PropertyValueFactory<>("id")); // Ajout pour afficher l'ID
+        idveh.setCellValueFactory(new PropertyValueFactory<>("id"));
         type.setCellValueFactory(new PropertyValueFactory<>("type"));
         ca.setCellValueFactory(new PropertyValueFactory<>("capacite"));
         st.setCellValueFactory(new PropertyValueFactory<>("statut"));
@@ -404,12 +557,16 @@ public class AcceuilAdmin {
         ToggleGroup toggleGroup = new ToggleGroup();
         oui.setToggleGroup(toggleGroup);
         non.setToggleGroup(toggleGroup);
-        oui.setSelected(true); // Sélection par défaut
+        oui.setSelected(true);
 
         // Charger les véhicules dans la TableView
         loadVehicules();
 
+        // Charger les conducteurs dans le ComboBox
+        loadConducteurs();
 
+
+        loadVehicules1();
 
         // Associer les colonnes aux attributs de Trajet
         idtar.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -422,6 +579,89 @@ public class AcceuilAdmin {
 
         // Charger les trajets existants
         loadTrajets();
+
+        loadProduits();
+        listViewP.setItems(produitList);
+
+        // Sélectionner un élément pour affichage dans les champs
+        listViewP.setOnMouseClicked(event -> {
+            String selected = listViewP.getSelectionModel().getSelectedItem();
+            if (selected != null && !selected.equals("ID  --  Nom  --  Type  --  Prix")) {
+                String[] parts = selected.split(" -- ");
+                txtNomP.setText(parts[1]);
+                txtTypeP.setText(parts[2]);
+                txtPrixP.setText(parts[3]);
+            }
+        });
+
+        id_c.setCellValueFactory(cellData -> new javafx.beans.property.SimpleIntegerProperty(cellData.getValue().getId()).asObject());
+        nom_c.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getNom()));
+        desc_c.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getDescription()));
+        tarif_c.setCellValueFactory(cellData -> new javafx.beans.property.SimpleDoubleProperty(cellData.getValue().getTarif()).asObject());
+
+        loadServices();
+
+        table.setOnMouseClicked(event -> {
+            if (!table.getSelectionModel().isEmpty()) {
+                Service selectedService = table.getSelectionModel().getSelectedItem();
+                txtNom.setText(selectedService.getNom());
+                txtDescription.setText(selectedService.getDescription());
+                txtTarif.setText(String.valueOf(selectedService.getTarif()));
+            }
+        });
+
+        InitComboBox();
+        chargerListe();
+
+        // Ajout du filtrage dynamique
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> filtrerEvenements(newValue));
+
+        // Personnalisation de l'affichage des éléments dans la ListView
+        liste.setCellFactory(param -> new ListCell<>() {
+            @Override
+            protected void updateItem(event ev, boolean empty) {
+                super.updateItem(ev, empty);
+                if (empty || ev == null) {
+                    setText(null);
+                    setGraphic(null);
+                } else {
+                    // Création d'une boîte HBox pour afficher l'événement
+                    HBox box = new HBox(10);
+                    javafx.scene.text.Text nomEvent = new javafx.scene.text.Text(ev.getNom());
+                    javafx.scene.text.Text dateEvent = new javafx.scene.text.Text("📅 " + ev.getDate());
+                    javafx.scene.text.Text lieuEvent = new Text("📍 " + ev.getLieu());
+
+                    // Ajout des éléments à la boîte
+                    box.getChildren().addAll(nomEvent, dateEvent, lieuEvent);
+                    setGraphic(box);
+                }
+            }
+        });
+
+        chargerListe();
+
+
+
+        System.out.println("📌 Initialisation du contrôleur...");
+
+        if (liste == null) {
+            System.out.println("⚠️ Erreur : ListView n'est pas initialisée !");
+            return;
+        }
+
+        // Charger les événements dans la liste
+        loadEvents();
+
+        // Listener pour la sélection d'événement
+        liste.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+
+                selectedEvent = newValue;
+                System.out.println("✅ Événement sélectionné : " + newValue.getNom());
+            }
+        });
+
+
 
 
     }
@@ -441,6 +681,9 @@ public class AcceuilAdmin {
         ajouter_transport.setVisible(false);
         Modifier.setVisible(false);
         afficher_event.setVisible(false);
+        afficher_evenement.setVisible(false);
+        afficher_produit.setVisible(false);
+        afficher_service.setVisible(false);
 
     }
 
@@ -457,6 +700,10 @@ public class AcceuilAdmin {
         ajouter_transport.setVisible(false);
         Modifier.setVisible(false);
         afficher_event.setVisible(true);
+        afficher_produit.setVisible(false);
+        afficher_service.setVisible(false);
+        afficher_evenement.setVisible(false);
+        afficher_evenement.setVisible(false);
 
     }
 
@@ -467,6 +714,9 @@ public class AcceuilAdmin {
         ajout_trajet.setVisible(false);
         ajouter_transport.setVisible(false);
         afficher_event.setVisible(false);
+        afficher_produit.setVisible(false);
+        afficher_service.setVisible(false);
+        afficher_evenement.setVisible(false);
 
     }
 
@@ -493,6 +743,14 @@ public class AcceuilAdmin {
 
     @FXML
     void show_service(ActionEvent event) {
+        ajout_trajet.setVisible(false);
+        ajouter_transport.setVisible(false);
+        Modifier.setVisible(false);
+        page_utilisateurs.setVisible(false);
+        afficher_event.setVisible(false);
+        afficher_produit.setVisible(true);
+        afficher_service.setVisible(false);
+        afficher_evenement.setVisible(false);
 
     }
 
@@ -503,6 +761,11 @@ public class AcceuilAdmin {
         Modifier.setVisible(false);
         page_utilisateurs.setVisible(false);
         afficher_event.setVisible(false);
+        afficher_produit.setVisible(false);
+        afficher_service.setVisible(false);
+        afficher_produit.setVisible(false);
+        afficher_service.setVisible(false);
+        afficher_evenement.setVisible(false);
 
     }
 
@@ -514,6 +777,9 @@ public class AcceuilAdmin {
         ajouter_transport.setVisible(false);
         Modifier.setVisible(false);
         afficher_event.setVisible(false);
+        afficher_produit.setVisible(false);
+        afficher_service.setVisible(false);
+        afficher_evenement.setVisible(false);
     }
 
     @FXML
@@ -522,6 +788,7 @@ public class AcceuilAdmin {
         PageClients.setVisible(false);
         Afficher_organisateurs.setVisible(false);
         afficher_conducteurs.setVisible(false);
+
 
 
     }
@@ -1062,42 +1329,38 @@ public class AcceuilAdmin {
     @FXML
     void add(ActionEvent event) {
         // Get input values
-//        int id = Integer.parseInt(idv.getText()); // Assuming ID is an integer
         String vehicleType = vtc.getValue();
         int capacity = Integer.parseInt(capacite.getText());
         String status = stat.getText();
         boolean available = oui.isSelected();
+        Conducteur selectedConducteur = conducteurCombo.getValue();
+        Integer conducteurId = selectedConducteur != null ? selectedConducteur.getId() : null;
 
         // Create a new Vehicule object
-        Vehicule vehicule = new Vehicule( vehicleType, capacity, status, available);
+        Vehicule vehicule = new Vehicule(vehicleType, capacity, status, available, conducteurId);
 
         // Add the vehicle using the Services class
         ps.add(vehicule);
 
         // Refresh the TableView
         loadVehicules();
+        initialize();
 
         // Clear input fields
         clearFields();
     }
+
     @FXML
     public void delete(ActionEvent event) {
-
         Vehicule selectedItem = tabv.getSelectionModel().getSelectedItem();
-
         if (selectedItem != null) {
-
             tabv.getItems().remove(selectedItem);
-
-            Services t = new Services();
-            t.delete(selectedItem);
+            ps.delete(selectedItem);
         }
-
     }
 
     public void update(ActionEvent event) {
         Vehicule selectedItem = tabv.getSelectionModel().getSelectedItem();
-
         if (selectedItem != null) {
             openUpdateWindow(selectedItem);
         } else {
@@ -1107,66 +1370,55 @@ public class AcceuilAdmin {
 
     private void openUpdateWindow(Vehicule selectedItem) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/UpdateVehicule.fxml")); // Vérifie le bon fichier FXML
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/UpdateVehicule.fxml"));
             Parent root = loader.load();
-
-            // Vérifie le bon contrôleur
             UpdateVehicule controller = loader.getController();
             controller.initData(selectedItem);
-
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
-
-            // Rafraîchir la liste après fermeture de la fenêtre
-            stage.setOnHidden(e -> refreshListView2());
+            stage.setOnHidden(e -> refreshListView());
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private void refreshListView2() {
+    private void refreshListView() {
         tabv.getItems().clear();
-
-        Services t = new Services();
-        ArrayList<Vehicule> items = t.getAllVehicule();
-
+        ArrayList<Vehicule> items = ps.getAllVehicule();
         tabv.getItems().addAll(items);
     }
 
-
-
-
-    private void loadVehicules() {
-        // Fetch all vehicles from the database or data source
+    private void loadVehicules1() {
         vehiculeList.clear();
         vehiculeList.addAll(ps.getAllVehicule());
         tabv.setItems(vehiculeList);
-        Services service = new Services();
-        List<Vehicule> vehicules = service.getAllVehicule(); // You need to implement this method in Services
-        id_veh.setItems(FXCollections.observableArrayList(vehicules));
+    }
 
-        // Set a cell factory to display vehicle information in ComboBox
-        id_veh.setCellFactory(param -> new ListCell<Vehicule>() {
+    private void loadConducteurs() {
+        List<Conducteur> conducteurs = ps.getAllConducteurs();
+        conducteurCombo.setItems(FXCollections.observableArrayList(conducteurs));
+        conducteurCombo.setCellFactory(param -> new ListCell<Conducteur>() {
             @Override
-            protected void updateItem(Vehicule item, boolean empty) {
+            protected void updateItem(Conducteur item, boolean empty) {
                 super.updateItem(item, empty);
                 if (empty || item == null) {
                     setText(null);
                 } else {
-                    setText(item.getType() + " - " + item.getCapacite()); // Adjust based on your Vehicule class
+                    setText(item.getNom() + " " + item.getPrenom() + " - " + item.getNumero_permis());
                 }
             }
         });
     }
 
     private void clearFields() {
-//        idv.clear();
         vtc.getSelectionModel().clearSelection();
         capacite.clear();
         stat.clear();
         oui.setSelected(true);
+        conducteurCombo.getSelectionModel().clearSelection();
     }
+
     @FXML
     void gotrajet(ActionEvent event) {
         ajout_trajet.setVisible(true);
@@ -1253,13 +1505,13 @@ public class AcceuilAdmin {
 
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
-            stage.setOnHidden(e -> refreshListView());
+            stage.setOnHidden(e -> refreshListView3());
             stage.show();
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
     }
-    private void refreshListView() {
+    private void refreshListView3() {
         tabt.getItems().clear();
 
         Services t = new Services();
@@ -1271,6 +1523,25 @@ public class AcceuilAdmin {
         trajetList.clear();
         trajetList.addAll(ps.getAllTrajet());
         tabt.setItems(trajetList);
+    }
+
+    private void loadVehicules() {
+        Services service = new Services();
+        List<Vehicule> vehicules = service.getAllVehicule(); // You need to implement this method in Services
+        id_veh.setItems(FXCollections.observableArrayList(vehicules));
+
+        // Set a cell factory to display vehicle information in ComboBox
+        id_veh.setCellFactory(param -> new ListCell<Vehicule>() {
+            @Override
+            protected void updateItem(Vehicule item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(item.getType() + " - " + item.getCapacite()); // Adjust based on your Vehicule class
+                }
+            }
+        });
     }
 
 
@@ -1295,22 +1566,8 @@ public class AcceuilAdmin {
 
     @FXML
     void afficherEvent(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/afficher_event.fxml"));
-            if (loader.getLocation() == null) {
-                throw new IOException("Le fichier FXML n'a pas pu être trouvé.");
-            }
-
-            Stage stage = new Stage();
-            stage.setScene(new Scene(loader.load()));
-            stage.setTitle("Afficher les événements");
-            stage.show();
-
-
-
-        } catch (IOException e) {
-            showAlert("Erreur", "❌ Erreur lors de l'ouverture de la page d'affichage des événements : " + e.getMessage());
-        }
+        afficher_evenement.setVisible(true);
+        afficher_event.setVisible(false);
     }
 
     @FXML
@@ -1359,6 +1616,7 @@ public class AcceuilAdmin {
         ps2.ajouter(newEvent);
 
         System.out.println("✅ Événement ajouté avec succès : " + newEvent);
+        initialize();
     }
 
 
@@ -1374,6 +1632,508 @@ public class AcceuilAdmin {
         return BCrypt.hashpw(password, BCrypt.gensalt());
     }
 
+    @FXML
+    public void showDisplaySection2() {
+        displayPane1.setVisible(true);
+        managePane1.setVisible(false);
+    }
+
+    @FXML
+    public void showManageSection2() {
+        displayPane1.setVisible(false);
+        managePane1.setVisible(true);
+    }
+    @FXML
+    public void searchProduit() {
+        String filter = searchProduit.getText().toLowerCase();
+        ObservableList<String> filteredList = FXCollections.observableArrayList();
+
+        for (String item : produitList) {
+            if (item.toLowerCase().contains(filter)) {
+                filteredList.add(item);
+            }
+        }
+
+        listViewP.setItems(filteredList);
+    }
+
+    private void loadProduits() {
+        produitList.clear();
+        produitList.add("ID -- Nom -- Type -- Prix"); // En-tête
+
+        try (
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery("SELECT * FROM produit")) {
+            while (rs.next()) {
+                produitList.add(rs.getInt("idproduit") + " -- " + rs.getString("nom") +
+                        " -- " + rs.getString("type") + " -- " + rs.getDouble("prix"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void generatePDF() {
+        List<String> products = listViewP.getItems();
+
+        if (!products.isEmpty()) {
+            try {
+                // Spécifiez le chemin de votre fichier PDF
+                String filePath = "product_list.pdf";
+
+
+                PDFGenerator.generatePDFFromStringList(products, filePath);
+
+                // Afficher une alerte de succès
+                showAlert(Alert.AlertType.INFORMATION, "PDF généré avec succès", "Le PDF a été créé avec succès à l'emplacement : " + filePath);
+            } catch (IOException e) {
+                showAlert(Alert.AlertType.ERROR, "Erreur lors de la génération du PDF", "Une erreur est survenue : " + e.getMessage());
+            }
+        } else {
+            showAlert(Alert.AlertType.WARNING, "Liste vide", "Il n'y a pas de produits dans la liste.");
+        }
+    }
+    private void showAlert(Alert.AlertType alertType, String title, String content) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+    @FXML
+    void AjouterProduit(ActionEvent event) {
+        String nom = txtNomP.getText();
+        String type = txtTypeP.getText();
+        double prix;
+
+        if (nom.isEmpty() || type.isEmpty()) {
+            showAlert("Erreur", "Tous les champs doivent être remplis.", Alert.AlertType.ERROR);
+            return;
+        }
+
+        try {
+            prix = Double.parseDouble(txtPrixP.getText());
+        } catch (NumberFormatException e) {
+            showAlert("Erreur", "Le prix doit être un nombre valide.", Alert.AlertType.ERROR);
+            return;
+        }
+
+        String query = "INSERT INTO produit (nom, type, prix) VALUES (?, ?, ?)";
+        try (
+                PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, nom);
+            stmt.setString(2, type);
+            stmt.setDouble(3, prix);
+            stmt.executeUpdate();
+            showAlert("Succès", "Produit ajouté avec succès !", Alert.AlertType.INFORMATION);
+
+            //   smsService.sendSMS("+21623039225","produit crée");
+            loadProduits();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void ModifierProduit(ActionEvent event) {
+        String selected = listViewP.getSelectionModel().getSelectedItem();
+        if (selected == null || selected.equals("ID -- Nom -- Type -- Prix")) {
+            showAlert("Erreur", "Veuillez sélectionner un produit à modifier.", Alert.AlertType.ERROR);
+            return;
+        }
+
+        int id = Integer.parseInt(selected.split(" -- ")[0]);
+        String nom = txtNomP.getText();
+        String type = txtTypeP.getText();
+        double prix;
+
+        if (nom.isEmpty() || type.isEmpty()) {
+            showAlert("Erreur", "Tous les champs doivent être remplis.", Alert.AlertType.ERROR);
+            return;
+        }
+
+        try {
+            prix = Double.parseDouble(txtPrixP.getText());
+        } catch (NumberFormatException e) {
+            showAlert("Erreur", "Le prix doit être un nombre valide.", Alert.AlertType.ERROR);
+            return;
+        }
+
+        String query = "UPDATE produit SET nom = ?, type = ?, prix = ? WHERE idproduit = ?";
+        try (
+                PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, nom);
+            stmt.setString(2, type);
+            stmt.setDouble(3, prix);
+            stmt.setInt(4, id);
+            stmt.executeUpdate();
+            showAlert("Succès", "Produit modifié avec succès !", Alert.AlertType.INFORMATION);
+            loadProduits();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void SupprimerProduit(ActionEvent event) {
+        String selected = listViewP.getSelectionModel().getSelectedItem();
+        if (selected == null || selected.equals("ID -- Nom -- Type -- Prix")) {
+            showAlert("Erreur", "Veuillez sélectionner un produit à supprimer.", Alert.AlertType.ERROR);
+            return;
+        }
+
+        int id = Integer.parseInt(selected.split(" -- ")[0]);
+
+        Alert confirm = new Alert(Alert.AlertType.CONFIRMATION, "Voulez-vous vraiment supprimer ce produit ?", ButtonType.YES, ButtonType.NO);
+        confirm.showAndWait();
+        if (confirm.getResult() == ButtonType.YES) {
+            String query = "DELETE FROM produit WHERE idproduit = ?";
+            try (
+                    PreparedStatement stmt = conn.prepareStatement(query)) {
+                stmt.setInt(1, id);
+                stmt.executeUpdate();
+                showAlert("Succès", "Produit supprimé avec succès !", Alert.AlertType.INFORMATION);
+                loadProduits();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @FXML
+    void VersService(ActionEvent event) {
+        afficher_produit.setVisible(false);
+        afficher_service.setVisible(true);
+    }
+
+    private void switchScene(ActionEvent event, String fxmlFile) {
+        try {
+            Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+            Parent root = loader.load();
+            stage.setScene(new Scene(root));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void showAlert(String title, String content, Alert.AlertType type) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+
+    private void loadServices() {
+        serviceList.clear();
+        try {
+            List<Service> services = ServiceDAO.getAllServices();
+            serviceList.addAll(services);
+            table.setItems(serviceList);
+        } catch (SQLException e) {
+            showAlert("Erreur", "Impossible de charger les services.", Alert.AlertType.ERROR);
+        }
+    }
+
+    @FXML
+    public void showDisplaySection() {
+        displayPane.setVisible(true);
+        managePane.setVisible(false);
+    }
+
+    @FXML
+    public void showManageSection() {
+        displayPane.setVisible(false);
+        managePane.setVisible(true);
+    }
+    @FXML
+    public void searchService() {
+        String filter = searchService.getText().toLowerCase();
+        ObservableList<Service> filteredList = FXCollections.observableArrayList();
+
+        for (Service service : serviceList) {
+            if (service.getNom().toLowerCase().contains(filter) ||
+                    service.getDescription().toLowerCase().contains(filter) ||
+                    Double.valueOf(service.getTarif()).toString().toLowerCase().contains(filter)) {
+                filteredList.add(service);
+            }
+        }
+
+        table.setItems(filteredList);
+    }
+    @FXML
+    void Add(ActionEvent event) {
+        if (!validerChamps()) return; // Validation avant ajout
+
+        try {
+            String nom = txtNom.getText();
+            String description = txtDescription.getText();
+            double tarif = Double.parseDouble(txtTarif.getText());
+
+            ServiceDAO.ajouterService(new Service(0, nom, description, tarif));
+            showAlert("Succès", "Service ajouté avec succès.", Alert.AlertType.INFORMATION);
+            loadServices();
+            clearFields();
+        } catch (SQLException e) {
+            showAlert("Erreur", "Impossible d'ajouter le service.", Alert.AlertType.ERROR);
+        }
+    }
+
+    @FXML
+    void Modifier(ActionEvent event) {
+        Service selectedService = table.getSelectionModel().getSelectedItem();
+        if (selectedService == null) {
+            showAlert("Erreur", "Veuillez sélectionner un service à modifier.", Alert.AlertType.ERROR);
+            return;
+        }
+
+        if (!validerChamps()) return; // Validation avant modification
+
+        try {
+            selectedService = new Service(selectedService.getId(), txtNom.getText(), txtDescription.getText(), Double.parseDouble(txtTarif.getText()));
+            ServiceDAO.modifierService(selectedService);
+            showAlert("Succès", "Service modifié avec succès.", Alert.AlertType.INFORMATION);
+            loadServices();
+            clearFields();
+        } catch (SQLException e) {
+            showAlert("Erreur", "Impossible de modifier le service.", Alert.AlertType.ERROR);
+        }
+    }
+
+    @FXML
+    void Supprimer(ActionEvent event) {
+        Service selectedService = table.getSelectionModel().getSelectedItem();
+        if (selectedService == null) {
+            showAlert("Erreur", "Veuillez sélectionner un service à supprimer.", Alert.AlertType.ERROR);
+            return;
+        }
+
+        Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION, "Voulez-vous vraiment supprimer ce service ?", ButtonType.YES, ButtonType.NO);
+        confirmation.showAndWait();
+        if (confirmation.getResult() == ButtonType.YES) {
+            try {
+                ServiceDAO.supprimerService(selectedService.getId());
+                showAlert("Succès", "Service supprimé avec succès.", Alert.AlertType.INFORMATION);
+                loadServices();
+                clearFields();
+            } catch (SQLException e) {
+                showAlert("Erreur", "Impossible de supprimer le service.", Alert.AlertType.ERROR);
+            }
+        }
+    }
+
+    @FXML
+    void VersProduit(ActionEvent event) {
+        afficher_produit.setVisible(true);
+        afficher_service.setVisible(false);
+    }
+
+
+    /**
+     * Vérifie si les champs sont bien remplis avant d'ajouter ou modifier un service.
+     */
+    private boolean validerChamps() {
+        String nom = txtNom.getText().trim();
+        String description = txtDescription.getText().trim();
+        String tarifStr = txtTarif.getText().trim();
+
+        if (nom.isEmpty() || description.isEmpty() || tarifStr.isEmpty()) {
+            showAlert("Erreur", "Tous les champs doivent être remplis.", Alert.AlertType.ERROR);
+            return false;
+        }
+
+        try {
+            double tarif = Double.parseDouble(tarifStr);
+            if (tarif <= 0) {
+                showAlert("Erreur", "Le tarif doit être un nombre positif.", Alert.AlertType.ERROR);
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            showAlert("Erreur", "Le tarif doit être un nombre valide.", Alert.AlertType.ERROR);
+            return false;
+        }
+
+        return true;
+    }
+
+    //oussema
+
+    public void chargerListe() {
+        List<event> events = eventService.afficher();
+        if (events.isEmpty()) {
+            afficherAlerte("Aucun événement", "⚠️ Aucun événement trouvé en base.", Alert.AlertType.WARNING);
+        }
+        eventList.setAll(events);
+        liste.setItems(eventList);
+    }
+
+    @FXML
+    private void supprimer_event(ActionEvent event) {
+        event selectedEvent = liste.getSelectionModel().getSelectedItem();
+        if (selectedEvent == null) {
+            afficherAlerte("Erreur", "Veuillez sélectionner un événement à supprimer.", Alert.AlertType.ERROR);
+            return;
+        }
+
+        Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmation.setTitle("Confirmation");
+        confirmation.setHeaderText("Suppression de l'événement");
+        confirmation.setContentText("Êtes-vous sûr de vouloir supprimer cet événement ?");
+
+        if (confirmation.showAndWait().orElse(ButtonType.CANCEL) == ButtonType.OK) {
+            boolean deleted = eventService.supprimer(selectedEvent);
+            if (deleted) {
+                eventList.remove(selectedEvent);
+                afficherAlerte("Succès", "L'événement '" + selectedEvent.getNom() + "' a été supprimé.", Alert.AlertType.INFORMATION);
+            } else {
+                afficherAlerte("Erreur", "Échec de la suppression. Vérifiez que l'événement existe toujours.", Alert.AlertType.ERROR);
+            }
+        }
+        initialize();
+    }
+
+    @FXML
+    private void modifier(ActionEvent event) {
+        System.out.println("clicked");
+        event selectedEvent = liste.getSelectionModel().getSelectedItem();
+        System.out.println("selectedEvent: " + selectedEvent);
+        if (selectedEvent == null) {
+            afficherAlerte("Erreur", "Veuillez sélectionner un événement à modifier.", Alert.AlertType.ERROR);
+            return;
+        }
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/modifier.fxml"));
+            Stage stage = new Stage();
+            stage.setScene(new Scene(loader.load()));
+
+            modifierEvent controller = loader.getController();
+            controller.initData(selectedEvent, this); // Passer l'événement sélectionné
+
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Modifier un événement");
+            stage.showAndWait();
+
+            chargerListe();  // Rafraîchir la liste après modification
+
+        } catch (IOException e) {
+            afficherAlerte("Erreur", "❌ Impossible d'ouvrir la fenêtre de modification : " + e.getMessage(), Alert.AlertType.ERROR);
+        }
+    }
+
+    // Méthode pour ouvrir la page des feedbacks
+    @FXML
+    private void voirFeedback(ActionEvent event) {
+        event selectedEvent = liste.getSelectionModel().getSelectedItem();
+        if (selectedEvent == null) {
+            afficherAlerte("Erreur", "Veuillez sélectionner un événement pour voir les feedbacks.", Alert.AlertType.ERROR);
+            return;
+        }
+
+        try {
+            // Charger la scène de feedback
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ajouter_fedback.fxml"));
+            Stage stage = new Stage();
+            stage.setScene(new Scene(loader.load()));
+
+            // Passer l'événement sélectionné au contrôleur de feedback
+            ajouterfedback controller = loader.getController();
+            controller.setEvent(selectedEvent);
+
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Feedbacks de l'événement");
+            stage.showAndWait();
+
+        } catch (IOException e) {
+            afficherAlerte("Erreur", "❌ Impossible d'ouvrir la fenêtre de feedbacks : " + e.getMessage(), Alert.AlertType.ERROR);
+        }
+    }
+
+
+    // Méthode pour filtrer les événements en fonction du champ de recherche
+    private void filtrerEvenements(String keyword) {
+        ObservableList<event> filteredList = FXCollections.observableArrayList();
+        for (event ev : eventList) {
+            if (ev.getNom().toLowerCase().contains(keyword.toLowerCase())) {
+                filteredList.add(ev);
+            }
+        }
+        liste.setItems(filteredList);
+    }
+
+    // Méthode pour afficher des alertes avec différents types
+    private void afficherAlerte(String titre, String message, Alert.AlertType type) {
+        Alert alert = new Alert(type);
+        alert.setTitle(titre);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+    private void InitComboBox() {
+        // Initialiser la ComboBox avec les options de tri par date
+        triComboBox.setItems(FXCollections.observableArrayList(
+                "Faire tri par date",
+                "Tri par date ascendante",
+                "Tri par date descendante"
+        ));
+
+        // Définir la valeur par défaut
+        triComboBox.setValue("Faire tri par date");
+
+        // Ajouter un listener pour trier les événements en fonction du choix
+        triComboBox.valueProperty().addListener((observable, oldValue, newValue) -> trierListeParDate(newValue));
+    }
+
+    private void trierListeParDate(String critere) {
+        switch (critere) {
+            case "Tri par date ascendante":
+                FXCollections.sort(eventList, (e1, e2) -> e1.getDate().compareTo(e2.getDate()));
+                break;
+            case "Tri par date descendante":
+                FXCollections.sort(eventList, (e1, e2) -> e2.getDate().compareTo(e1.getDate()));
+                break;
+        }
+        liste.setItems(eventList);
+    }
+
+    private void loadEvents() {
+        try {
+            ObservableList<event> events = FXCollections.observableArrayList(eventService.getAllEvents());
+            liste.setItems(events);
+            liste.setCellFactory(param -> new ListCell<event>() {
+                @Override
+                protected void updateItem(event item, boolean empty) {
+                    super.updateItem(item, empty);
+                    setText((empty || item == null) ? null : item.getNom());
+                }
+            });
+        } catch (Exception e) {
+            System.out.println("❌ Erreur lors du chargement des événements : " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+
+
+    public void setEvent(event selectedEvent) {
+        this.selectedEvent = selectedEvent;
+    }
+
+
+
+
+    public void initData(fedback feedback) {
+        this.selectedFeedback = feedback;
+
+    }
+
+    @FXML
+    public void retour_ajouter_event(ActionEvent event){
+        afficher_event.setVisible(true);
+        afficher_evenement.setVisible(false);
+    }
 
 
 

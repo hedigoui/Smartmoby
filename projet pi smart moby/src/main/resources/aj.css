@@ -44,7 +44,3 @@
     -fx-text-fill: white;
     -fx-font-weight: bold;
 }
-
-.supprimer {
-    -fx-background-color: linear-gradient(to bottom, red, darkred);
-}

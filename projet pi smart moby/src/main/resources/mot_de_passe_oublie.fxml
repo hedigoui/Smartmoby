@@ -34,17 +34,17 @@
                </font>
             </Label>
             <TextField fx:id="email" layoutX="359.0" layoutY="218.0" prefHeight="43.0" prefWidth="502.0" promptText="Entrez votre email" styleClass="text-field" stylesheets="@AcceuilUser.css" />
-            <Button layoutX="359.0" layoutY="373.0" mnemonicParsing="false" onAction="#se_connecter" prefHeight="26.0" prefWidth="182.0" styleClass="root" stylesheets="@aj.css" text="Se Connecter">
+            <Button layoutX="359.0" layoutY="373.0" mnemonicParsing="false" onAction="#se_connecter" prefHeight="26.0" prefWidth="182.0" styleClass="add-button" stylesheets="@buttons.css" text="Se Connecter">
                <font>
                   <Font name="Tahoma" size="14.0" />
                </font>
             </Button>
-            <Button layoutX="497.0" layoutY="437.0" mnemonicParsing="false" onAction="#register" prefHeight="26.0" prefWidth="196.0" styleClass="root" stylesheets="@aj.css" text="Créer un nouveau compte">
+            <Button layoutX="497.0" layoutY="437.0" mnemonicParsing="false" onAction="#register" prefHeight="41.0" prefWidth="231.0" styleClass="black-button" stylesheets="@buttons.css" text="Créer un nouveau compte">
                <font>
                   <Font name="Tahoma" size="14.0" />
                </font>
             </Button>
-            <Button layoutX="677.0" layoutY="373.0" mnemonicParsing="false" onAction="#send_email" prefHeight="26.0" prefWidth="182.0" styleClass="root" stylesheets="@aj.css" text="Envoyer Un Email">
+            <Button layoutX="677.0" layoutY="373.0" mnemonicParsing="false" onAction="#send_email" prefHeight="26.0" prefWidth="182.0" styleClass="green-button" stylesheets="@buttons.css" text="Envoyer Un Email">
                <font>
                   <Font name="Tahoma" size="14.0" />
                </font>

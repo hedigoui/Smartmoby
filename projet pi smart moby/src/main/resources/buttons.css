@@ -1,0 +1,111 @@
+/* Basic Button Style */
+.button {
+    -fx-font-size: 14px; /* Font size */
+    -fx-font-weight: bold; /* Bold text */
+    -fx-padding: 10px 20px; /* Padding */
+    -fx-background-radius: 10px; /* Rounded corners */
+    -fx-border-radius: 10px; /* Rounded corners for border */
+    -fx-cursor: hand; /* Pointer cursor on hover */
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 5, 0, 0, 0); /* Drop shadow */
+    -fx-transition: all 0.3s ease; /* Smooth transition */
+}
+
+/* Green Button Style */
+.green-button {
+    -fx-background-color: linear-gradient(to bottom, #4CAF50, #388E3C); /* Green gradient */
+    -fx-text-fill: white; /* White text */
+}
+
+.green-button:hover {
+    -fx-background-color: linear-gradient(to bottom, #45a049, #2E7D32); /* Darker green gradient on hover */
+}
+
+.green-button:pressed {
+    -fx-background-color: linear-gradient(to bottom, #388E3C, #2E7D32); /* Even darker green gradient on press */
+}
+
+/* Black Button Style for Management */
+.black-button {
+    -fx-background-color: linear-gradient(to bottom, #2c3e50, #34495e); /* Black gradient */
+    -fx-text-fill: white; /* White text */
+}
+
+.black-button:hover {
+    -fx-background-color: linear-gradient(to bottom, #34495e, #2c3e50); /* Darker black gradient on hover */
+}
+
+.black-button:pressed {
+    -fx-background-color: linear-gradient(to bottom, #2c3e50, #2c3e50); /* Even darker black gradient on press */
+}
+
+/* Add Button Style */
+.add-button {
+    -fx-background-color: linear-gradient(to bottom, #2196F3, #1976D2); /* Blue gradient */
+    -fx-text-fill: white; /* White text */
+}
+
+.add-button:hover {
+    -fx-background-color: linear-gradient(to bottom, #1976D2, #1565C0); /* Darker blue gradient on hover */
+}
+
+.add-button:pressed {
+    -fx-background-color: linear-gradient(to bottom, #1565C0, #0D47A1); /* Even darker blue gradient on press */
+}
+
+/* Delete Button Style */
+.delete-button {
+    -fx-background-color: linear-gradient(to bottom, #F44336, #D32F2F); /* Red gradient */
+    -fx-text-fill: white; /* White text */
+}
+
+.delete-button:hover {
+    -fx-background-color: linear-gradient(to bottom, #D32F2F, #C62828); /* Darker red gradient on hover */
+}
+
+.delete-button:pressed {
+    -fx-background-color: linear-gradient(to bottom, #C62828, #B71C1C); /* Even darker red gradient on press */
+}
+
+/* Disabled Button Style */
+.button:disabled {
+    -fx-background-color: #BDBDBD; /* Gray background */
+    -fx-text-fill: #757575; /* Dark gray text */
+    -fx-cursor: default; /* Default cursor */
+    -fx-effect: none; /* No shadow */
+}
+
+/* Specific Style for Navigation Buttons */
+.nav-button {
+    -fx-background-color: transparent; /* Transparent background */
+    -fx-text-fill: #4CAF50; /* Green text */
+    -fx-padding: 10px 15px; /* Padding */
+    -fx-font-size: 14px; /* Font size */
+    -fx-font-weight: bold; /* Bold text */
+    -fx-border-color: #4CAF50; /* Green border */
+    -fx-border-width: 2px; /* Border width */
+    -fx-border-radius: 10px; /* Rounded corners for border */
+    -fx-cursor: hand; /* Pointer cursor on hover */
+    -fx-transition: all 0.3s ease; /* Smooth transition */
+}
+
+/* Hover Effect for Navigation Buttons */
+.nav-button:hover {
+    -fx-background-color: rgba(76, 175, 80, 0.2); /* Light green background on hover */
+    -fx-text-fill: #388E3C; /* Darker green text on hover */
+    -fx-border-color: #388E3C; /* Darker green border on hover */
+}
+
+/* Pressed Effect for Navigation Buttons */
+.nav-button:pressed {
+    -fx-background-color: rgba(76, 175, 80, 0.4); /* Darker green background on press */
+    -fx-text-fill: #2E7D32; /* Even darker green text on press */
+    -fx-border-color: #2E7D32; /* Even darker green border on press */
+}
+
+/* Disabled Style for Navigation Buttons */
+.nav-button:disabled {
+    -fx-background-color: transparent; /* Transparent background */
+    -fx-text-fill: #BDBDBD; /* Gray text */
+    -fx-border-color: #BDBDBD; /* Gray border */
+    -fx-cursor: default; /* Default cursor */
+}

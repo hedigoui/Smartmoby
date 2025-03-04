@@ -1,6 +1,10 @@
 package org.example.models;
 import java.sql.Timestamp;
 
+
+
+import java.sql.Timestamp;
+
 public class Trajet {
     private int id;
     private String pointD;
@@ -23,7 +27,6 @@ public class Trajet {
         this.dateA = dateA;
         this.distance = distance;
         this.prix = prix;
-
         this.id_veh = id_veh;
     }
 
@@ -48,12 +51,13 @@ public class Trajet {
 
     public double getPrix() { return prix; }
     public void setPrix(double prix) { this.prix = prix; }
+
     public String getVehicule() { return vehicule; }
     public void setVehicule(String vehicule) { this.vehicule = vehicule; }
+
     public int getId_veh() { return id_veh; }
     public void setId_veh(int id_veh) { this.id_veh = id_veh; }
 
-    // Méthode toString()
     @Override
     public String toString() {
         return "Trajet{" +
@@ -64,6 +68,8 @@ public class Trajet {
                 ", dateA=" + dateA +
                 ", distance=" + distance +
                 ", prix=" + prix +
+                ", vehicule='" + vehicule + '\'' +
+                ", id_veh=" + id_veh +
                 '}';
     }
 }

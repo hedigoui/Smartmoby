@@ -31,9 +31,10 @@ public class modifierEvent {
 
     private event currentEvent; // L'événement à modifier
     private final event_serv eventService = new event_serv();
-    private AfficherEvent mainController; // Référence au contrôleur principal
+    private AcceuilAdmin mainController;
+    private AcceuilOrganisateur mainController2;
 
-    public void initData(event selectedEvent, AfficherEvent mainController) {
+    public void initData(event selectedEvent, AcceuilAdmin mainController) {
         if (selectedEvent == null) {
             System.out.println("❌ Erreur: Aucun événement sélectionné.");
             return;
@@ -41,6 +42,27 @@ public class modifierEvent {
 
         this.currentEvent = selectedEvent;
         this.mainController = mainController;
+
+        // Pré-remplir les champs
+        nom.setText(currentEvent.getNom());
+        lieu.setText(currentEvent.getLieu());
+        if (currentEvent.getDate() != null) {
+            // Si c'est un java.util.Date, convertis-le en java.sql.Date
+            java.sql.Date sqlDate = new java.sql.Date(currentEvent.getDate().getTime());
+            // Convertir java.sql.Date en LocalDate
+            LocalDate localDate = sqlDate.toLocalDate();
+            date.setValue(localDate);
+        }
+    }
+
+    public void initData2(event selectedEvent, AcceuilOrganisateur mainController2) {
+        if (selectedEvent == null) {
+            System.out.println("❌ Erreur: Aucun événement sélectionné.");
+            return;
+        }
+
+        this.currentEvent = selectedEvent;
+        this.mainController2 = mainController2;
 
         // Pré-remplir les champs
         nom.setText(currentEvent.getNom());

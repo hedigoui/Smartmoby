@@ -45,6 +45,19 @@ public class Utilisateur {
         this.mot_de_passe = mot_de_passe;
     }
 
+    public Utilisateur(int id, String nom, String prenom, String motDePasse) {
+        this.id = id;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.mot_de_passe = motDePasse;
+    }
+
+    public Utilisateur(int id, String nom, String prenom) {
+        this.id = id;
+        this.nom = nom;
+        this.prenom = prenom;
+    }
+
     public int getId() {
         return id;
     }

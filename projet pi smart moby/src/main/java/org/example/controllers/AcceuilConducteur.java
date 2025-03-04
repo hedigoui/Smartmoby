@@ -120,6 +120,54 @@ public class AcceuilConducteur {
     @FXML
     private AnchorPane ajouter_transport;
 
+    @FXML
+    private ComboBox<Conducteur> conducteurCombo;
+
+    @FXML
+    void initialize() {
+
+        refreshListView();
+        refreshListView3();
+        loadVehicules1();
+        vtc.getItems().addAll("Car", "Taxi", "Métro", "Bus", "Moto");
+
+        // Associer les colonnes du TableView aux attributs de l'objet Vehicule
+        idveh.setCellValueFactory(new PropertyValueFactory<>("id"));
+        type.setCellValueFactory(new PropertyValueFactory<>("type"));
+        ca.setCellValueFactory(new PropertyValueFactory<>("capacite"));
+        st.setCellValueFactory(new PropertyValueFactory<>("statut"));
+        disp.setCellValueFactory(new PropertyValueFactory<>("dispo"));
+
+        // Lier les RadioButtons à un ToggleGroup
+        ToggleGroup toggleGroup = new ToggleGroup();
+        oui.setToggleGroup(toggleGroup);
+        non.setToggleGroup(toggleGroup);
+        oui.setSelected(true);
+
+        // Charger les véhicules dans la TableView
+        loadVehicules();
+
+        // Charger les conducteurs dans le ComboBox
+        loadConducteurs();
+
+
+        loadVehicules1();
+
+        // Associer les colonnes aux attributs de Trajet
+        idtar.setCellValueFactory(new PropertyValueFactory<>("id"));
+        pd.setCellValueFactory(new PropertyValueFactory<>("pointD"));
+        pa.setCellValueFactory(new PropertyValueFactory<>("pointA"));
+        dd.setCellValueFactory(new PropertyValueFactory<>("dateD"));
+        da.setCellValueFactory(new PropertyValueFactory<>("dateA"));
+        dis.setCellValueFactory(new PropertyValueFactory<>("distance"));
+        px.setCellValueFactory(new PropertyValueFactory<>("prix"));
+
+        // Charger les trajets existants
+        loadTrajets();
+        loadVehicules1();
+        loadVehicules();
+    }
+
 
 
     @FXML
@@ -303,41 +351,7 @@ public class AcceuilConducteur {
 
     }
 
-    @FXML
-    void initialize() {
-        // Ajouter les types de véhicules dans le ComboBox
-        vtc.getItems().addAll("Bus", "Métro", "Car", "Vélo", "Trottinette");
 
-        // Associer les colonnes du TableView aux attributs de l'objet Vehicule
-        idveh.setCellValueFactory(new PropertyValueFactory<>("id")); // Ajout pour afficher l'ID
-        type.setCellValueFactory(new PropertyValueFactory<>("type"));
-        ca.setCellValueFactory(new PropertyValueFactory<>("capacite"));
-        st.setCellValueFactory(new PropertyValueFactory<>("statut"));
-        disp.setCellValueFactory(new PropertyValueFactory<>("dispo"));
-
-        // Lier les RadioButtons à un ToggleGroup
-        ToggleGroup toggleGroup = new ToggleGroup();
-        oui.setToggleGroup(toggleGroup);
-        non.setToggleGroup(toggleGroup);
-        oui.setSelected(true); // Sélection par défaut
-
-        // Charger les véhicules dans la TableView
-        loadVehicules();
-
-
-
-        // Associer les colonnes aux attributs de Trajet
-        idtar.setCellValueFactory(new PropertyValueFactory<>("id"));
-        pd.setCellValueFactory(new PropertyValueFactory<>("pointD"));
-        pa.setCellValueFactory(new PropertyValueFactory<>("pointA"));
-        dd.setCellValueFactory(new PropertyValueFactory<>("dateD"));
-        da.setCellValueFactory(new PropertyValueFactory<>("dateA"));
-        dis.setCellValueFactory(new PropertyValueFactory<>("distance"));
-        px.setCellValueFactory(new PropertyValueFactory<>("prix"));
-
-        // Charger les trajets existants
-        loadTrajets();
-    }
 
 
 
@@ -345,42 +359,38 @@ public class AcceuilConducteur {
     @FXML
     void add(ActionEvent event) {
         // Get input values
-//        int id = Integer.parseInt(idv.getText()); // Assuming ID is an integer
         String vehicleType = vtc.getValue();
         int capacity = Integer.parseInt(capacite.getText());
         String status = stat.getText();
         boolean available = oui.isSelected();
+        Conducteur selectedConducteur = conducteurCombo.getValue();
+        Integer conducteurId = selectedConducteur != null ? selectedConducteur.getId() : null;
 
         // Create a new Vehicule object
-        Vehicule vehicule = new Vehicule( vehicleType, capacity, status, available);
+        Vehicule vehicule = new Vehicule(vehicleType, capacity, status, available, conducteurId);
 
         // Add the vehicle using the Services class
         ps.add(vehicule);
 
         // Refresh the TableView
         loadVehicules();
+        initialize();
 
         // Clear input fields
         clearFields();
     }
+
     @FXML
     public void delete(ActionEvent event) {
-
         Vehicule selectedItem = tabv.getSelectionModel().getSelectedItem();
-
         if (selectedItem != null) {
-
             tabv.getItems().remove(selectedItem);
-
-            Services t = new Services();
-            t.delete(selectedItem);
+            ps.delete(selectedItem);
         }
-
     }
 
     public void update(ActionEvent event) {
         Vehicule selectedItem = tabv.getSelectionModel().getSelectedItem();
-
         if (selectedItem != null) {
             openUpdateWindow(selectedItem);
         } else {
@@ -390,66 +400,57 @@ public class AcceuilConducteur {
 
     private void openUpdateWindow(Vehicule selectedItem) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/UpdateVehicule.fxml")); // Vérifie le bon fichier FXML
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/UpdateVehicule.fxml"));
             Parent root = loader.load();
-
-            // Vérifie le bon contrôleur
             UpdateVehicule controller = loader.getController();
             controller.initData(selectedItem);
-
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
-
-            // Rafraîchir la liste après fermeture de la fenêtre
-            stage.setOnHidden(e -> refreshListView2());
+            stage.setOnHidden(e -> refreshListView());
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private void refreshListView2() {
+    private void refreshListView() {
         tabv.getItems().clear();
-
-        Services t = new Services();
-        ArrayList<Vehicule> items = t.getAllVehicule();
-
+        ArrayList<Vehicule> items = ps.getAllVehicule();
         tabv.getItems().addAll(items);
+    }
+
+    private void loadVehicules1() {
+        vehiculeList.clear();
+        vehiculeList.addAll(ps.getAllVehicule());
+        tabv.setItems(vehiculeList);
     }
 
 
 
-
-    private void loadVehicules() {
-        // Fetch all vehicles from the database or data source
-        vehiculeList.clear();
-        vehiculeList.addAll(ps.getAllVehicule());
-        tabv.setItems(vehiculeList);
-        Services service = new Services();
-        List<Vehicule> vehicules = service.getAllVehicule(); // You need to implement this method in Services
-        id_veh.setItems(FXCollections.observableArrayList(vehicules));
-
-        // Set a cell factory to display vehicle information in ComboBox
-        id_veh.setCellFactory(param -> new ListCell<Vehicule>() {
+    private void loadConducteurs() {
+        List<Conducteur> conducteurs = ps.getAllConducteurs();
+        conducteurCombo.setItems(FXCollections.observableArrayList(conducteurs));
+        conducteurCombo.setCellFactory(param -> new ListCell<Conducteur>() {
             @Override
-            protected void updateItem(Vehicule item, boolean empty) {
+            protected void updateItem(Conducteur item, boolean empty) {
                 super.updateItem(item, empty);
                 if (empty || item == null) {
                     setText(null);
                 } else {
-                    setText(item.getType() + " - " + item.getCapacite()); // Adjust based on your Vehicule class
+                    setText(item.getNom() + " " + item.getPrenom() + " - " + item.getNumero_permis());
                 }
             }
         });
     }
 
     private void clearFields() {
-//        idv.clear();
         vtc.getSelectionModel().clearSelection();
         capacite.clear();
         stat.clear();
         oui.setSelected(true);
+        conducteurCombo.getSelectionModel().clearSelection();
     }
+
     @FXML
     void gotrajet(ActionEvent event) {
         ajout_trajet.setVisible(true);
@@ -535,13 +536,13 @@ public class AcceuilConducteur {
 
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
-            stage.setOnHidden(e -> refreshListView());
+            stage.setOnHidden(e -> refreshListView3());
             stage.show();
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
     }
-    private void refreshListView() {
+    private void refreshListView3() {
         tabt.getItems().clear();
 
         Services t = new Services();
@@ -553,6 +554,25 @@ public class AcceuilConducteur {
         trajetList.clear();
         trajetList.addAll(ps.getAllTrajet());
         tabt.setItems(trajetList);
+    }
+
+    private void loadVehicules() {
+        Services service = new Services();
+        List<Vehicule> vehicules = service.getAllVehicule(); // You need to implement this method in Services
+        id_veh.setItems(FXCollections.observableArrayList(vehicules));
+
+        // Set a cell factory to display vehicle information in ComboBox
+        id_veh.setCellFactory(param -> new ListCell<Vehicule>() {
+            @Override
+            protected void updateItem(Vehicule item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(item.getType() + " - " + item.getCapacite()); // Adjust based on your Vehicule class
+                }
+            }
+        });
     }
 
 

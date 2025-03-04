@@ -1,0 +1,134 @@
+.main-container {
+    -fx-background-color: #e6f7e6; /* Light green background */
+    -fx-padding: 20px;
+    -fx-font-family: 'Arial';
+}
+
+.header-container {
+    -fx-padding: 15px;
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 10px;
+    -fx-border-color: #ccc;
+    -fx-border-radius: 10px;
+    -fx-border-width: 1px;
+}
+
+.titre-vehicule {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+}
+
+.status-vehicule {
+    -fx-font-size: 14px;
+    -fx-text-fill: #8e44ad; /* Purple text */
+}
+
+.conducteur-nom {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+    -fx-graphic-text-gap: 10px; /* Space between image and text */
+}
+
+.conducteur-telephone {
+    -fx-font-size: 14px;
+    -fx-text-fill: #3498db; /* Blue text */
+    -fx-graphic-text-gap: 10px; /* Space between image and text */
+}
+
+.info-grid {
+    -fx-padding: 10px;
+    -fx-border-color: #ccc;
+    -fx-border-radius: 10px;
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 10px;
+}
+
+.info-box {
+    -fx-padding: 10px;
+    -fx-background-color: #ecf0f1; /* Light grey for info boxes */
+    -fx-background-radius: 10px;
+    -fx-border-color: #bdc3c7; /* Light blue border */
+    -fx-border-radius: 10px;
+    -fx-border-width: 1px;
+}
+
+.info-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #27ae60;
+}
+
+.info-value {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+}
+
+.reservation-section {
+    -fx-padding: 10px;
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 10px;
+    -fx-border-color: #ccc;
+    -fx-border-radius: 10px;
+    -fx-border-width: 1px;
+}
+
+.section-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+}
+
+.btn-reserver {
+    -fx-background-color: #27ae60; /* Green button */
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 10px 20px;
+    -fx-background-radius: 10px;
+}
+
+.btn-reserver:hover {
+    -fx-background-color: #229954;
+}
+
+.btn-reserver:disabled {
+    -fx-background-color: #cccccc;
+}
+
+.places-restantes {
+    -fx-font-size: 14px;
+    -fx-text-fill: #e74c3c; /* Red text */
+}
+
+.reservation-details {
+    -fx-padding: 15px;
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 10px;
+    -fx-border-color: #ccc;
+    -fx-border-radius: 10px;
+    -fx-border-width: 1px;
+}
+
+.code-reservation {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+}
+
+.date-reservation {
+    -fx-font-size: 14px;
+    -fx-text-fill: #7f8c8d;
+}
+
+.btn-retour {
+    -fx-background-color: #2980b9; /* Blue button */
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 8px 16px;
+    -fx-background-radius: 10px;
+}
+
+.btn-retour:hover {
+    -fx-background-color: #2471a3;
+}

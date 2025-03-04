@@ -2,6 +2,8 @@
 .main-container {
     -fx-background-color: #f5f6fa;
     -fx-background-radius: 50;
+    -fx-padding: 20px;
+    -fx-font-family: 'Arial';
 }
 
 /* Left Panel */
@@ -57,17 +59,21 @@
 
 /* Content Container */
 .content-container {
-    -fx-background-color: transparent;
-    -fx-padding: 20;
-    -fx-spacing: 10;
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 10px;
+    -fx-border-color: #ccc;
+    -fx-border-radius: 10px;
+    -fx-border-width: 1px;
+    -fx-padding: 20px;
+    -fx-spacing: 10px;
 }
 
 /* Grid Container */
 .grid-container {
-    -fx-background-color: transparent;
-    -fx-padding: 10;
-    -fx-hgap: 15;
-    -fx-vgap: 15;
+    -fx-background-color: #f5f6fa;
+    -fx-padding: 10px;
+    -fx-hgap: 15px;
+    -fx-vgap: 15px;
 }
 
 /* Pagination */
@@ -78,10 +84,10 @@
 .custom-pagination .pagination-control .number-button {
     -fx-background-color: white;
     -fx-text-fill: #2c3e50;
-    -fx-background-radius: 15;
+    -fx-background-radius: 15px;
     -fx-border-color: #2ecc71;
-    -fx-border-radius: 15;
-    -fx-border-width: 1;
+    -fx-border-radius: 15px;
+    -fx-border-width: 1px;
 }
 
 .custom-pagination .pagination-control .number-button:selected {
@@ -93,8 +99,8 @@
     -fx-background-color: white;
     -fx-text-fill: #2ecc71;
     -fx-border-color: #2ecc71;
-    -fx-border-radius: 15;
-    -fx-background-radius: 15;
+    -fx-border-radius: 15px;
+    -fx-background-radius: 15px;
 }
 
 .custom-pagination .pagination-control .button:hover {
@@ -122,15 +128,15 @@
 .scroll-bar:vertical .thumb,
 .scroll-bar:horizontal .thumb {
     -fx-background-color: #2ecc71;
-    -fx-background-radius: 5;
+    -fx-background-radius: 5px;
 }
 
 /* Card Styling */
 .grid-item {
     -fx-background-color: white;
-    -fx-background-radius: 15;
+    -fx-background-radius: 15px;
     -fx-effect: dropshadow(three-pass-box, rgba(46,204,113,0.2), 10, 0, 0, 0);
-    -fx-padding: 15;
+    -fx-padding: 15px;
 }
 
 .grid-item:hover {
@@ -143,12 +149,13 @@
 .search-field, .filter-combo, .grid-item {
     -fx-transition: all 0.3s ease;
 }
-/* Add these styles for the weather widget */
+
+/* Weather Widget */
 .weather-widget {
     -fx-background-color: rgba(255,255,255,0.1);
-    -fx-padding: 10;
-    -fx-spacing: 5;
-    -fx-background-radius: 10;
+    -fx-padding: 10px;
+    -fx-spacing: 5px;
+    -fx-background-radius: 10px;
 }
 
 .info-label {
@@ -174,30 +181,29 @@
 
 .weather-info {
     -fx-background-color: rgba(0,0,0,0.2);
-    -fx-padding: 10;
-    -fx-background-radius: 5;
+    -fx-padding: 10px;
+    -fx-background-radius: 5px;
 }
 
-
-
+/* App Logo */
 .app-logo {
     -fx-effect: dropshadow(three-pass-box, rgba(46,204,113,0.2), 10, 0, 0, 0);
 }
 
 /* Navigation Buttons */
 .nav-buttons {
-    -fx-spacing: 8;
-    -fx-padding: 10 0;
+    -fx-spacing: 8px;
+    -fx-padding: 10px 0;
 }
 
 .nav-button {
     -fx-background-color: transparent;
     -fx-text-fill: #ecf0f1;
     -fx-alignment: CENTER_LEFT;
-    -fx-padding: 10 15;
+    -fx-padding: 10px 15px;
     -fx-font-size: 14px;
-    -fx-graphic-text-gap: 10;
-    -fx-pref-width: 140;
+    -fx-graphic-text-gap: 10px;
+    -fx-pref-width: 140px;
     -fx-cursor: hand;
 }
 
@@ -212,16 +218,14 @@
 
 /* User Info Section */
 .user-info {
-    -fx-padding: 15;
+    -fx-padding: 15px;
     -fx-background-color: rgba(255,255,255,0.05);
-    -fx-background-radius: 10;
-    -fx-spacing: 5;
-    -fx-margin-top: 20;
+    -fx-background-radius: 10px;
+    -fx-spacing: 5px;
+    -fx-margin-top: 20px;
 }
 
-.user-avatar {
-    -fx-effect: dropshadow(three-pass-box, rgba(255,255,255,0.1), 5, 0, 0, 0);
-}
+
 
 .user-name {
     -fx-text-fill: white;
@@ -234,23 +238,10 @@
     -fx-font-size: 12px;
 }
 
-
-
-.content-container {
-    -fx-background-color: rgba(255,255,255,0.05);
-    -fx-background-radius: 10;
-    -fx-padding: 20;
-}
-
-
-
-
 /* Exit Button */
 .exit-button {
     -fx-cursor: hand;
     -fx-opacity: 0.8;
 }
 
-.exit-button:hover {
-    -fx-opacity: 1;
-}
+
