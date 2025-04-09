@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+	{% block css %}
+	<link rel="stylesheet" href="{{ asset('css/login.css') }}">
+	{% endblock %}
+</head>
+<body>
+    
+<div class="container" id="container">
+	<div class="form-container sign-up-container">
+		<form action="{{ path('app_inscription') }}" method="post">
+    		<h1>Créer Un Compte</h1>
+    		{{ form_start(form) }}
+        		{{ form_widget(form.nom, {'attr': {'placeholder': 'Nom', 'class': 'form-input'}}) }} 
+        		<div class="form-error">
+        			{{ form_errors(form.nom) }}
+    			</div>
+				{{ form_widget (form.prenom, {'label': false ,'attr': {'placeholder': 'Prénom', 'class': 'form-input'}}) }}
+				<div class="form-error">
+        			{{ form_errors(form.prenom) }}
+    			</div>
+				{{ form_widget (form.nom_utilisateur, {'label': false, 'attr': {'placeholder': "Nom d'utilisateur", 'class': 'form-input'}}) }}
+				<div class="form-error">
+        			{{ form_errors(form.nom_utilisateur) }}
+    			</div>
+        		{{ form_widget (form.email , {'label': false, 'attr': {'placeholder': "Email", 'class': 'form-input'}}) }}
+				<div class="form-error">
+        			{{ form_errors(form.email) }}
+    			</div>
+        		{{ form_widget (form.mot_de_passe , {'label': false, 'attr': {'placeholder': "Mot De Passe", 'class': 'form-input'}}) }}
+				<div class="form-error">
+        			{{ form_errors(form.mot_de_passe) }}
+    			</div>
+        		{{ form_widget (form.role, {'label': false, 'attr': {'id': 'utilisateur_role', 'onchange': 'handleRoleChange()', 'class': 'form-input'}}) }}
+				<div class="form-error">
+        			{{ form_errors(form.role) }}
+    			</div>
+			
+        		
+        		<button class="button-inscrire">S'inscrire</button>
+    		{{ form_end(form) }}
+		</form>
+	</div>
+	<div class="form-container sign-in-container">
+		<form action="{{ path('app_inscription') }}" method="POST">
+    		<h1>Se Connecter</h1>
+    		<input type="email" name="email" placeholder="Email" required />
+    		<input type="password" name="mot_de_passe" placeholder="Mot De Passe" required />
+    		<a href="#">Mot De Passe Oublié ?</a>
+    		<button type="submit">Se Connecter</button>
+<		</form>
+	</div>
+	<div class="overlay-container">
+		<div class="overlay">
+			<div class="overlay-panel overlay-left">
+				<h1>Bonjour !</h1>
+				<p>Entrez vos informations personnelles et commencez l'aventure ! </p>
+				<button class="ghost" id="signIn">Se Connecter ?</button>
+			</div>
+			<div class="overlay-panel overlay-right">
+				<h1>Content De Vous Revoir !</h1>
+				<p>Pour rester connecté avec nous, veuillez vous connecter avec vos informations personnelles</p>
+				<button class="ghost" id="signUp">S'inscrire ?</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% block js %}
+<script src="{{ asset('js/login.js') }}"></script>
+{% endblock %}
+</body>
+</html>
