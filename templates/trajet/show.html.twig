@@ -1,0 +1,67 @@
+{% extends 'back_base.html.twig' %}
+
+{% block title %}Trip Details{% endblock %}
+
+{% block body %}
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Trip Details</h3>
+            <div class="card-tools">
+                <a href="{{ path('trajet_index') }}" class="btn btn-secondary btn-sm">
+                    <i class="fas fa-arrow-left"></i> Back to List
+                </a>
+            </div>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <th>ID</th>
+                        <td>{{ trajet.id }}</td>
+                    </tr>
+                    <tr>
+                        <th>Vehicle</th>
+                        <td>{{ trajet.vehicule.type }}</td>
+                    </tr>
+                    <tr>
+                        <th>Departure Point</th>
+                        <td>{{ trajet.pointDepart }}</td>
+                    </tr>
+                    <tr>
+                        <th>Arrival Point</th>
+                        <td>{{ trajet.pointArrivee }}</td>
+                    </tr>
+                    <tr>
+                        <th>Departure Date</th>
+                        <td>{{ trajet.dateDepart|date('Y-m-d H:i') }}</td>
+                    </tr>
+                    <tr>
+                        <th>Arrival Date</th>
+                        <td>{{ trajet.dateArrivee|date('Y-m-d H:i') }}</td>
+                    </tr>
+                    <tr>
+                        <th>Distance</th>
+                        <td>{{ trajet.distance }} km</td>
+                    </tr>
+                    <tr>
+                        <th>Price</th>
+                        <td>{{ trajet.prix }} €</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="mt-3">
+                <a href="{{ path('trajet_edit', { id: trajet.id }) }}" class="btn btn-warning">
+                    <i class="fas fa-edit"></i> Edit
+                </a>
+                <form method="post" action="{{ path('trajet_delete', { id: trajet.id }) }}" style="display:inline;" onsubmit="return confirm('Are you sure?');">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ trajet.id) }}">
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fas fa-trash"></i> Delete
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %} 

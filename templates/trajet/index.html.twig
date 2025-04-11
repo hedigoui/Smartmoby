@@ -1,0 +1,77 @@
+{% extends 'back_base.html.twig' %}
+
+{% block title %}Trip Management{% endblock %}
+
+{% block page_title %}
+    <div class="d-flex justify-content-between align-items-center">
+        <h1 class="h3 mb-0 text-gray-800">Trip Management</h1>
+        <a href="{{ path('trajet_new') }}" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Add New Trip
+        </a>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Trip List</h3>
+            <div class="card-tools">
+                <a href="{{ path('trajet_new') }}" class="btn btn-primary btn-sm">
+                    <i class="fas fa-plus"></i> Add New Trip
+                </a>
+            </div>
+        </div>
+        <div class="card-body">
+            {% if trajets is empty %}
+                <div class="alert alert-info">
+                    No trips found. Click the "Add New Trip" button to create one.
+                </div>
+            {% else %}
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Vehicle</th>
+                            <th>Departure Point</th>
+                            <th>Arrival Point</th>
+                            <th>Departure Date</th>
+                            <th>Arrival Date</th>
+                            <th>Distance</th>
+                            <th>Price</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for trajet in trajets %}
+                            <tr>
+                                <td>{{ trajet.id }}</td>
+                                <td>{{ trajet.vehicule.type }}</td>
+                                <td>{{ trajet.pointDepart }}</td>
+                                <td>{{ trajet.pointArrivee }}</td>
+                                <td>{{ trajet.dateDepart|date('Y-m-d H:i') }}</td>
+                                <td>{{ trajet.dateArrivee|date('Y-m-d H:i') }}</td>
+                                <td>{{ trajet.distance }} km</td>
+                                <td>{{ trajet.prix }} €</td>
+                                <td>
+                                    <a href="{{ path('trajet_show', { id: trajet.id }) }}" class="btn btn-info btn-sm">
+                                        <i class="fas fa-eye"></i> View
+                                    </a>
+                                    <a href="{{ path('trajet_edit', { id: trajet.id }) }}" class="btn btn-warning btn-sm">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </a>
+                                    <form method="post" action="{{ path('trajet_delete', { id: trajet.id }) }}" style="display:inline;" onsubmit="return confirm('Are you sure?');">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ trajet.id) }}">
+                                        <button type="submit" class="btn btn-danger btn-sm">
+                                            <i class="fas fa-trash"></i> Delete
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %} 

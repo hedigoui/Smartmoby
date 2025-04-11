@@ -3,88 +3,134 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 #[ORM\Entity]
+#[ORM\Table(name: "vehicule")]
 class Vehicule
 {
-
     #[ORM\Id]
-    #[ORM\Column(type: "integer")]
-    private int $id;
+    #[ORM\GeneratedValue(strategy: "AUTO")]
+    #[ORM\Column(name: "id", type: "integer")]
+    private ?int $id = null;
 
-    #[ORM\Column(type: "string", length: 50)]
-    private string $type;
+    #[ORM\Column(name: "type", type: "string", length: 50)]
+    #[Assert\NotBlank(message: "Le type est obligatoire")]
+    #[Assert\Length(
+        min: 2,
+        max: 50,
+        minMessage: "Le type doit faire au moins {{ limit }} caractères",
+        maxMessage: "Le type ne peut pas dépasser {{ limit }} caractères"
+    )]
+    #[Assert\Regex(
+        pattern: "/^[a-zA-Z0-9\s\-]+$/",
+        message: "Le type ne peut contenir que des lettres, des chiffres, des espaces et des tirets"
+    )]
+    private ?string $type = null;
 
-    #[ORM\Column(type: "integer")]
-    private int $capacite;
+    #[ORM\Column(name: "capacite", type: "integer")]
+    #[Assert\NotBlank(message: "La capacité est obligatoire")]
+    #[Assert\Type(type: "integer", message: "La capacité doit être un nombre entier")]
+    #[Assert\Positive(message: "La capacité doit être positive")]
+    #[Assert\LessThanOrEqual(value: 100, message: "La capacité ne peut pas dépasser {{ compared_value }}")]
+    private ?int $capacite = null;
 
-    #[ORM\Column(type: "string", length: 50)]
-    private string $statut;
+    #[ORM\Column(name: "statut", type: "string", length: 50)]
+    #[Assert\NotBlank(message: "Le statut est obligatoire")]
+    #[Assert\Choice(
+        choices: ["available", "in_use", "under_maintenance"],
+        message: "Le statut doit être 'available', 'in_use' ou 'under_maintenance'"
+    )]
+    private ?string $statut = null;
 
-    #[ORM\Column(type: "boolean")]
-    private bool $dispo;
+    #[ORM\Column(name: "dispo", type: "boolean")]
+    #[Assert\NotNull(message: "La disponibilité est obligatoire")]
+    private ?bool $dispo = null;
 
-    #[ORM\Column(type: "integer")]
-    private int $conducteur_id;
+    #[ORM\OneToMany(mappedBy: "vehicule", targetEntity: Trajet::class)]
+    private Collection $trajets;
 
-    public function getId()
+    public function __construct()
+    {
+        $this->trajets = new ArrayCollection();
+    }
+
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function setId($value)
-    {
-        $this->id = $value;
-    }
-
-    public function getType()
+    public function getType(): ?string
     {
         return $this->type;
     }
 
-    public function setType($value)
+    public function setType(string $type): self
     {
-        $this->type = $value;
+        $this->type = $type;
+        return $this;
     }
 
-    public function getCapacite()
+    public function getCapacite(): ?int
     {
         return $this->capacite;
     }
 
-    public function setCapacite($value)
+    public function setCapacite(int $capacite): self
     {
-        $this->capacite = $value;
+        $this->capacite = $capacite;
+        return $this;
     }
 
-    public function getStatut()
+    public function getStatut(): ?string
     {
         return $this->statut;
     }
 
-    public function setStatut($value)
+    public function setStatut(string $statut): self
     {
-        $this->statut = $value;
+        $this->statut = $statut;
+        return $this;
     }
 
-    public function getDispo()
+    public function isDispo(): ?bool
     {
         return $this->dispo;
     }
 
-    public function setDispo($value)
+    public function setDispo(bool $dispo): self
     {
-        $this->dispo = $value;
+        $this->dispo = $dispo;
+        return $this;
     }
 
-    public function getConducteur_id()
+    /**
+     * @return Collection<int, Trajet>
+     */
+    public function getTrajets(): Collection
     {
-        return $this->conducteur_id;
+        return $this->trajets;
     }
 
-    public function setConducteur_id($value)
+    public function addTrajet(Trajet $trajet): self
     {
-        $this->conducteur_id = $value;
+        if (!$this->trajets->contains($trajet)) {
+            $this->trajets->add($trajet);
+            $trajet->setVehicule($this);
+        }
+        return $this;
+    }
+
+    public function removeTrajet(Trajet $trajet): self
+    {
+        if ($this->trajets->removeElement($trajet)) {
+            // set the owning side to null (unless already changed)
+            if ($trajet->getVehicule() === $this) {
+                $trajet->setVehicule(null);
+            }
+        }
+        return $this;
     }
 }

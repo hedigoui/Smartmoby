@@ -3,114 +3,144 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity]
+#[ORM\Table(name: "trajet")]
 class Trajet
 {
-
     #[ORM\Id]
-    #[ORM\Column(type: "integer")]
-    private int $id;
+    #[ORM\GeneratedValue(strategy: "IDENTITY")]
+    #[ORM\Column(name: "id", type: "integer")]
+    private ?int $id = null;
 
-    #[ORM\Column(type: "string", length: 100)]
-    private string $point_d;
+    #[ORM\ManyToOne(targetEntity: Vehicule::class, inversedBy: "trajets")]
+    #[ORM\JoinColumn(name: "id_veh", referencedColumnName: "id", nullable: false)]
+    #[Assert\NotNull(message: "Le véhicule est obligatoire")]
+    private ?Vehicule $vehicule = null;
 
-    #[ORM\Column(type: "string", length: 100)]
-    private string $point_a;
+    #[ORM\Column(name: "point_d", type: "string", length: 100)]
+    #[Assert\NotBlank(message: "Le point de départ est obligatoire")]
+    #[Assert\Length(
+        min: 2,
+        max: 100,
+        minMessage: "Le point de départ doit faire au moins {{ limit }} caractères",
+        maxMessage: "Le point de départ ne peut pas dépasser {{ limit }} caractères"
+    )]
+    private ?string $pointDepart = null;
 
-    #[ORM\Column(type: "datetime")]
-    private \DateTimeInterface $date_d;
+    #[ORM\Column(name: "point_a", type: "string", length: 100)]
+    #[Assert\NotBlank(message: "Le point d'arrivée est obligatoire")]
+    #[Assert\Length(
+        min: 2,
+        max: 100,
+        minMessage: "Le point d'arrivée doit faire au moins {{ limit }} caractères",
+        maxMessage: "Le point d'arrivée ne peut pas dépasser {{ limit }} caractères"
+    )]
+    private ?string $pointArrivee = null;
 
-    #[ORM\Column(type: "datetime")]
-    private \DateTimeInterface $date_a;
+    #[ORM\Column(name: "date_d", type: "datetime")]
+    #[Assert\NotBlank(message: "La date de départ est obligatoire")]
+    #[Assert\GreaterThan("today", message: "La date de départ doit être dans le futur")]
+    private ?\DateTimeInterface $dateDepart = null;
 
-    #[ORM\Column(type: "float")]
-    private float $distance;
+    #[ORM\Column(name: "date_a", type: "datetime")]
+    #[Assert\NotBlank(message: "La date d'arrivée est obligatoire")]
+    #[Assert\Expression(
+        "this.getDateArrivee() > this.getDateDepart()",
+        message: "La date d'arrivée doit être postérieure à la date de départ"
+    )]
+    private ?\DateTimeInterface $dateArrivee = null;
 
-    #[ORM\Column(type: "float")]
-    private float $prix;
+    #[ORM\Column(name: "distance", type: "float")]
+    #[Assert\NotBlank(message: "La distance est obligatoire")]
+    #[Assert\Positive(message: "La distance doit être positive")]
+    private ?float $distance = null;
 
-    #[ORM\Column(type: "integer")]
-    private int $id_veh;
+    #[ORM\Column(name: "prix", type: "float")]
+    #[Assert\NotBlank(message: "Le prix est obligatoire")]
+    #[Assert\Positive(message: "Le prix doit être positif")]
+    private ?float $prix = null;
 
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function setId($value)
+    public function getVehicule(): ?Vehicule
     {
-        $this->id = $value;
+        return $this->vehicule;
     }
 
-    public function getPoint_d()
+    public function setVehicule(?Vehicule $vehicule): self
     {
-        return $this->point_d;
+        $this->vehicule = $vehicule;
+        return $this;
     }
 
-    public function setPoint_d($value)
+    public function getPointDepart(): ?string
     {
-        $this->point_d = $value;
+        return $this->pointDepart;
     }
 
-    public function getPoint_a()
+    public function setPointDepart(string $pointDepart): self
     {
-        return $this->point_a;
+        $this->pointDepart = $pointDepart;
+        return $this;
     }
 
-    public function setPoint_a($value)
+    public function getPointArrivee(): ?string
     {
-        $this->point_a = $value;
+        return $this->pointArrivee;
     }
 
-    public function getDate_d()
+    public function setPointArrivee(string $pointArrivee): self
     {
-        return $this->date_d;
+        $this->pointArrivee = $pointArrivee;
+        return $this;
     }
 
-    public function setDate_d($value)
+    public function getDateDepart(): ?\DateTimeInterface
     {
-        $this->date_d = $value;
+        return $this->dateDepart;
     }
 
-    public function getDate_a()
+    public function setDateDepart(\DateTimeInterface $dateDepart): self
     {
-        return $this->date_a;
+        $this->dateDepart = $dateDepart;
+        return $this;
     }
 
-    public function setDate_a($value)
+    public function getDateArrivee(): ?\DateTimeInterface
     {
-        $this->date_a = $value;
+        return $this->dateArrivee;
     }
 
-    public function getDistance()
+    public function setDateArrivee(\DateTimeInterface $dateArrivee): self
+    {
+        $this->dateArrivee = $dateArrivee;
+        return $this;
+    }
+
+    public function getDistance(): ?float
     {
         return $this->distance;
     }
 
-    public function setDistance($value)
+    public function setDistance(float $distance): self
     {
-        $this->distance = $value;
+        $this->distance = $distance;
+        return $this;
     }
 
-    public function getPrix()
+    public function getPrix(): ?float
     {
         return $this->prix;
     }
 
-    public function setPrix($value)
+    public function setPrix(float $prix): self
     {
-        $this->prix = $value;
-    }
-
-    public function getId_veh()
-    {
-        return $this->id_veh;
-    }
-
-    public function setId_veh($value)
-    {
-        $this->id_veh = $value;
+        $this->prix = $prix;
+        return $this;
     }
 }
