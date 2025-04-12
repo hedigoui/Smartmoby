@@ -34,14 +34,14 @@ class Vehicule
     #[Assert\NotBlank(message: "La capacité est obligatoire")]
     #[Assert\Type(type: "integer", message: "La capacité doit être un nombre entier")]
     #[Assert\Positive(message: "La capacité doit être positive")]
-    #[Assert\LessThanOrEqual(value: 100, message: "La capacité ne peut pas dépasser {{ compared_value }}")]
+    #[Assert\LessThanOrEqual(value: 500, message: "La capacité ne peut pas dépasser {{ compared_value }}")]
     private ?int $capacite = null;
 
     #[ORM\Column(name: "statut", type: "string", length: 50)]
     #[Assert\NotBlank(message: "Le statut est obligatoire")]
     #[Assert\Choice(
-        choices: ["available", "in_use", "under_maintenance"],
-        message: "Le statut doit être 'available', 'in_use' ou 'under_maintenance'"
+        choices: ["available", "in use", "under maintenance"],
+        message: "Le statut doit être 'available', 'in use' ou 'under maintenance'"
     )]
     private ?string $statut = null;
 

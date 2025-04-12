@@ -19,7 +19,7 @@ class Trajet
     #[Assert\NotNull(message: "Le véhicule est obligatoire")]
     private ?Vehicule $vehicule = null;
 
-    #[ORM\Column(name: "point_d", type: "string", length: 100)]
+    #[ORM\Column(name: "pointD", type: "string", length: 100)]
     #[Assert\NotBlank(message: "Le point de départ est obligatoire")]
     #[Assert\Length(
         min: 2,
@@ -29,7 +29,7 @@ class Trajet
     )]
     private ?string $pointDepart = null;
 
-    #[ORM\Column(name: "point_a", type: "string", length: 100)]
+    #[ORM\Column(name: "pointA", type: "string", length: 100)]
     #[Assert\NotBlank(message: "Le point d'arrivée est obligatoire")]
     #[Assert\Length(
         min: 2,
@@ -39,12 +39,12 @@ class Trajet
     )]
     private ?string $pointArrivee = null;
 
-    #[ORM\Column(name: "date_d", type: "datetime")]
+    #[ORM\Column(name: "dateD", type: "datetime")]
     #[Assert\NotBlank(message: "La date de départ est obligatoire")]
     #[Assert\GreaterThan("today", message: "La date de départ doit être dans le futur")]
     private ?\DateTimeInterface $dateDepart = null;
 
-    #[ORM\Column(name: "date_a", type: "datetime")]
+    #[ORM\Column(name: "dateA", type: "datetime")]
     #[Assert\NotBlank(message: "La date d'arrivée est obligatoire")]
     #[Assert\Expression(
         "this.getDateArrivee() > this.getDateDepart()",

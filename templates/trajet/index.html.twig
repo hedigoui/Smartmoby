@@ -2,15 +2,6 @@
 
 {% block title %}Trip Management{% endblock %}
 
-{% block page_title %}
-    <div class="d-flex justify-content-between align-items-center">
-        <h1 class="h3 mb-0 text-gray-800">Trip Management</h1>
-        <a href="{{ path('trajet_new') }}" class="btn btn-primary">
-            <i class="fas fa-plus"></i> Add New Trip
-        </a>
-    </div>
-{% endblock %}
-
 {% block body %}
     <div class="card">
         <div class="card-header">
@@ -51,7 +42,7 @@
                                 <td>{{ trajet.dateDepart|date('Y-m-d H:i') }}</td>
                                 <td>{{ trajet.dateArrivee|date('Y-m-d H:i') }}</td>
                                 <td>{{ trajet.distance }} km</td>
-                                <td>{{ trajet.prix }} €</td>
+                                <td>{{ trajet.prix }} TND</td>
                                 <td>
                                     <a href="{{ path('trajet_show', { id: trajet.id }) }}" class="btn btn-info btn-sm">
                                         <i class="fas fa-eye"></i> View
