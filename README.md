@@ -1,41 +1,72 @@
-Smart MOBY
+Smart Moby  
+Overview  
+Smart Moby est une application de bureau développée avec JavaFX et une base de données MySQL, dans le cadre du module PIDEV 3A à Esprit School of Engineering. Ce projet vise à améliorer l’expérience de transport en intégrant des fonctionnalités intelligentes, favorisant ainsi une mobilité urbaine plus fluide et connectée.
 
-Description
+Features  
+Gestion intelligente des trajets : permet aux utilisateurs de planifier, suivre et optimiser leurs trajets en fonction de leurs préférences, de la disponibilité des moyens de transport et des conditions de circulation en temps réel.
 
-Smart MOBY est une solution innovante visant à transformer la mobilité classique en une expérience intelligente et optimisée.
-Développé en Java avec une base de données MySQL, ce projet propose une interface moderne et intuitive pour une meilleure accessibilité.
+Système de réservation : les utilisateurs peuvent réserver des trajets à l'avance, visualiser les horaires disponibles, recevoir des confirmations, et gérer leurs réservations via une interface dédiée.
 
-Fonctionnalités principales
+Gestion des utilisateurs, événements et blog :  
+- Authentification sécurisée, gestion de profils  
+- Création, modification et suivi d’événements liés à la mobilité urbaine  
+- Blog intégré pour la diffusion d’articles, d’actualités et d’annonces en lien avec les services de transport  
 
-Gestion des transports : Accédez à des services de transport détaillés et disponibles à tout moment.
+Interface intuitive et responsive : design moderne avec JavaFX, adapté aux résolutions d’écrans variées, facilitant la navigation et l’interaction pour tous les utilisateurs.
 
-Événements : Découvrez et participez à divers événements liés à la mobilité.
+SmartMoby_AI : chatbot intelligent intégré qui guide les utilisateurs, répond à leurs questions fréquentes, les aide à trouver des trajets ou à effectuer des réservations, améliorant ainsi l'accessibilité et le support utilisateur en continu.
 
-Offres et services : Profitez d’offres exclusives intégrant divers services et produits.
+Tech Stack  
+Frontend  
+JavaFX  
+FXML  
+CSS  
 
-Blog : Restez informé grâce à un espace dédié aux actualités et conseils sur la mobilité.
+Backend  
+Java  
+MySQL  
+JDBC  
 
-Gestion des utilisateurs : Inscrivez-vous et créez un compte pour accéder à toutes les fonctionnalités.
+Other Tools  
+GitHub  
+Maven  
 
-Technologies utilisées
+Directory Structure  
+/smart-moby  
 
-Langage : Java
+├── src/  
+│   └── main/  
+│       ├── java/  
+│       └── resources/  
+├── lib/  
+├── sql/  
+├── .env  
+├── pom.xml  
 
-Base de données : MySQL
+Getting Started  
+Cloner le dépôt :  
+git clone https://github.com/hedigoui/Smartmoby 
 
-Frameworks et bibliothèques : JavaFX
+Installer les dépendances :  
+mvn install  
 
-Installation
+Configurer la base de données dans le fichier utils/DataSource.java  
 
-Cloner le dépôt :
+Lancer l'application :  
+Exécuter la classe principale (MainGUI.java)  
 
-git clone https://github.com/hedigoui/Smartmoby.git
+Acknowledgments  
+Ce projet a été réalisé sous la supervision de l'équipe pédagogique de Esprit School of Engineering dans le cadre du projet académique PIDEV 3A.  
 
-Configurer la base de données MySQL avec le script fourni.
+Topics  
+java  
+javafx  
+desktop-application  
+smart-transport  
+smart-mobility  
+esprit  
+mysql  
 
-Importer le projet dans votre IDE et exécuter.
-
-Contributions
-
-Les contributions sont les bienvenues ! N'hésitez pas à proposer des améliorations ou signaler des problèmes.
-
+Hébergement  
+Ce projet est hébergé sur GitHub Education for Students via un dépôt public.  
+Il est accessible et consultable par tous pour démonstration et évaluation.
