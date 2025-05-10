@@ -103,6 +103,7 @@ import org.example.models.event;
 import org.example.models.fedback;
 import org.example.services.event_serv;
 import org.example.services.fedback_serv;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -1629,7 +1630,16 @@ public class AcceuilAdmin {
     }
 
     private String hashPassword(String password) {
-        return BCrypt.hashpw(password, BCrypt.gensalt());
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(12);
+        String hashedPassword = passwordEncoder.encode(password);
+
+        // Remplacer le préfixe "$2a$" par "$2y$"
+        if (hashedPassword.startsWith("$2a$")) {
+            hashedPassword = "$2y$" + hashedPassword.substring(4);
+        }
+
+        return hashedPassword;
+
     }
 
     @FXML

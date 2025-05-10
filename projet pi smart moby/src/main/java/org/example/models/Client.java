@@ -22,6 +22,10 @@ public class Client extends Utilisateur{
         super(id,nom, prenom, nom_utilisateur, email, mot_de_passe, role);
     }
 
+    public Client(int id, String nom, String prenom, String nom_utilisateur, String email, String mot_de_passe, Role role, int ban, int id_client) {
+        super(id, nom, prenom, nom_utilisateur, email, mot_de_passe, role, ban);
+        this.id_client = id_client;
+    }
 
     public int getId_client() {
         return id_client;

@@ -145,7 +145,7 @@ public class ProduitController {
             stmt.executeUpdate();
             showAlert("Succès", "Produit ajouté avec succès !", Alert.AlertType.INFORMATION);
 
-         //   smsService.sendSMS("+21623039225","produit crée");
+           smsService.sendSMS("+21623039225","produit crée");
             loadProduits();
 
         } catch (SQLException e) {

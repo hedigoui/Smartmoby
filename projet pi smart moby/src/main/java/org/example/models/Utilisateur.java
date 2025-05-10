@@ -10,6 +10,7 @@ public class Utilisateur {
     private String email;
     private String mot_de_passe;
     private Role role;
+    private int ban;
     public Utilisateur(int id, String nom, String prenom, String nom_utilisateur, String email, String mot_de_passe, Role role) {
         this.id = id;
         this.nom = nom;
@@ -56,6 +57,17 @@ public class Utilisateur {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
+    }
+
+    public Utilisateur(int id, String nom, String prenom, String nom_utilisateur, String email, String mot_de_passe, Role role, int ban) {
+        this.id = id;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.nom_utilisateur = nom_utilisateur;
+        this.email = email;
+        this.mot_de_passe = mot_de_passe;
+        this.role = role;
+        this.ban = ban;
     }
 
     public int getId() {
@@ -114,6 +126,14 @@ public class Utilisateur {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public int getBan() {
+        return ban;
+    }
+
+    public void setBan(int ban) {
+        this.ban = ban;
     }
 
     @Override

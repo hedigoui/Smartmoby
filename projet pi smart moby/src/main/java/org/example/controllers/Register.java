@@ -20,6 +20,8 @@ import org.example.models.*;
 import org.example.services.*;
 import org.example.utils.DataSource;
 import org.mindrot.jbcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 
 
 public class Register {
@@ -305,8 +307,19 @@ public class Register {
     }
 
     private String hashPassword(String password) {
-        return BCrypt.hashpw(password, BCrypt.gensalt());
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(12);
+        String hashedPassword = passwordEncoder.encode(password);
+
+        // Remplacer le préfixe "$2a$" par "$2y$"
+        if (hashedPassword.startsWith("$2a$")) {
+            hashedPassword = "$2y$" + hashedPassword.substring(4);
+        }
+
+        return hashedPassword;
+
     }
+
+
 
 
 

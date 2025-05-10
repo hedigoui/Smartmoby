@@ -14,6 +14,7 @@ import org.example.models.Session;
 import org.example.models.Utilisateur;
 import org.example.utils.DataSource;
 import org.mindrot.jbcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -30,11 +31,21 @@ public class Login {
     private TextField nom_utilisateur;
 
     private String hashPassword(String password) {
-        return BCrypt.hashpw(password, BCrypt.gensalt());
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(12);
+        String hashedPassword = passwordEncoder.encode(password);
+
+        // Remplacer le préfixe "$2a$" par "$2y$"
+        if (hashedPassword.startsWith("$2a$")) {
+            hashedPassword = "$2y$" + hashedPassword.substring(4);
+        }
+
+        return hashedPassword;
+
     }
 
     @FXML
     void se_connecter(ActionEvent event) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String username = nom_utilisateur.getText();
         String password = mot_de_passe.getText();
         System.out.println(password);
@@ -58,7 +69,8 @@ public class Login {
                 String enteredHashedPassword = hashPassword(password);
                 System.out.println(enteredHashedPassword);
 
-                if (BCrypt.checkpw(password, hashedPassword)) {
+                if (passwordEncoder.matches(password, hashedPassword)) {
+
                     System.out.println("Connexion réussie !");
                     int userId = rs.getInt("id");
 

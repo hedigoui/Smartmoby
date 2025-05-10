@@ -15,9 +15,9 @@ public class Utilisateur_service implements IUtilisateur_service {
     @Override
     public void ajouter(Utilisateur utilisateur) {
         Register register = new Register();
-        String req = "INSERT INTO utilisateur (nom, prenom, nom_utilisateur, email, mot_de_passe, role) VALUES ('"
+        String req = "INSERT INTO utilisateur (nom, prenom, nom_utilisateur, email, mot_de_passe, role, ban) VALUES ('"
                 + utilisateur.getNom() + "', '" + utilisateur.getPrenom() + "', '" + utilisateur.getNom_utilisateur()
-                + "', '" + utilisateur.getEmail() + "',  '" + utilisateur.getMot_de_passe() + "', '" + utilisateur.getRole() + "')";
+                + "', '" + utilisateur.getEmail() + "', '" + utilisateur.getMot_de_passe() + "', '" + utilisateur.getRole() + "', '" + "', false)";
 
         try {
             PreparedStatement pst = connection.prepareStatement(req, Statement.RETURN_GENERATED_KEYS);
@@ -46,7 +46,7 @@ public class Utilisateur_service implements IUtilisateur_service {
                 if(utilisateur.getRole() == Utilisateur.Role.CLIENT){
                     Client_service c = new Client_service();
                     c.ajouter(new Client(userId, utilisateur.getNom(), utilisateur.getPrenom(), utilisateur.getNom_utilisateur(),
-                            utilisateur.getEmail(), utilisateur.getMot_de_passe(), utilisateur.getRole(),userId));
+                            utilisateur.getEmail(), utilisateur.getMot_de_passe(), utilisateur.getRole(), utilisateur.getBan(), userId));
                 }
 
             }
